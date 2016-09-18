@@ -6,7 +6,7 @@ import org.junit.Test;
 public class VersionTest {
 
 	@Test
-	public void getVersion() throws Exception {
+	public void testVersion() throws Exception {
 		String version = Version.getVersion();
 		Assert.assertNotEquals("Version is defined", Version.UNKNOWN, version);
 	}
