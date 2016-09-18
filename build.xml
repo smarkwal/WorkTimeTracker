@@ -6,8 +6,8 @@
 
 	<property file="build.properties"/>
 
-	<property name="src.dir" value="${basedir}/src"/>
-	<property name="build.dir" value="${basedir}/build"/>
+	<property name="src.dir" value="${basedir}/src/main/java"/>
+	<property name="build.dir" value="${basedir}/target/classes"/>
 	<property name="dist.dir" value="${basedir}/dist"/>
 	<property name="jar.name" value="${ant.project.name}.jar"/>
 
