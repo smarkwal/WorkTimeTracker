@@ -1,6 +1,9 @@
 package net.markwalder.tools.worktime;
 
 import net.markwalder.tools.worktime.db.*;
+import net.markwalder.tools.worktime.tracker.ActivityTracker;
+import net.markwalder.tools.worktime.tracker.DefaultMouseTracker;
+import net.markwalder.tools.worktime.tracker.MouseTracker;
 import net.markwalder.tools.worktime.ui.Window;
 import net.markwalder.tools.worktime.ui.WorkYearPanel;
 import org.apache.commons.lang3.time.DateUtils;
