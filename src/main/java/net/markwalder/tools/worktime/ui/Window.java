@@ -159,14 +159,12 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 		} else if (keyChar == 't') {
 			Date date = DateTimeUtils.getToday();
 			controller.setDisplayDate(date);
-		} else {
-			controller.setActiveKey(keyChar);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		controller.setActiveKey((char) 0);
+		// nothing to do
 	}
 
 }

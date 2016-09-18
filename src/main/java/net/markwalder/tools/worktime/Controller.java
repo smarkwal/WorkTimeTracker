@@ -20,8 +20,6 @@ public class Controller {
 	private WorkDay displayWorkDay;
 	private WorkYear displayWorkYear;
 
-	private char activeKey;
-
 	public Controller() {
 
 		// open main window
@@ -42,14 +40,6 @@ public class Controller {
 
 	public Database getDatabase() {
 		return database;
-	}
-
-	public char getActiveKey() {
-		return activeKey;
-	}
-
-	public void setActiveKey(char activeKey) {
-		this.activeKey = activeKey;
 	}
 
 	public void start() {
