@@ -1,9 +1,6 @@
 package net.markwalder.tools.worktime;
 
-import net.markwalder.tools.worktime.db.Database;
-import net.markwalder.tools.worktime.db.DateTimeUtils;
-import net.markwalder.tools.worktime.db.WorkDay;
-import net.markwalder.tools.worktime.db.WorkYear;
+import net.markwalder.tools.worktime.db.*;
 import net.markwalder.tools.worktime.ui.Window;
 import net.markwalder.tools.worktime.ui.WorkYearPanel;
 import org.apache.commons.lang3.time.DateUtils;
@@ -14,7 +11,7 @@ public class Controller {
 
 	private final Window window;
 	private final ActivityTracker activityTracker;
-	private final Database database = new Database();
+	private final Database database = new FileDatabase();
 
 	private Date activeDate;
 	private WorkDay activeWorkDay;
@@ -96,7 +93,7 @@ public class Controller {
 		}
 
 		// check if timeTable needs to be modified ...
-		int slot = Database.slot(time - startOfDay);
+		int slot = DatabaseUtils.slot(time - startOfDay);
 
 		// make sure that the "application is running" flag is set
 		if (!activeWorkDay.isRunning(slot)) {

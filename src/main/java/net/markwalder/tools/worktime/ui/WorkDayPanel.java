@@ -1,10 +1,7 @@
 package net.markwalder.tools.worktime.ui;
 
 import net.markwalder.tools.worktime.Controller;
-import net.markwalder.tools.worktime.db.Database;
-import net.markwalder.tools.worktime.db.DateTimeUtils;
-import net.markwalder.tools.worktime.db.Statistics;
-import net.markwalder.tools.worktime.db.WorkDay;
+import net.markwalder.tools.worktime.db.*;
 import org.apache.commons.lang3.time.DateUtils;
 
 import javax.swing.*;
@@ -150,7 +147,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		int nowSlot = -1;
 		if (date.equals(today)) {
-			nowSlot = Database.slot(System.currentTimeMillis() - today.getTime());
+			nowSlot = DatabaseUtils.slot(System.currentTimeMillis() - today.getTime());
 		}
 
 		Color COLOR_RUNNING = new Color(204, 204, 204);
@@ -268,7 +265,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		if (workingCount > 0 || date.compareTo(today) <= 0) {
 
-			int workTimeSlots = database.getWorkTimeSlots(date) - freeCount;
+			int workTimeSlots = DatabaseUtils.getWorkTimeSlots(database, date) - freeCount;
 
 			int remainingCount = workTimeSlots - workingCount;
 
@@ -303,7 +300,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		// create statistics for the current week
 		Date startOfWeek = DateTimeUtils.getStartOfWeek(date);
 		Date endOfWeek = DateTimeUtils.getEndOfWeek(date);
-		Statistics statistics = database.getStatistics(startOfWeek, endOfWeek);
+		Statistics statistics = Statistics.getStatistics(database, startOfWeek, endOfWeek);
 
 		workingCount = statistics.getWorkingCount();
 		if (workingCount > 0 || startOfWeek.compareTo(today) <= 0) {
@@ -343,7 +340,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		// create statistics for the current month
 		Date startOfMonth = DateTimeUtils.getStartOfMonth(date);
 		Date endOfMonth = DateTimeUtils.getEndOfMonth(date);
-		statistics = database.getStatistics(startOfMonth, endOfMonth);
+		statistics = Statistics.getStatistics(database, startOfMonth, endOfMonth);
 
 		workingCount = statistics.getWorkingCount();
 		if (workingCount > 0 || startOfMonth.compareTo(today) <= 0) {
@@ -383,7 +380,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		// create statistics for the current year
 		Date startOfYear = DateTimeUtils.getStartOfYear(date);
 		Date endOfYear = DateTimeUtils.getEndOfYear(date);
-		statistics = database.getStatistics(startOfYear, endOfYear);
+		statistics = Statistics.getStatistics(database, startOfYear, endOfYear);
 
 		workingCount = statistics.getWorkingCount();
 		if (workingCount > 0 || startOfYear.compareTo(today) <= 0) {

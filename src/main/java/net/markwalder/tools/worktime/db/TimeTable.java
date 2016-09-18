@@ -5,7 +5,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TimeTable {
+public abstract class TimeTable {
 
 	protected final Date date;
 	protected final byte[] data;
@@ -13,8 +13,8 @@ public class TimeTable {
 	protected int updates = 0;
 
 	public TimeTable(Date date, byte[] data) {
-		if (date == null) throw new NullPointerException("date");
-		if (data == null) throw new NullPointerException("data");
+		if (date == null) throw new IllegalArgumentException("date == null");
+		if (data == null) throw new IllegalArgumentException("data == null");
 		this.date = DateUtils.truncate(date, Calendar.DATE);
 		this.data = data;
 	}
