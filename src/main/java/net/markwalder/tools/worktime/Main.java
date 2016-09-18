@@ -28,7 +28,7 @@ public class Main {
 
 		}
 
-		Controller controller = new Controller();
+		Controller controller = new ControllerImpl();
 		controller.start();
 
 	}

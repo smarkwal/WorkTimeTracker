@@ -4,16 +4,19 @@ import java.awt.*;
 
 public class ActivityTracker implements Runnable {
 
-
 	private final Controller controller;
-	private final long pollInterval = 15 * 1000; // 15 seconds
+	private final MouseTracker mouseTracker;
+	private final long pollInterval = 15 * 1000; // 15 seconds // TODO: make configurable
+
 	private Thread thread = null;
 	private volatile boolean stop = false;
 	private Point lastPosition = null;
 
-	public ActivityTracker(Controller controller) {
-		if (controller == null) throw new NullPointerException("controller");
+	public ActivityTracker(Controller controller, MouseTracker mouseTracker) {
+		if (controller == null) throw new IllegalArgumentException("controller == null");
+		if (mouseTracker == null) throw new IllegalArgumentException("mouseTracker == null");
 		this.controller = controller;
+		this.mouseTracker = mouseTracker;
 	}
 
 	public void start() {
@@ -69,7 +72,7 @@ public class ActivityTracker implements Runnable {
 	private boolean mouseHasBeenMoved() {
 
 		// get current mouse position
-		Point position = getMousePosition();
+		Point position = mouseTracker.getMousePosition();
 
 		if (position == null) return false;
 
@@ -80,12 +83,6 @@ public class ActivityTracker implements Runnable {
 		lastPosition = position;
 
 		return moved;
-	}
-
-	private static Point getMousePosition() {
-		PointerInfo pointerInfo = MouseInfo.getPointerInfo();
-		if (pointerInfo == null) return null;
-		return pointerInfo.getLocation();
 	}
 
 }
