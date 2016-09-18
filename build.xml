@@ -1,56 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-
-<project name="WorkTimeTracker" default="jar" basedir=".">
+<project name="WorkTimeTracker" default="exe" basedir=".">
 
 	<echo message="${ant.project.name}"/>
 
 	<property file="build.properties"/>
-
-	<property name="src.dir" value="${basedir}/src/main/java"/>
-	<property name="build.dir" value="${basedir}/target/classes"/>
 	<property name="dist.dir" value="${basedir}/dist"/>
-	<property name="jar.name" value="${ant.project.name}.jar"/>
 
-	<path id="compile.classpath">
-		<fileset dir="${basedir}/lib" includes="**/*.jar"/>
-	</path>
-
-	<target name="clean">
-		<delete dir="${build.dir}"/>
-		<delete dir="${dist.dir}"/>
-	</target>
-
-	<target name="prepare">
-		<tstamp/>
-		<mkdir dir="${build.dir}"/>
-		<mkdir dir="${dist.dir}"/>
-		<copy todir="${build.dir}">
-			<fileset dir="${src.dir}" excludes="**/*.java,**/package.html,**/doc-files,**/doc-files/*"/>
-		</copy>
-		<available file="${exe4j.home}" type="dir" property="exe4j.found"/>
-	</target>
-
-	<target name="compile" depends="prepare">
-		<javac encoding="ISO-8859-1" srcdir="${src.dir}" destdir="${build.dir}" source="${compile.source}" target="${compile.target}" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
-			<classpath refid="compile.classpath"/>
-		</javac>
-	</target>
-
-	<target name="jar" depends="compile">
-		<unjar dest="${build.dir}">
-			<fileset dir="${basedir}/lib" includes="**/*.jar"/>
-		</unjar>
-		<delete dir="${build.dir}/META-INF"/>
-		<mkdir dir="${build.dir}/META-INF"/>
-		<manifest file="${build.dir}/META-INF/MANIFEST.MF">
-			<attribute name="Main-Class" value="net.markwalder.tools.worktime.Main"/>
-		</manifest>
-		<jar destfile="${dist.dir}/${jar.name}" manifest="${build.dir}/META-INF/MANIFEST.MF">
-			<fileset dir="${build.dir}"/>
-		</jar>
-	</target>
-
-	<target name="exe" depends="jar">
+	<target name="exe">
 		<fail message="exe4j installation not found" unless="exe4j.found"/>
 		<taskdef name="exe4j" classname="com.exe4j.Exe4JTask" classpath="${exe4j.home}/bin/ant.jar"/>
 		<copy tofile="${dist.dir}/project.exe4j" file="template.exe4j">
