@@ -1,4 +1,4 @@
-package net.markwalder.tools.worktime.db;
+package net.markwalder.tools.worktime.db.store;
 
 import org.apache.commons.io.IOUtils;
 
@@ -8,15 +8,21 @@ import java.io.RandomAccessFile;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class FileDatabase extends AbstractDatabase {
+public class FileStoreImpl implements Store {
 
 	private ReadWriteLock lock = new ReentrantReadWriteLock(true);
 
+	private final File directory;
+
+	public FileStoreImpl() {
+		directory = new File(".");
+	}
+
 	@Override
-	protected byte[] readData(String key, int offset, int length) {
+	public byte[] readData(String key, int offset, int length) {
 
 		// get database file
-		File file = new File(key + ".dat");
+		File file = getFile(key);
 
 		lock.readLock().lock();
 		try {
@@ -60,10 +66,10 @@ public class FileDatabase extends AbstractDatabase {
 	}
 
 	@Override
-	protected void writeData(String key, int offset, byte[] data) {
+	public void writeData(String key, int offset, byte[] data) {
 
 		// get database file
-		File file = new File(key + ".dat");
+		File file = getFile(key);
 
 		lock.writeLock().lock();
 		try {
@@ -89,6 +95,10 @@ public class FileDatabase extends AbstractDatabase {
 			lock.writeLock().unlock();
 		}
 
+	}
+
+	private File getFile(String key) {
+		return new File(directory, key + ".dat");
 	}
 
 }

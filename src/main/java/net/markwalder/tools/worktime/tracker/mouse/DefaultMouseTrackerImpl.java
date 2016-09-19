@@ -1,8 +1,11 @@
-package net.markwalder.tools.worktime.tracker;
+package net.markwalder.tools.worktime.tracker.mouse;
 
 import java.awt.*;
 
-public class DefaultMouseTracker implements MouseTracker {
+/**
+ * Mouse tracker based on {@link java.awt.MouseInfo}.
+ */
+public class DefaultMouseTrackerImpl implements MouseTracker {
 
 	public MousePosition getMousePosition() {
 		PointerInfo pointerInfo = MouseInfo.getPointerInfo();

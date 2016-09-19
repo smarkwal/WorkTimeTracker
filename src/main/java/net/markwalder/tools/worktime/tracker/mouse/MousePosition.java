@@ -1,26 +1,29 @@
-package net.markwalder.tools.worktime.tracker;
+package net.markwalder.tools.worktime.tracker.mouse;
 
 import java.awt.*;
 
-public class MousePosition {
+/**
+ * Global mouse position with x and y coordinates.
+ */
+class MousePosition {
 
 	private final int x;
 	private final int y;
 
-	public MousePosition(int x, int y) {
+	MousePosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public MousePosition(Point point) {
+	MousePosition(Point point) {
 		this(point.x, point.y);
 	}
 
-	public int getX() {
+	int getX() {
 		return x;
 	}
 
-	public int getY() {
+	int getY() {
 		return y;
 	}
 

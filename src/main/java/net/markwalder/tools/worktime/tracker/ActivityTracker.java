@@ -1,97 +1,43 @@
 package net.markwalder.tools.worktime.tracker;
 
-import net.markwalder.tools.worktime.Controller;
+/**
+ * An ActivityTracker is used to check if the user is currently working
+ * at the computer. The tracker can be started with {@link #start()} and
+ * stopped with {@link #stop()}. It has to report the current state in
+ * regular intervals to the given {@link ActivityListener}.
+ * <p/>
+ * "regular interval" means at least once every 5 minutes.
+ */
+public abstract class ActivityTracker {
 
-public class ActivityTracker implements Runnable {
+	// TODO: invert the communication pattern
+	// so that the tracker is asked for the last time
+	// the user has been active.
 
-	private final Controller controller;
-	private final MouseTracker mouseTracker;
-	private long pollInterval = 15 * 1000; // 15 seconds
+	private final ActivityListener activityListener;
 
-	private Thread thread = null;
-	private volatile boolean stop = false;
-	private MousePosition lastPosition = null;
-
-	public ActivityTracker(Controller controller, MouseTracker mouseTracker) {
-		if (controller == null) throw new IllegalArgumentException("controller == null");
-		if (mouseTracker == null) throw new IllegalArgumentException("mouseTracker == null");
-		this.controller = controller;
-		this.mouseTracker = mouseTracker;
+	protected ActivityTracker(ActivityListener activityListener) {
+		if (activityListener == null) throw new IllegalArgumentException("activityListener == null");
+		this.activityListener = activityListener;
 	}
 
 	/**
-	 * Set poll interval for mouse tracker in milliseconds.
+	 * Subclasses call this method to notify the {@link ActivityListener}.
 	 *
-	 * @param pollInterval Poll interval in milliseconds
+	 * @param active <code>true</code> if the user is active, <code>false</code> otherwise.
 	 */
-	public void setPollInterval(long pollInterval) {
-		this.pollInterval = pollInterval;
+	protected void reportActive(boolean active) {
+		activityListener.reportActive(active);
 	}
 
-	public void start() {
-		if (thread != null) return;
-		thread = new Thread(this);
-		thread.setName("ActivityTracker");
-		thread.setDaemon(false);
-		thread.start();
-	}
+	/**
+	 * Start activity tracking.
+	 */
+	public abstract void start();
 
-	public void stop() {
-		if (thread == null) return;
-		stop = true;
-		thread.interrupt();
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			// ignore
-		}
-		thread = null;
-	}
-
-	@Override
-	public void run() {
-
-		try {
-
-			stop = false;
-			while (!stop) {
-
-				// check if user is active (mouse has been moved)
-				boolean active = mouseHasBeenMoved();
-
-				// report result to controller
-				controller.reportActive(active);
-
-				// sleep
-				try {
-					Thread.sleep(pollInterval);
-				} catch (InterruptedException e) {
-					// ignore
-				}
-
-			}
-
-		} catch (Exception e) {
-			System.err.println("unexpected error: " + e.toString());
-			// todo: show error dialog
-		}
-
-	}
-
-	private boolean mouseHasBeenMoved() {
-
-		// get current mouse position
-		MousePosition position = mouseTracker.getMousePosition();
-
-		if (position == null) return false;
-
-		// check if mouse has been moved
-		boolean moved = lastPosition != null && !position.equals(lastPosition);
-
-		// remember last position
-		lastPosition = position;
-
-		return moved;
-	}
+	/**
+	 * Stop activity tracking.
+	 */
+	public abstract void stop();
 
 }

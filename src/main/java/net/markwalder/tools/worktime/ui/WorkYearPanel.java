@@ -1,9 +1,10 @@
 package net.markwalder.tools.worktime.ui;
 
+import com.google.inject.Inject;
 import net.markwalder.tools.worktime.Controller;
 import net.markwalder.tools.worktime.db.Database;
-import net.markwalder.tools.worktime.db.DateTimeUtils;
 import net.markwalder.tools.worktime.db.WorkYear;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,9 +37,13 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 	private int mouseSlot = -1;
 
 	private final Controller controller;
+	private final Database database;
 
-	public WorkYearPanel(Controller controller) {
+	@Inject
+	public WorkYearPanel(Controller controller, Database database) {
 		this.controller = controller;
+		this.database = database;
+
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 
@@ -60,8 +65,6 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		Color COLOR_COMPENSATION = new Color(225, 175, 125);
 		Color COLOR_VACATION = new Color(150, 200, 150);
 		Color COLOR_FREE = new Color(200, 200, 200);
-
-		Database database = controller.getDatabase();
 
 		g2.setColor(getBackground());
 		g2.fillRect(0, 0, getWidth(), getHeight());

@@ -1,20 +1,24 @@
 package net.markwalder.tools.worktime;
 
-import net.markwalder.tools.worktime.db.*;
+import com.google.inject.Inject;
+import net.markwalder.tools.worktime.db.Database;
+import net.markwalder.tools.worktime.db.DatabaseUtils;
+import net.markwalder.tools.worktime.db.WorkDay;
+import net.markwalder.tools.worktime.db.WorkYear;
+import net.markwalder.tools.worktime.tracker.ActivityListener;
 import net.markwalder.tools.worktime.tracker.ActivityTracker;
-import net.markwalder.tools.worktime.tracker.DefaultMouseTracker;
-import net.markwalder.tools.worktime.tracker.MouseTracker;
 import net.markwalder.tools.worktime.ui.Window;
 import net.markwalder.tools.worktime.ui.WorkYearPanel;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
 
-public class ControllerImpl implements Controller {
+public class ControllerImpl implements Controller, ActivityListener {
 
 	private final Window window;
 	private final ActivityTracker activityTracker;
-	private final Database database = new FileDatabase();
+	private final Database database;
 
 	private Date activeDate;
 	private WorkDay activeWorkDay;
@@ -23,16 +27,11 @@ public class ControllerImpl implements Controller {
 	private WorkDay displayWorkDay;
 	private WorkYear displayWorkYear;
 
-	public ControllerImpl() {
-
-		// open main window
-		String version = Version.getVersion();
-		window = new Window(this, "Work Time Tracker " + version);
-
-		// prepare activity tracker
-		MouseTracker mouseTracker = new DefaultMouseTracker();
-		activityTracker = new ActivityTracker(this, mouseTracker);
-
+	@Inject
+	public ControllerImpl(Window window, ActivityTracker activityTracker, Database database) {
+		this.window = window;
+		this.activityTracker = activityTracker;
+		this.database = database;
 	}
 
 	@Override
@@ -43,11 +42,6 @@ public class ControllerImpl implements Controller {
 	@Override
 	public WorkYear getDisplayWorkYear() {
 		return displayWorkYear;
-	}
-
-	@Override
-	public Database getDatabase() {
-		return database;
 	}
 
 	@Override

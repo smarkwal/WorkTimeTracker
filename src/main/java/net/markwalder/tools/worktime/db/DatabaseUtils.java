@@ -1,5 +1,7 @@
 package net.markwalder.tools.worktime.db;
 
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
+
 import java.util.Date;
 
 public class DatabaseUtils {

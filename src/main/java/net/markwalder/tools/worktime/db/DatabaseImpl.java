@@ -1,15 +1,25 @@
 package net.markwalder.tools.worktime.db;
 
+import com.google.inject.Inject;
+import net.markwalder.tools.worktime.db.store.Store;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractDatabase implements Database {
+public class DatabaseImpl implements Database {
+
+	private final Store store;
 
 	private Map<Date, WorkDay> workDaysCache = new HashMap<Date, WorkDay>();
 	private Map<Date, WorkYear> workYearsCache = new HashMap<Date, WorkYear>();
+
+	@Inject
+	public DatabaseImpl(Store store) {
+		this.store = store;
+	}
 
 	@Override
 	public synchronized WorkDay getWorkDay(Date date) {
@@ -38,7 +48,7 @@ public abstract class AbstractDatabase implements Database {
 		String key = getKey("data", date);
 
 		// read data from database file
-		byte[] data = readData(key, offset, length);
+		byte[] data = store.readData(key, offset, length);
 
 		// return bitmap
 		return new WorkDay(date, data);
@@ -68,7 +78,7 @@ public abstract class AbstractDatabase implements Database {
 		workDay.resetModified();
 
 		// write data to database file
-		writeData(key, offset, data);
+		store.writeData(key, offset, data);
 
 	}
 
@@ -99,7 +109,7 @@ public abstract class AbstractDatabase implements Database {
 		String key = getKey("calendar", date);
 
 		// read data from database file
-		byte[] data = readData(key, 0, length);
+		byte[] data = store.readData(key, 0, length);
 
 		// return bitmap
 		return new WorkYear(date, data);
@@ -121,16 +131,9 @@ public abstract class AbstractDatabase implements Database {
 		workYear.resetModified();
 
 		// write data to database file
-		writeData(key, 0, data);
+		store.writeData(key, 0, data);
 
 	}
-
-	// ------------------------------------------------------------------------------------------------------------
-	// abstract methods for persistence
-
-	protected abstract byte[] readData(String key, int offset, int length);
-
-	protected abstract void writeData(String key, int offset, byte[] data);
 
 	// ------------------------------------------------------------------------------------------------------------
 	// private methods

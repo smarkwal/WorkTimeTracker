@@ -1,6 +1,5 @@
 package net.markwalder.tools.worktime;
 
-import net.markwalder.tools.worktime.db.Database;
 import net.markwalder.tools.worktime.db.WorkDay;
 import net.markwalder.tools.worktime.db.WorkYear;
 
@@ -12,13 +11,9 @@ public interface Controller {
 
 	WorkYear getDisplayWorkYear();
 
-	Database getDatabase();
-
 	void start();
 
 	void stop();
-
-	void reportActive(boolean active);
 
 	void workDayMousePressed(int slot, boolean shift);
 
