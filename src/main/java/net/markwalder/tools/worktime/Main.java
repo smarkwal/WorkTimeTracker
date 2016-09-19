@@ -1,9 +1,6 @@
 package net.markwalder.tools.worktime;
 
-import com.google.inject.Binder;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Module;
+import com.google.inject.*;
 import net.markwalder.tools.worktime.db.Database;
 import net.markwalder.tools.worktime.db.DatabaseImpl;
 import net.markwalder.tools.worktime.db.store.FileStoreImpl;
@@ -43,6 +40,8 @@ public class Main {
 
 		}
 
+		// GuiceDebug.enable();
+
 		// configure dependency injection
 		Module module = new Module() {
 
@@ -50,16 +49,16 @@ public class Main {
 			public void configure(Binder binder) {
 
 				// main controller
-				binder.bind(Controller.class).to(ControllerImpl.class);
+				binder.bind(Controller.class).to(ControllerImpl.class).in(Singleton.class);
 
 				// user activity tracking
-				binder.bind(ActivityListener.class).to(ControllerImpl.class);
-				binder.bind(ActivityTracker.class).to(MouseActivityTrackerImpl.class);
-				binder.bind(MouseTracker.class).to(DefaultMouseTrackerImpl.class);
+				binder.bind(ActivityListener.class).to(ControllerImpl.class).in(Singleton.class);
+				binder.bind(ActivityTracker.class).to(MouseActivityTrackerImpl.class).in(Singleton.class);
+				binder.bind(MouseTracker.class).to(DefaultMouseTrackerImpl.class).in(Singleton.class);
 
 				// persistence
-				binder.bind(Database.class).to(DatabaseImpl.class);
-				binder.bind(Store.class).to(FileStoreImpl.class);
+				binder.bind(Database.class).to(DatabaseImpl.class).in(Singleton.class);
+				binder.bind(Store.class).to(FileStoreImpl.class).in(Singleton.class);
 
 			}
 
