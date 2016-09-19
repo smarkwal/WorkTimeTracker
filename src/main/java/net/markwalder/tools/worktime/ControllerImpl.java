@@ -56,6 +56,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 		displayWorkDay = activeWorkDay;
 		displayWorkYear = database.getWorkYear(displayDate);
 
+		window.setVisible(true);
 		window.repaint();
 
 		activityTracker.start();

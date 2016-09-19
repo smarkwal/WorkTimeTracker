@@ -15,8 +15,6 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 
 	private final Controller controller;
 
-	private final Container contentPane;
-
 	private final WorkDayPanel workDayPanel;
 	private final WorkYearPanel workYearPanel;
 
@@ -36,7 +34,7 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 		this.workDayPanel = workDayPanel;
 		this.workYearPanel = workYearPanel;
 
-		this.contentPane = this.getContentPane();
+		Container contentPane = this.getContentPane();
 		contentPane.add(workDayPanel);
 
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -50,13 +48,12 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 		Image image = Toolkit.getDefaultToolkit().getImage(resource);
 		setIconImage(image);
 
-		this.setVisible(true);
-
 	}
 
-	public void switchView() {
+	private void switchView() {
+		Container contentPane = this.getContentPane();
 		contentPane.removeAll();
-		if (view == VIEW_DAY) {
+		if (view.equals(VIEW_DAY)) {
 			view = VIEW_YEAR;
 			contentPane.add(workYearPanel);
 		} else {
