@@ -1,7 +1,9 @@
 package net.markwalder.tools.worktime.ui;
 
+import com.google.inject.Inject;
 import net.markwalder.tools.worktime.Controller;
-import net.markwalder.tools.worktime.db.DateTimeUtils;
+import net.markwalder.tools.worktime.Version;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +15,6 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 
 	private final Controller controller;
 
-	private final Container contentPane;
-
 	private final WorkDayPanel workDayPanel;
 	private final WorkYearPanel workYearPanel;
 
@@ -22,13 +22,19 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 	private static final String VIEW_YEAR = "WorkYear";
 	private String view = VIEW_DAY;
 
-	public Window(Controller controller, String title) {
-		super(title);
-		this.controller = controller;
-		this.contentPane = this.getContentPane();
-		this.workDayPanel = new WorkDayPanel(controller);
-		this.workYearPanel = new WorkYearPanel(controller);
+	public static final String TITLE = "Work Time Tracker";
 
+	@Inject
+	public Window(Controller controller, WorkDayPanel workDayPanel, WorkYearPanel workYearPanel) {
+
+		String version = Version.getVersion();
+		this.setTitle(TITLE + " " + version);
+
+		this.controller = controller;
+		this.workDayPanel = workDayPanel;
+		this.workYearPanel = workYearPanel;
+
+		Container contentPane = this.getContentPane();
 		contentPane.add(workDayPanel);
 
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -42,13 +48,12 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 		Image image = Toolkit.getDefaultToolkit().getImage(resource);
 		setIconImage(image);
 
-		this.setVisible(true);
-
 	}
 
-	public void switchView() {
+	private void switchView() {
+		Container contentPane = this.getContentPane();
 		contentPane.removeAll();
-		if (view == VIEW_DAY) {
+		if (view.equals(VIEW_DAY)) {
 			view = VIEW_YEAR;
 			contentPane.add(workYearPanel);
 		} else {
@@ -74,7 +79,7 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		int answer = JOptionPane.showConfirmDialog(this, "Close Work Time Tracker?", "Close", JOptionPane.YES_NO_OPTION);
+		int answer = JOptionPane.showConfirmDialog(this, "Close " + TITLE + "?", "Close", JOptionPane.YES_NO_OPTION);
 		if (answer == JOptionPane.YES_OPTION) {
 			this.setVisible(false);
 			this.dispose();
@@ -103,7 +108,7 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 				}
 			};
 
-			trayIcon.setToolTip("Work Time Tracker");
+			trayIcon.setToolTip(TITLE);
 
 			final PopupMenu popupMenu = new PopupMenu();
 			MenuItem openItem = new MenuItem("Open");
@@ -159,14 +164,12 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 		} else if (keyChar == 't') {
 			Date date = DateTimeUtils.getToday();
 			controller.setDisplayDate(date);
-		} else {
-			controller.setActiveKey(keyChar);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		controller.setActiveKey((char) 0);
+		// nothing to do
 	}
 
 }

@@ -1,7 +1,12 @@
 package net.markwalder.tools.worktime.ui;
 
+import com.google.inject.Inject;
 import net.markwalder.tools.worktime.Controller;
-import net.markwalder.tools.worktime.db.*;
+import net.markwalder.tools.worktime.db.Database;
+import net.markwalder.tools.worktime.db.DatabaseUtils;
+import net.markwalder.tools.worktime.db.Statistics;
+import net.markwalder.tools.worktime.db.WorkDay;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import javax.swing.*;
@@ -23,9 +28,13 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 	private int slotHeight = 20;
 
 	private final Controller controller;
+	private final Database database;
 
-	public WorkDayPanel(Controller controller) {
+	@Inject
+	public WorkDayPanel(Controller controller, Database database) {
 		this.controller = controller;
+		this.database = database;
+
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 
@@ -136,8 +145,6 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		}
 
 		if (workDay == null) return;
-
-		Database database = controller.getDatabase();
 
 		Date date = workDay.getDate();
 		int runningCount = workDay.getRunningCount();
