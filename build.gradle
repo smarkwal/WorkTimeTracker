@@ -22,7 +22,9 @@ dependencies {
 import org.apache.tools.ant.filters.ReplaceTokens
 
 processResources {
-    filter(ReplaceTokens, tokens: ['project.version': version])
+    filesMatching('**/*.properties') {
+        filter(ReplaceTokens, tokens: ['project.version': version])
+    }
 }
 
 jar {
