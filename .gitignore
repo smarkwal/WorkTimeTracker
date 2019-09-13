@@ -5,3 +5,6 @@
 /out
 /temp
 *.iml
+.DS_Store
+*.dat
+
