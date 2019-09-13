@@ -10,16 +10,16 @@ import net.markwalder.tools.worktime.tracker.ActivityTracker;
 import net.markwalder.tools.worktime.tracker.mouse.DefaultMouseTrackerImpl;
 import net.markwalder.tools.worktime.tracker.mouse.MouseActivityTrackerImpl;
 import net.markwalder.tools.worktime.tracker.mouse.MouseTracker;
+import net.markwalder.tools.worktime.ui.MacOSX;
 import net.markwalder.tools.worktime.ui.Window;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 
 		// check if headless mode is enabled
 		boolean headless = GraphicsEnvironment.isHeadless();
@@ -31,6 +31,8 @@ public class Main {
 			} catch (Exception e) {
 				// ignore
 			}
+
+			MacOSX.setDockIcon();
 
 			// ask user if work time tracker should get started ...
 			int answer = JOptionPane.showConfirmDialog(null, "Start " + Window.TITLE + "?", "Start", JOptionPane.YES_NO_OPTION);
