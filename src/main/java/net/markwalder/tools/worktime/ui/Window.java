@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import net.markwalder.tools.worktime.Controller;
 import net.markwalder.tools.worktime.Version;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
+import org.apache.commons.lang3.SystemUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -94,18 +95,17 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 	@Override
 	public void windowIconified(WindowEvent e) {
 
-		if (SystemTray.isSupported()) {
+		// on Windows: minimize to system tray
+		if (SystemUtils.IS_OS_WINDOWS && SystemTray.isSupported()) {
 
 			URL resource = getClass().getResource("images/tray-icon.png");
 			Image image = Toolkit.getDefaultToolkit().getImage(resource);
 			final TrayIcon trayIcon = new TrayIcon(image);
 
-			ActionListener actionListener = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Window.this.setVisible(true);
-					Window.this.setExtendedState(Window.NORMAL);
-					SystemTray.getSystemTray().remove(trayIcon);
-				}
+			ActionListener actionListener = event -> {
+				Window.this.setVisible(true);
+				Window.this.setExtendedState(Window.NORMAL);
+				SystemTray.getSystemTray().remove(trayIcon);
 			};
 
 			trayIcon.setToolTip(TITLE);
