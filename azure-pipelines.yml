@@ -1,16 +1,16 @@
-# Gradle
-# Build your Java project and run tests with Gradle using a Gradle wrapper script.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
 - master
+- feature/*
+- bugfix/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
+# Build with Gradle
 - task: Gradle@2
+  displayName: 'Build and Test'
   inputs:
     workingDirectory: ''
     gradleWrapperFile: 'gradlew'
@@ -21,3 +21,17 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'build'
+
+# Copy files to artifact folder
+- task: CopyFiles@2
+  displayName: 'Copy Files'
+  inputs:
+    sourceFolder: '$(Build.SourcesDirectory)/build/libs'
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+# Publish artifact
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifact'
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'WorkTimeTracker'
