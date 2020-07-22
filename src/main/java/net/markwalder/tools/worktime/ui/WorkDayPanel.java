@@ -21,11 +21,11 @@ import java.util.Locale;
 
 public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionListener {
 
-	private int marginTop = 50;
-	private int marginLeft = 20;
+	private final int marginTop = 50;
+	private final int marginLeft = 20;
 
-	private int slotWidth = 20;
-	private int slotHeight = 20;
+	private final int slotWidth = 20;
+	private final int slotHeight = 20;
 
 	private final Controller controller;
 	private final Database database;
@@ -76,6 +76,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 			} else if (displayDate.equals(DateUtils.addDays(today, 1))) {
 				dateFormat = new SimpleDateFormat("'Tomorrow' | EEEE", Locale.US);
 			} else if (displayDate.equals(DateUtils.addDays(today, -1))) {
+				//noinspection SuspiciousDateFormat
 				dateFormat = new SimpleDateFormat("'Yesterday' | EEEE", Locale.US);
 			} else {
 				dateFormat = new SimpleDateFormat("dd.MM.yyyy | EEEE", Locale.US);
@@ -260,7 +261,6 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 			g2.drawString("Free :", x2, y);
 			drawString(g2, formatTime(freeCount), x3, y, RIGHT, BOTTOM);
 
-			y += 30;
 		}
 
 		y = 140;

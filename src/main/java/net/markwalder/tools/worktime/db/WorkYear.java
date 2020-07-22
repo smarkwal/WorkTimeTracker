@@ -5,10 +5,10 @@ import java.util.Date;
 
 public class WorkYear extends TimeTable {
 
-	private static int HOLIDAY = 0x01;
-	private static int COMPENSATION = 0x02;
-	private static int VACATION = 0x04;
-	private static int FREE = 0x08;
+	private static final int HOLIDAY = 0x01;
+	private static final int COMPENSATION = 0x02;
+	private static final int VACATION = 0x04;
+	private static final int FREE = 0x08;
 
 	private int holidayCount = 0;
 	private int compensationCount = 0;

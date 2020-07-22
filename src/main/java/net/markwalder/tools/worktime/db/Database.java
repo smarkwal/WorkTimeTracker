@@ -4,12 +4,12 @@ import java.util.Date;
 
 public interface Database {
 
-	public WorkDay getWorkDay(Date date);
+	WorkDay getWorkDay(Date date);
 
-	public void storeWorkDay(WorkDay workDay);
+	void storeWorkDay(WorkDay workDay);
 
-	public WorkYear getWorkYear(Date date);
+	WorkYear getWorkYear(Date date);
 
-	public void storeWorkYear(WorkYear workYear);
+	void storeWorkYear(WorkYear workYear);
 
 }

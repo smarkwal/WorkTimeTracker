@@ -5,10 +5,10 @@ import java.util.Date;
 
 public class WorkDay extends TimeTable {
 
-	private static int RUNNING = 0x01;
-	private static int ACTIVE = 0x02;
-	private static int WORKING = 0x04;
-	private static int FREE = 0x08;
+	private static final int RUNNING = 0x01;
+	private static final int ACTIVE = 0x02;
+	private static final int WORKING = 0x04;
+	private static final int FREE = 0x08;
 
 	private int runningCount = 0;
 	private int activeCount = 0;

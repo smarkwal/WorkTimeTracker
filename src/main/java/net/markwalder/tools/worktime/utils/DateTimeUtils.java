@@ -125,6 +125,7 @@ public class DateTimeUtils {
 	}
 
 	public static Date getDate(int year, int month, int day) {
+		//noinspection MagicConstant
 		return new Date(year - 1900, month - 1, day);
 	}
 

@@ -18,13 +18,13 @@ import java.util.Date;
 
 public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionListener {
 
-	private int marginTop = 50;
-	private int marginLeft = 20;
+	private final int marginTop = 50;
+	private final int marginLeft = 20;
 
-	private int slotWidth = 20;
-	private int slotHeight = 20;
+	private final int slotWidth = 20;
+	private final int slotHeight = 20;
 
-	private int padding = 20;
+	private final int padding = 20;
 
 	public static final int MODE_NONE = 0;
 	public static final int MODE_HOLIDAY = 1;

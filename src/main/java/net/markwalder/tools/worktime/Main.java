@@ -45,24 +45,19 @@ public class Main {
 		// GuiceDebug.enable();
 
 		// configure dependency injection
-		Module module = new Module() {
+		Module module = binder -> {
 
-			@Override
-			public void configure(Binder binder) {
+			// main controller
+			binder.bind(Controller.class).to(ControllerImpl.class).in(Singleton.class);
 
-				// main controller
-				binder.bind(Controller.class).to(ControllerImpl.class).in(Singleton.class);
+			// user activity tracking
+			binder.bind(ActivityListener.class).to(ControllerImpl.class).in(Singleton.class);
+			binder.bind(ActivityTracker.class).to(MouseActivityTrackerImpl.class).in(Singleton.class);
+			binder.bind(MouseTracker.class).to(DefaultMouseTrackerImpl.class).in(Singleton.class);
 
-				// user activity tracking
-				binder.bind(ActivityListener.class).to(ControllerImpl.class).in(Singleton.class);
-				binder.bind(ActivityTracker.class).to(MouseActivityTrackerImpl.class).in(Singleton.class);
-				binder.bind(MouseTracker.class).to(DefaultMouseTrackerImpl.class).in(Singleton.class);
-
-				// persistence
-				binder.bind(Database.class).to(DatabaseImpl.class).in(Singleton.class);
-				binder.bind(Store.class).to(FileStoreImpl.class).in(Singleton.class);
-
-			}
+			// persistence
+			binder.bind(Database.class).to(DatabaseImpl.class).in(Singleton.class);
+			binder.bind(Store.class).to(FileStoreImpl.class).in(Singleton.class);
 
 		};
 

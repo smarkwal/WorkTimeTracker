@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class FileStoreImpl implements Store {
 
-	private ReadWriteLock lock = new ReentrantReadWriteLock(true);
+	private final ReadWriteLock lock = new ReentrantReadWriteLock(true);
 
 	private final File directory;
 

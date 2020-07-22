@@ -69,6 +69,7 @@ public class MouseActivityTrackerImpl extends ActivityTracker implements Runnabl
 
 				// sleep
 				try {
+					//noinspection BusyWait
 					Thread.sleep(pollInterval);
 				} catch (InterruptedException e) {
 					// ignore

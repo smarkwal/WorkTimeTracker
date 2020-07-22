@@ -13,8 +13,8 @@ public class DatabaseImpl implements Database {
 
 	private final Store store;
 
-	private Map<Date, WorkDay> workDaysCache = new HashMap<Date, WorkDay>();
-	private Map<Date, WorkYear> workYearsCache = new HashMap<Date, WorkYear>();
+	private final Map<Date, WorkDay> workDaysCache = new HashMap<>();
+	private final Map<Date, WorkYear> workYearsCache = new HashMap<>();
 
 	@Inject
 	public DatabaseImpl(Store store) {
