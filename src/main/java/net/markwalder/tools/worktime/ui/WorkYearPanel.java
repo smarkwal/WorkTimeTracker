@@ -47,7 +47,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 
-		Dimension size = new Dimension(800, 800);
+		Dimension size = new Dimension(655, 760);
 		setMinimumSize(size);
 		setMaximumSize(size);
 		setPreferredSize(size);
@@ -78,12 +78,12 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 		Date displayDate = controller.getDisplayDate();
 		if (displayDate != null) {
-			g2.setFont(new Font("Arial", Font.BOLD, 16));
+			g2.setFont(new Font("DejaVu", Font.BOLD, 16));
 			g2.setColor(Color.BLACK);
 			g2.drawString("Year " + year, 0, -24);
 		}
 
-		Font font = new Font("Arial", Font.PLAIN, 11);
+		Font font = new Font("DejaVu", Font.PLAIN, 11);
 		g2.setFont(font);
 
 		// draw legend
@@ -181,25 +181,10 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		WorkYear workYear = database.getWorkYear(date);
 		if (workYear == null) return;
 
-		int weekendTotal = 0;
-		int holidayTotal = 0;
-		int compensationTotal = 0;
-		int vacationTotal = 0;
-		int freeTotal = 0;
-		int workTotal = 0;
-
-		int xs = 31 * slotWidth + 40;
-
 		int slot = -1;
 		for (int month = 1; month <= 12; month++) {
 			int days = DateTimeUtils.getDaysInMonth(year, month);
 			int y = (month - 1) * (slotHeight * 2 + padding);
-
-			int weekendCount = 0;
-			int holidayCount = 0;
-			int compensationCount = 0;
-			int vacationCount = 0;
-			int freeCount = 0;
 
 			for (int day = 1; day <= days; day++) {
 
@@ -211,7 +196,6 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 					if (weekend) {
 						g2.setColor(COLOR_WEEKEND);
 						g2.fillRect((day - 1) * slotWidth + 1, y + h * slotHeight + 1, slotWidth - 1, slotHeight - 1);
-						weekendCount++;
 						continue;
 					}
 
@@ -223,16 +207,12 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 					Color color = null;
 					if (holiday) {
 						color = COLOR_HOLIDAY;
-						holidayCount++;
 					} else if (compensation) {
 						color = COLOR_COMPENSATION;
-						compensationCount++;
 					} else if (vacation) {
 						color = COLOR_VACATION;
-						vacationCount++;
 					} else if (free) {
 						color = COLOR_FREE;
-						freeCount++;
 					}
 					if (color != null) {
 						g2.setColor(color);
@@ -254,40 +234,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 			}
 
-			int daysInMonth = DateTimeUtils.getDaysInMonth(year, month);
-			int workCount = daysInMonth * 2 - weekendCount - holidayCount - compensationCount;
-
-			weekendTotal += weekendCount;
-			holidayTotal += holidayCount;
-			compensationTotal += compensationCount;
-			vacationTotal += vacationCount;
-			freeTotal += freeCount;
-			workTotal += workCount;
-
-			// statistics
-			printStatistics(xs, y + slotHeight - 2, workCount, vacationCount, freeCount, g2);
 		}
-		printStatistics(xs, 725, workTotal, vacationTotal, freeTotal, g2);
-
-		/*
-		int yearTotal = DateTimeUtils.getDaysInYear(year) * 2;
-
-		g2.setColor(Color.BLACK);
-		NumberFormat numberFormat = new DecimalFormat("0.0");
-		drawString(g2, String.valueOf(yearTotal / 2), 0, 725, LEFT, MIDDLE);
-		drawString(g2, String.valueOf(weekendTotal / 2), 100, 725, LEFT, MIDDLE);
-
-		int weekdayTotal = yearTotal - weekendTotal;
-		drawString(g2, String.valueOf(weekdayTotal / 2), 200, 725, LEFT, MIDDLE);
-
-		drawString(g2, numberFormat.format(holidayTotal * 0.5), 300, 725, LEFT, MIDDLE);
-		drawString(g2, numberFormat.format(compensationTotal * 0.5), 400, 725, LEFT, MIDDLE);
-
-		int workingDays = weekdayTotal - holidayTotal - compensationTotal;
-		drawString(g2, numberFormat.format(workingDays * 0.5), 500, 725, LEFT, MIDDLE);
-
-		drawString(g2, numberFormat.format(vacationTotal * 0.5), 600, 725, LEFT, MIDDLE);
-		*/
 
 		// draw marker for today
 
@@ -306,21 +253,6 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 			g2.setStroke(new BasicStroke(2));
 			g2.drawRect(x, y, slotWidth, slotHeight);
 		}
-
-	}
-
-	private void printStatistics(int x, int y, int workCount, int vacationCount, int freeCount, Graphics2D g2) {
-		g2.setColor(Color.BLACK);
-
-		double rate = ((double) workCount - freeCount) * 100 / workCount;
-
-		NumberFormat numberFormat = new DecimalFormat("0.0");
-		g2.setColor(vacationCount > 0 ? Color.BLACK : Color.GRAY);
-		drawString(g2, numberFormat.format(vacationCount * 0.5), x, y, RIGHT, MIDDLE);
-		g2.setColor(freeCount > 0 ? Color.BLACK : Color.GRAY);
-		drawString(g2, numberFormat.format(freeCount * 0.5), x + 30, y, RIGHT, MIDDLE);
-		g2.setColor(rate < 100 ? Color.BLACK : Color.GRAY);
-		drawString(g2, numberFormat.format(rate) + " %", x + 80, y, RIGHT, MIDDLE);
 
 	}
 

@@ -42,8 +42,9 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 	private static final BasicStroke LINE_1 = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	private static final BasicStroke LINE_5 = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
-	private static final Font FONT_16 = new Font("Arial", Font.BOLD, 16);
-	private static final Font FONT_11 = new Font("Arial", Font.PLAIN, 11);
+	private static final Font FONT_TITLE = new Font("DejaVu", Font.BOLD, 16);
+	private static final Font FONT_BOLD = new Font("DejaVu", Font.BOLD, 12);
+	private static final Font FONT_PLAIN = new Font("DejaVu", Font.PLAIN, 11);
 
 	private static final Locale LOCALE = Locale.US;
 
@@ -83,7 +84,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		drawTitle(0, -24, today, g2);
 
-		g2.setFont(FONT_11);
+		g2.setFont(FONT_PLAIN);
 
 		drawGrid(hours, g2);
 		drawBorders(hours, g2);
@@ -100,24 +101,15 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		// statistics
 
-		int runningCount = workDay.getRunningCount();
-		int activeCount = workDay.getActiveCount();
 		int workingCount = workDay.getWorkingCount();
 		int freeCount = workDay.getFreeCount();
 
 		int x = 12 * SLOT_WIDTH + 20;
 
-		drawTime(x, 0, RUNNING, true, "Running", runningCount, g2);
-		drawTime(x, 30, ACTIVE, true, "Active", activeCount, g2);
-		drawTime(x, 60, DARK_GRAY, false, "Working", workingCount, g2);
-		if (freeCount > 0) {
-			drawTime(x, 90, GRAY, false, "Free", freeCount, g2);
-		}
-
-		drawStatsForDay(x, 140, nowSlot, workingCount, freeCount, date, today, g2);
-		drawStatsForWeek(x, 180, nowSlot, date, today, g2);
-		drawStatsForMonth(x, 220, nowSlot, date, today, g2);
-		drawStatsForYear(x, 260, nowSlot, date, today, g2);
+		drawStatsForDay(x, 5, nowSlot, workingCount, freeCount, date, today, g2);
+		drawStatsForWeek(x, 105, nowSlot, date, today, g2);
+		drawStatsForMonth(x, 205, nowSlot, date, today, g2);
+		drawStatsForYear(x, 305, nowSlot, date, today, g2);
 	}
 
 	private void drawTitle(int x, int y, Date today, Graphics2D g2) {
@@ -125,7 +117,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		Date displayDate = controller.getDisplayDate();
 		if (displayDate != null) {
 
-			g2.setFont(FONT_16);
+			g2.setFont(FONT_TITLE);
 			g2.setColor(BLACK);
 
 			SimpleDateFormat dateFormat;
@@ -261,29 +253,6 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		}
 	}
 
-	private void drawTime(int x, int y, Color color, boolean fill, String label, int count, Graphics2D g2) {
-
-		g2.setColor(WHITE);
-		g2.fillRect(x, y, SLOT_WIDTH, SLOT_HEIGHT);
-
-		g2.setColor(BLACK);
-		g2.setStroke(LINE_1);
-		g2.drawRect(x, y, SLOT_WIDTH, SLOT_HEIGHT);
-
-		g2.setColor(color);
-		if (fill) {
-			g2.fillRect(x + 2, y + 2, SLOT_WIDTH - 3, SLOT_HEIGHT - 3);
-		} else {
-			g2.setStroke(LINE_5);
-			g2.drawLine(x + 5, y + 5, x + SLOT_WIDTH - 5, y + SLOT_HEIGHT - 5);
-			g2.drawLine(x + 5, y + SLOT_HEIGHT - 5, x + SLOT_WIDTH - 5, y + 5);
-		}
-
-		g2.setColor(BLACK);
-		g2.drawString(label + " :", x + 30, y + 15);
-		drawString(g2, formatTime(count), x + 120, y + 15, RIGHT, BOTTOM);
-	}
-
 	private void drawStatsForDay(int x, int y, int nowSlot, int workingCount, int freeCount, Date date, Date today, Graphics2D g2) {
 
 		drawStats(x, y, nowSlot, date, today, g2, date, workingCount, "Day", DatabaseUtils.getWorkTimeSlots(database, date), freeCount);
@@ -322,18 +291,36 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		drawStats(x, y, nowSlot, date, today, g2, startDate, workingCount, "Year", statistics.getWorkTimeSlots(), statistics.getFreeCount());
 	}
 
-	private void drawStats(int x, int y, int nowSlot, Date date, Date today, Graphics2D g2, Date startDate, int workingCount, String label, int workTimeSlots2, int freeCount) {
+	private void drawStats(int x, int y, int nowSlot, Date date, Date today, Graphics2D g2, Date startDate, int workingCount, String label, int workTimeSlots, int freeCount) {
 
-		g2.setStroke(LINE_1);
-		g2.setColor(GRAY);
-		g2.drawLine(x, y, x + 120, y);
+		g2.setColor(new Color(245, 245, 245));
+		g2.fillRect(x - 5, y - 5, 130, 86);
+
+		g2.setFont(FONT_BOLD);
 		g2.setColor(BLACK);
-		drawString(g2, label, x, y + 15);
+		drawString(g2, label, x, y + 12);
 
 		if (workingCount > 0 || startDate.compareTo(today) <= 0) {
 
-			int workTimeSlots = workTimeSlots2 - freeCount;
+			workTimeSlots = workTimeSlots - freeCount;
 
+			g2.setColor(WHITE);
+			g2.fillRect(x + 60, y + 20, 60, 16);
+			g2.fillRect(x + 60, y + 40, 60, 16);
+			g2.fillRect(x + 60, y + 60, 60, 16);
+
+			g2.setFont(FONT_PLAIN);
+
+			g2.setColor(DARK_GRAY);
+			drawString(g2, "Total", x + 3, y + 33, LEFT, BOTTOM);
+			drawString(g2, formatTime(workTimeSlots), x + 117, y + 33, RIGHT, BOTTOM);
+
+			g2.setColor(DARK_GRAY);
+			drawString(g2, "Worked", x + 3, y + 53, LEFT, BOTTOM);
+			drawString(g2, formatTime(workingCount), x + 117, y + 53, RIGHT, BOTTOM);
+
+			g2.setColor(DARK_GRAY);
+			drawString(g2, "Flexi", x + 3, y + 73, LEFT, BOTTOM);
 			int remainingCount = workTimeSlots - workingCount;
 			if (remainingCount > 0) {
 				g2.setColor(RED);
@@ -342,15 +329,14 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 			} else {
 				g2.setColor(GRAY);
 			}
-			drawString(g2, formatTimeDiff(-remainingCount), x + 120, y + 15, RIGHT, BOTTOM);
+			drawString(g2, formatTimeDiff(-remainingCount), x + 117, y + 73, RIGHT, BOTTOM);
 
 			if (date.equals(today)) {
 				if (remainingCount > 0) {
 					int endSlot = nowSlot + remainingCount;
 					endSlot = endSlot % (24 * 12);
-					g2.setColor(GRAY);
-					g2.drawString("End :", x + 50, y + 30);
-					drawString(g2, formatTime(endSlot), x + 120, y + 30, RIGHT, BOTTOM);
+					g2.setColor(DARK_GRAY);
+					drawString(g2, "End @ " + formatTime(endSlot), x + 117, y + 12, RIGHT, BOTTOM);
 				}
 			}
 
