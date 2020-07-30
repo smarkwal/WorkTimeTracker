@@ -1,9 +1,8 @@
 package net.markwalder.tools.worktime.db;
 
+import java.util.Date;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.apache.commons.lang3.time.DateUtils;
-
-import java.util.Date;
 
 public class Statistics {
 
@@ -38,32 +37,20 @@ public class Statistics {
 
 	private final long now = System.currentTimeMillis();
 
-	private int runningCount = 0;
-	private int activeCount = 0;
 	private int workingCount = 0;
 	private int freeCount = 0;
-	private int workTimeSlots = 0;
+	private int workTime = 0;
 
 	private Statistics() {
 	}
 
 	private void update(Database database, WorkDay workDay) {
-		runningCount += workDay.getRunningCount();
-		activeCount += workDay.getActiveCount();
 		workingCount += workDay.getWorkingCount();
 		freeCount += workDay.getFreeCount();
 		Date date = workDay.getDate();
 		if (date.getTime() <= now) {
-			workTimeSlots += DatabaseUtils.getWorkTimeSlots(database, date);
+			workTime += DatabaseUtils.getWorkTime(database, date);
 		}
-	}
-
-	public int getRunningCount() {
-		return runningCount;
-	}
-
-	public int getActiveCount() {
-		return activeCount;
 	}
 
 	public int getWorkingCount() {
@@ -74,8 +61,11 @@ public class Statistics {
 		return freeCount;
 	}
 
-	public int getWorkTimeSlots() {
-		return workTimeSlots;
+	/**
+	 * Get work time in minutes.
+	 */
+	public int getWorkTime() {
+		return workTime;
 	}
 
 }

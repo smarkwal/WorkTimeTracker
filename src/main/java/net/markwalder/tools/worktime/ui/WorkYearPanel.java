@@ -1,20 +1,17 @@
 package net.markwalder.tools.worktime.ui;
 
 import com.google.inject.Inject;
-import net.markwalder.tools.worktime.Controller;
-import net.markwalder.tools.worktime.db.Database;
-import net.markwalder.tools.worktime.db.WorkYear;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Date;
+import javax.swing.*;
+import net.markwalder.tools.worktime.Controller;
+import net.markwalder.tools.worktime.db.Database;
+import net.markwalder.tools.worktime.db.WorkYear;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -28,7 +25,6 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 	public static final int MODE_NONE = 0;
 	public static final int MODE_HOLIDAY = 1;
-	public static final int MODE_COMPENSATION = 2;
 	public static final int MODE_VACATION = 3;
 	public static final int MODE_FREE = 4;
 
@@ -93,16 +89,14 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		g2.fillRect(180, -40, 16, 16);
 		g2.fillRect(260, -40, 16, 16);
 		g2.fillRect(320, -40, 16, 16);
-		g2.fillRect(420, -40, 16, 16);
-		g2.fillRect(520, -40, 16, 16);
+		g2.fillRect(430, -40, 16, 16);
 
 		g2.setColor(Color.GRAY);
 		g2.drawRect(100, -40, 16, 16);
 		g2.drawRect(180, -40, 16, 16);
 		g2.drawRect(260, -40, 16, 16);
 		g2.drawRect(320, -40, 16, 16);
-		g2.drawRect(420, -40, 16, 16);
-		g2.drawRect(520, -40, 16, 16);
+		g2.drawRect(430, -40, 16, 16);
 
 		g2.setColor(COLOR_WEEKEND);
 		g2.fillRect(181, -39, 15, 15);
@@ -110,18 +104,15 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		g2.fillRect(262, -38, 13, 13);
 		g2.setColor(COLOR_HOLIDAY);
 		g2.fillRect(322, -38, 13, 13);
-		g2.setColor(COLOR_COMPENSATION);
-		g2.fillRect(422, -38, 13, 13);
 		g2.setColor(COLOR_VACATION);
-		g2.fillRect(522, -38, 13, 13);
+		g2.fillRect(432, -38, 13, 13);
 
 		g2.setColor(Color.BLACK);
 		drawString(g2, "Workday", 120, -34, LEFT, MIDDLE);
 		drawString(g2, "Weekend", 200, -34, LEFT, MIDDLE);
 		drawString(g2, "Free", 280, -34, LEFT, MIDDLE);
 		drawString(g2, "Public Holiday", 340, -34, LEFT, MIDDLE);
-		drawString(g2, "Compensation", 440, -34, LEFT, MIDDLE);
-		drawString(g2, "Private Vacation", 540, -34, LEFT, MIDDLE);
+		drawString(g2, "Private Vacation", 450, -34, LEFT, MIDDLE);
 
 		Stroke defaultStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke(2));
@@ -129,10 +120,8 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 			g2.drawRect(260, -40, 16, 16);
 		} else if (mode == MODE_HOLIDAY) {
 			g2.drawRect(320, -40, 16, 16);
-		} else if (mode == MODE_COMPENSATION) {
-			g2.drawRect(420, -40, 16, 16);
 		} else if (mode == MODE_VACATION) {
-			g2.drawRect(520, -40, 16, 16);
+			g2.drawRect(430, -40, 16, 16);
 		}
 		g2.setStroke(defaultStroke);
 
@@ -221,7 +210,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 					if (mode != MODE_NONE && slot == mouseSlot) {
 						boolean none = workYear.getValue(slot) == 0;
-						boolean enabled = none || (mode == MODE_HOLIDAY && holiday || mode == MODE_COMPENSATION && compensation || mode == MODE_VACATION && vacation || mode == MODE_FREE && free);
+						boolean enabled = none || (mode == MODE_HOLIDAY && holiday || mode == MODE_VACATION && vacation || mode == MODE_FREE && free);
 						if (enabled) {
 							g2.setColor(Color.BLACK);
 							g2.setStroke(new BasicStroke(2));
@@ -278,9 +267,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 				mode = MODE_FREE;
 			} else if (x > 320 && x < 410) {
 				mode = MODE_HOLIDAY;
-			} else if (x > 420 && x < 510) {
-				mode = MODE_COMPENSATION;
-			} else if (x > 520 && x < 620) {
+			} else if (x > 430 && x < 530) {
 				mode = MODE_VACATION;
 			}
 

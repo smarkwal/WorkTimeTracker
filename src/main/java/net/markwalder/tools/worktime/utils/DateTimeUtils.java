@@ -1,9 +1,8 @@
 package net.markwalder.tools.worktime.utils;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import java.util.Calendar;
 import java.util.Date;
+import org.apache.commons.lang3.time.DateUtils;
 
 public class DateTimeUtils {
 
@@ -127,6 +126,16 @@ public class DateTimeUtils {
 	public static Date getDate(int year, int month, int day) {
 		//noinspection MagicConstant
 		return new Date(year - 1900, month - 1, day);
+	}
+
+	public static Date addMinutes(Date date, int minutes) {
+		return new Date(date.getTime() + minutes * 60 * 1000);
+	}
+
+	public static boolean isToday(Date date) {
+		int today = getDayOfYear(getToday());
+		int day = getDayOfYear(date);
+		return day == today;
 	}
 
 }

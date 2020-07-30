@@ -1,18 +1,20 @@
 package net.markwalder.tools.worktime.db;
 
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
-
 import java.util.Date;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class DatabaseUtils {
 
-	public static int getWorkTimeSlots(Database database, Date date) {
+	/**
+	 * Get work time in minutes.
+	 */
+	public static int getWorkTime(Database database, Date date) {
 
 		if (DateTimeUtils.isWeekend(date)) {
 			return 0;
 		}
 
-		int slots = 0;
+		int time = 0;
 
 		WorkYear workYear = database.getWorkYear(date);
 		int dayOfYear = DateTimeUtils.getDayOfYear(date);
@@ -21,20 +23,16 @@ public class DatabaseUtils {
 		// morning
 		byte value = workYear.getValue(slot);
 		if (value == 0) {
-			slots += 50; // 4:10
+			time += 252; // 4.2 hours * 60 minutes
 		}
 
 		// afternoon
 		value = workYear.getValue(slot + 1);
 		if (value == 0) {
-			if (DateTimeUtils.isFriday(date)) {
-				slots += 50; // 4:10
-			} else {
-				slots += 51; // 4:15
-			}
+			time += 252; // 4.2 hours * 60 minutes
 		}
 
-		return slots;
+		return time;
 	}
 
 	public static int slot(long time) {

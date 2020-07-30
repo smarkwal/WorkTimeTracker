@@ -184,15 +184,6 @@ public class ControllerImpl implements Controller, ActivityListener {
 			} else {
 				displayWorkYear.setHoliday(slot, true);
 			}
-		} else if (mode == WorkYearPanel.MODE_COMPENSATION) {
-			if (value > 0) {
-				boolean compensation = displayWorkYear.isCompensation(slot);
-				if (compensation) {
-					displayWorkYear.setCompensation(slot, false);
-				}
-			} else {
-				displayWorkYear.setCompensation(slot, true);
-			}
 		} else if (mode == WorkYearPanel.MODE_VACATION) {
 			if (value > 0) {
 				boolean vacation = displayWorkYear.isVacation(slot);

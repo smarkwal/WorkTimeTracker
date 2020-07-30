@@ -106,10 +106,10 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		int x = 12 * SLOT_WIDTH + 20;
 
-		drawStatsForDay(x, 5, nowSlot, workingCount, freeCount, date, today, g2);
-		drawStatsForWeek(x, 105, nowSlot, date, today, g2);
-		drawStatsForMonth(x, 205, nowSlot, date, today, g2);
-		drawStatsForYear(x, 305, nowSlot, date, today, g2);
+		drawStatsForDay(x, 5, workingCount, freeCount, date, today, g2);
+		drawStatsForWeek(x, 105, date, today, g2);
+		drawStatsForMonth(x, 205, date, today, g2);
+		drawStatsForYear(x, 305, date, today, g2);
 	}
 
 	private void drawTitle(int x, int y, Date today, Graphics2D g2) {
@@ -253,12 +253,12 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		}
 	}
 
-	private void drawStatsForDay(int x, int y, int nowSlot, int workingCount, int freeCount, Date date, Date today, Graphics2D g2) {
+	private void drawStatsForDay(int x, int y, int workingCount, int freeCount, Date date, Date today, Graphics2D g2) {
 
-		drawStats(x, y, nowSlot, date, today, g2, date, workingCount, "Day", DatabaseUtils.getWorkTimeSlots(database, date), freeCount);
+		drawStats(x, y, date, today, g2, date, workingCount, "Day", DatabaseUtils.getWorkTime(database, date), freeCount);
 	}
 
-	private void drawStatsForWeek(int x, int y, int nowSlot, Date date, Date today, Graphics2D g2) {
+	private void drawStatsForWeek(int x, int y, Date date, Date today, Graphics2D g2) {
 
 		// create statistics for the current week
 		Date startDate = DateTimeUtils.getStartOfWeek(date);
@@ -266,10 +266,10 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		Statistics statistics = Statistics.getStatistics(database, startDate, endDate);
 		int workingCount = statistics.getWorkingCount();
 
-		drawStats(x, y, nowSlot, date, today, g2, startDate, workingCount, "Week", statistics.getWorkTimeSlots(), statistics.getFreeCount());
+		drawStats(x, y, date, today, g2, startDate, workingCount, "Week", statistics.getWorkTime(), statistics.getFreeCount());
 	}
 
-	private void drawStatsForMonth(int x, int y, int nowSlot, Date date, Date today, Graphics2D g2) {
+	private void drawStatsForMonth(int x, int y, Date date, Date today, Graphics2D g2) {
 
 		// create statistics for the current month
 		Date startDate = DateTimeUtils.getStartOfMonth(date);
@@ -277,10 +277,10 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		Statistics statistics = Statistics.getStatistics(database, startDate, endDate);
 		int workingCount = statistics.getWorkingCount();
 
-		drawStats(x, y, nowSlot, date, today, g2, startDate, workingCount, "Month", statistics.getWorkTimeSlots(), statistics.getFreeCount());
+		drawStats(x, y, date, today, g2, startDate, workingCount, "Month", statistics.getWorkTime(), statistics.getFreeCount());
 	}
 
-	private void drawStatsForYear(int x, int y, int nowSlot, Date date, Date today, Graphics2D g2) {
+	private void drawStatsForYear(int x, int y, Date date, Date today, Graphics2D g2) {
 
 		// create statistics for the current year
 		Date startDate = DateTimeUtils.getStartOfYear(date);
@@ -288,10 +288,10 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		Statistics statistics = Statistics.getStatistics(database, startDate, endDate);
 		int workingCount = statistics.getWorkingCount();
 
-		drawStats(x, y, nowSlot, date, today, g2, startDate, workingCount, "Year", statistics.getWorkTimeSlots(), statistics.getFreeCount());
+		drawStats(x, y, date, today, g2, startDate, workingCount, "Year", statistics.getWorkTime(), statistics.getFreeCount());
 	}
 
-	private void drawStats(int x, int y, int nowSlot, Date date, Date today, Graphics2D g2, Date startDate, int workingCount, String label, int workTimeSlots, int freeCount) {
+	private void drawStats(int x, int y, Date date, Date today, Graphics2D g2, Date startDate, int workingCount, String label, int workTime, int freeCount) {
 
 		g2.setColor(new Color(245, 245, 245));
 		g2.fillRect(x - 5, y - 5, 130, 86);
@@ -302,7 +302,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		if (workingCount > 0 || startDate.compareTo(today) <= 0) {
 
-			workTimeSlots = workTimeSlots - freeCount;
+			workTime = workTime - freeCount * 5;
 
 			g2.setColor(WHITE);
 			g2.fillRect(x + 60, y + 20, 60, 16);
@@ -313,30 +313,31 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 			g2.setColor(DARK_GRAY);
 			drawString(g2, "Total", x + 3, y + 33, LEFT, BOTTOM);
-			drawString(g2, formatTime(workTimeSlots), x + 117, y + 33, RIGHT, BOTTOM);
+			drawString(g2, formatTime(workTime), x + 117, y + 33, RIGHT, BOTTOM);
 
 			g2.setColor(DARK_GRAY);
 			drawString(g2, "Worked", x + 3, y + 53, LEFT, BOTTOM);
-			drawString(g2, formatTime(workingCount), x + 117, y + 53, RIGHT, BOTTOM);
+			drawString(g2, formatSlots(workingCount), x + 117, y + 53, RIGHT, BOTTOM);
 
 			g2.setColor(DARK_GRAY);
 			drawString(g2, "Flexi", x + 3, y + 73, LEFT, BOTTOM);
-			int remainingCount = workTimeSlots - workingCount;
-			if (remainingCount > 0) {
+			int remainingTime = workTime - workingCount * 5;
+			if (remainingTime > 0) {
 				g2.setColor(RED);
-			} else if (remainingCount < 0) {
+			} else if (remainingTime < 0) {
 				g2.setColor(REMAINING);
 			} else {
 				g2.setColor(GRAY);
 			}
-			drawString(g2, formatTimeDiff(-remainingCount), x + 117, y + 73, RIGHT, BOTTOM);
+			drawString(g2, formatTimeDiff(-remainingTime), x + 117, y + 73, RIGHT, BOTTOM);
 
 			if (date.equals(today)) {
-				if (remainingCount > 0) {
-					int endSlot = nowSlot + remainingCount;
-					endSlot = endSlot % (24 * 12);
+				if (remainingTime > 0 && remainingTime < 24 * 60) {
+					Date now = DateTimeUtils.getNow();
+					Date end = DateTimeUtils.addMinutes(now, remainingTime);
 					g2.setColor(DARK_GRAY);
-					drawString(g2, "End @ " + formatTime(endSlot), x + 117, y + 12, RIGHT, BOTTOM);
+					SimpleDateFormat format = new SimpleDateFormat("H:mm");
+					drawString(g2, "End @ " + format.format(end), x + 117, y + 12, RIGHT, BOTTOM);
 				}
 			}
 
@@ -410,19 +411,23 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		return h * 12 + s;
 	}
 
-	private String formatTime(int slots) {
-		int hours = slots / 12;
-		int minutes = (slots % 12) * 5;
+	private String formatSlots(int slots) {
+		return formatTime(slots * 5);
+	}
+
+	private String formatTime(int time) {
+		int hours = time / 60;
+		int minutes = time % 60;
 		return String.format("%d:%02d", hours, minutes);
 	}
 
-	private String formatTimeDiff(int slots) {
-		int hours = Math.abs(slots) / 12;
-		int minutes = (Math.abs(slots) % 12) * 5;
+	private String formatTimeDiff(int time) {
+		int hours = Math.abs(time) / 60;
+		int minutes = Math.abs(time) % 60;
 		String text = String.format("%d:%02d", hours, minutes);
-		if (slots > 0) {
+		if (time > 0) {
 			return "+ " + text;
-		} else if (slots < 0) {
+		} else if (time < 0) {
 			return "- " + text;
 		} else {
 			return "\u00B1 " + text;
