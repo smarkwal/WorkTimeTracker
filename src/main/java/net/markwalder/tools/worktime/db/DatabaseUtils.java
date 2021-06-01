@@ -32,6 +32,11 @@ public class DatabaseUtils {
 			time += 252; // 4.2 hours * 60 minutes
 		}
 
+		// from 2021-06-01 on, count only 80% for every day
+		if (date.getTime() >= 1622498400000L) {
+			time = time * 4 / 5; // 80%
+		}
+
 		return time;
 	}
 
