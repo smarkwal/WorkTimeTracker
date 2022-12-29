@@ -62,6 +62,10 @@ idea {
         vcs = "Git"
     }
 
+    module {
+        excludeDirs = setOf(file(".jarhc"))
+    }
+
 }
 
 licenseReport {
