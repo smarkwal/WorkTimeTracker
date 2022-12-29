@@ -17,10 +17,23 @@
 plugins {
     java
     idea
+    jacoco
 
     // Gradle Versions Plugin
     // https://github.com/ben-manes/gradle-versions-plugin
     id("com.github.ben-manes.versions") version "0.44.0"
+
+    // create report with all open-source licenses
+    id("com.github.jk1.dependency-license-report") version "2.1"
+
+    // run Sonar analysis
+    id("org.sonarqube") version "3.5.0.2730"
+
+    // get current Git branch name
+    id("org.ajoberstar.grgit") version "5.0.0"
+
+    // JarHC Gradle plugin
+    id("org.jarhc") version "1.0.1"
 }
 
 repositories {
@@ -51,6 +64,43 @@ idea {
 
 }
 
+licenseReport {
+    // create CSV report with all open-source licenses
+    renderers = arrayOf(
+        com.github.jk1.license.render.CsvReportRenderer("licenses.csv")
+    )
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+sonar {
+    // documentation: https://docs.sonarqube.org/latest/analyzing-source-code/scanners/sonarscanner-for-gradle/
+
+    properties {
+
+        // connection to SonarCloud
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.organization", "smarkwal")
+        property("sonar.projectKey", "smarkwal_WorkTimeTracker")
+
+        // Git branch
+        property("sonar.branch.name", getGitBranchName())
+
+        // paths to test sources and test classes
+        property("sonar.tests", "${projectDir}/src/test/java")
+        property("sonar.java.test.binaries", "${buildDir}/classes/java/test")
+
+        // include test results
+        property("sonar.junit.reportPaths", "${buildDir}/test-results/test")
+
+        // include test coverage results
+        property("sonar.java.coveragePlugin", "jacoco")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+    }
+}
+
 tasks {
 
     processResources {
@@ -64,17 +114,87 @@ tasks {
         }
     }
 
+    test {
+        // no special configuration
+    }
+
     jar {
+
+        // make sure that license report has been generated
+        dependsOn("generateLicenseReport")
 
         // set Main-Class in MANIFEST.MF
         manifest {
             attributes["Main-Class"] = "net.markwalder.tools.worktime.Main"
         }
 
+        // add LICENSE to JAR file
+        from("../LICENSE")
+
         // include all compile time dependencies in JAR file
         from(configurations.compileClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
-        exclude("META-INF/**")
+
+        // include license report in JAR file
+        from("${buildDir}/reports/dependency-license") {
+            into("META-INF/licenses")
+        }
+
+        exclude(
+
+            // exclude module-info files
+            "**/module-info.class",
+
+            // exclude license files
+            "META-INF/LICENSE", "META-INF/LICENSE.txt",
+            "META-INF/NOTICE", "META-INF/NOTICE.txt",
+            "META-INF/DEPENDENCIES",
+
+            // exclude signature files
+            "META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA"
+        )
 
     }
 
+    jacocoTestReport {
+
+        // run all tests first
+        dependsOn(test)
+
+        reports {
+
+            // generate XML report (required for Sonar)
+            xml.required.set(true)
+
+            // generate HTML report
+            html.required.set(true)
+        }
+    }
+
+    jarhcReport {
+        dependsOn(jar)
+        classpath.setFrom(
+            //jar.get().archiveFile,
+            configurations.runtimeClasspath
+        )
+        reportFiles.setFrom(
+            file("${rootDir}/docs/jarhc-report.html"),
+            file("${rootDir}/docs/jarhc-report.txt")
+        )
+    }
+
+    build {
+        dependsOn(jarhcReport)
+    }
+
+}
+
+tasks.sonar {
+    // run all tests and generate JaCoCo XML report
+    dependsOn(tasks.test, tasks.jacocoTestReport)
+}
+
+// helper functions ------------------------------------------------------------
+
+fun getGitBranchName(): String {
+    return grgit.branch.current().name
 }
