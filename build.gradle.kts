@@ -30,7 +30,7 @@ repositories {
 dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("commons-io:commons-io:2.11.0")
-    implementation("com.google.inject:guice:4.2.3") // TODO: upgrade to 5.1.0?
+    implementation("com.google.inject:guice:5.1.0") // TODO: upgrade to 5.1.0?
     testImplementation("junit:junit:4.13.2")
 }
 
