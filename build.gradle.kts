@@ -107,6 +107,11 @@ sonar {
 
 tasks {
 
+    compileJava {
+        // report usage of deprecated APIs
+        options.compilerArgs.add("-Xlint:deprecation")
+    }
+
     processResources {
 
         // replace placeholders in resources
