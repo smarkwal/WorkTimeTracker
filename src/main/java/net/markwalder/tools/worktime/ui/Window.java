@@ -18,7 +18,6 @@ package net.markwalder.tools.worktime.ui;
 
 import com.google.inject.Inject;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -32,7 +31,7 @@ import net.markwalder.tools.worktime.Version;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.apache.commons.lang3.SystemUtils;
 
-public class Window extends JFrame implements ActionListener, WindowListener, KeyListener {
+public class Window extends JFrame implements WindowListener, KeyListener {
 
 	private final Controller controller;
 
@@ -85,17 +84,11 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 	}
 
 	//----------------------------------------------------------------------------------------
-	// interface ActionListener
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	}
-
-	//----------------------------------------------------------------------------------------
 	// interface WindowListener
 
 	@Override
 	public void windowOpened(WindowEvent e) {
+		// nothing to do
 	}
 
 	@Override
@@ -152,14 +145,17 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
+		// nothing to do
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
+		// nothing to do
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
+		// nothing to do
 	}
 
 	//----------------------------------------------------------------------------------------
@@ -167,6 +163,7 @@ public class Window extends JFrame implements ActionListener, WindowListener, Ke
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		// nothing to do
 	}
 
 	@Override
