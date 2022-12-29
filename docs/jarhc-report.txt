@@ -9,18 +9,17 @@ JAR file                                                       | Size    | Class
 ---------------------------------------------------------------+---------+---------+-----------+------------------------------------------+----------------------------------------------------------------------------
 commons-lang3-3.12.0.jar                                       | 574 KB  | 345     | 0         | c6842c86792ff03b9f1d1fe2aab8dc23aa6c6f0e | org.apache.commons:commons-lang3:3.12.0
 commons-io-2.11.0.jar                                          | 319 KB  | 201     | 0         | a2503f302b11ebde7ebc3df41daebe0e4eea3689 | commons-io:commons-io:2.11.0
-guice-4.2.3.jar                                                | 837 KB  | 585     | 1         | 2ea992d6d7bdcac7a43111a95d182a4c42eb5ff7 | com.google.inject:guice:4.2.3
+guice-5.1.0.jar                                                | 759 KB  | 494     | 1         | da25056c694c54ba16e78e4fc35f17fc60f0d1b4 | com.google.inject:guice:5.1.0
 javax.inject-1.jar                                             | 2.44 KB | 6       | 0         | 6975da39a7040257bd51d21a231b76c915872d38 | javax.inject:javax.inject:1
 aopalliance-1.0.jar                                            | 4.36 KB | 9       | 0         | 0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8 | aopalliance:aopalliance:1.0
-guava-27.1-jre.jar                                             | 2.62 MB | 1935    | 0         | e47b59c893079b87743cdcfb6f17ca95c08c592c | com.google.guava:guava:27.1-jre
+guava-30.1-jre.jar                                             | 2.73 MB | 2014    | 0         | 00d0c3ce2311c9e36e73228da25a6e99b2ab826f | com.google.guava:guava:30.1-jre
 failureaccess-1.0.1.jar                                        | 4.51 KB | 2       | 0         | 1dcf1de382a0bf95a3d8b0849546c88bac1292c9 | com.google.guava:failureaccess:1.0.1
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | 2.15 KB | 0       | 0         | b421526c5f297295adef1c886e5246c39d4ac629 | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
 jsr305-3.0.2.jar                                               | 19.5 KB | 35      | 0         | 25ea2e8b0c338a877313bd4672d3fe056ea78f0d | com.google.code.findbugs:jsr305:3.0.2
-checker-qual-2.5.2.jar                                         | 189 KB  | 302     | 0         | cea74543d5904a30861a61b4643a5f2bb372efc4 | org.checkerframework:checker-qual:2.5.2
-error_prone_annotations-2.2.0.jar                              | 13.4 KB | 22      | 0         | 88e3c593e9b3586e1c6177f89267da6fc6986f0c | com.google.errorprone:error_prone_annotations:2.2.0
-j2objc-annotations-1.1.jar                                     | 8.58 KB | 12      | 0         | ed28ded51a8b1c6b112568def5f4b455e6809019 | com.google.j2objc:j2objc-annotations:1.1
-animal-sniffer-annotations-1.17.jar                            | 3.37 KB | 1       | 0         | f97ce6decaea32b36101e37979f8b647f00681fb | org.codehaus.mojo:animal-sniffer-annotations:1.17
-Classpath                                                      | 4.55 MB | 3455    | 1         | -                                        | -
+checker-qual-3.5.0.jar                                         | 209 KB  | 321     | 0         | 2f50520c8abea66fbd8d26e481d3aef5c673b510 | org.checkerframework:checker-qual:3.5.0
+error_prone_annotations-2.3.4.jar                              | 13.6 KB | 22      | 0         | dac170e4594de319655ffb62f41cbd6dbb5e601e | com.google.errorprone:error_prone_annotations:2.3.4
+j2objc-annotations-1.3.jar                                     | 8.58 KB | 12      | 0         | ba035118bc8bac37d7eff77700720999acd9986d | com.google.j2objc:j2objc-annotations:1.3
+Classpath                                                      | 4.60 MB | 3461    | 1         | -                                        | -
 
 Modules
 -------
@@ -30,65 +29,65 @@ JAR file                                                       | Module name    
 ---------------------------------------------------------------+-----------------------------------------------------+----------------+-----------+----------+---------------
 commons-lang3-3.12.0.jar                                       | org.apache.commons.lang3                            | Manifest       | Yes       | -        | [all packages]
 commons-io-2.11.0.jar                                          | org.apache.commons.io                               | Manifest       | Yes       | -        | [all packages]
-guice-4.2.3.jar                                                | com.google.guice                                    | Manifest       | Yes       | -        | [all packages]
+guice-5.1.0.jar                                                | com.google.guice                                    | Manifest       | Yes       | -        | [all packages]
 javax.inject-1.jar                                             | javax.inject                                        | Auto-generated | Yes       | -        | [all packages]
 aopalliance-1.0.jar                                            | aopalliance                                         | Auto-generated | Yes       | -        | [all packages]
-guava-27.1-jre.jar                                             | com.google.common                                   | Manifest       | Yes       | -        | [all packages]
+guava-30.1-jre.jar                                             | com.google.common                                   | Manifest       | Yes       | -        | [all packages]
 failureaccess-1.0.1.jar                                        | failureaccess                                       | Auto-generated | Yes       | -        | [all packages]
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | listenablefuture.empty.to.avoid.conflict.with.guava | Auto-generated | Yes       | -        | [all packages]
 jsr305-3.0.2.jar                                               | jsr305                                              | Auto-generated | Yes       | -        | [all packages]
-checker-qual-2.5.2.jar                                         | checker.qual                                        | Auto-generated | Yes       | -        | [all packages]
-error_prone_annotations-2.2.0.jar                              | error_prone_annotations                             | Auto-generated | Yes       | -        | [all packages]
-j2objc-annotations-1.1.jar                                     | j2objc.annotations                                  | Auto-generated | Yes       | -        | [all packages]
-animal-sniffer-annotations-1.17.jar                            | animal.sniffer.annotations                          | Auto-generated | Yes       | -        | [all packages]
+checker-qual-3.5.0.jar                                         | org.checkerframework.checker.qual                   | Manifest       | Yes       | -        | [all packages]
+error_prone_annotations-2.3.4.jar                              | com.google.errorprone.annotations                   | Manifest       | Yes       | -        | [all packages]
+j2objc-annotations-1.3.jar                                     | j2objc.annotations                                  | Auto-generated | Yes       | -        | [all packages]
 
 Class Versions
 --------------
 Java class file format information.
 
 JAR file                                                       | Multi-release | Class files by Java version
----------------------------------------------------------------+---------------+-------------------------------------------------------
+---------------------------------------------------------------+---------------+------------------------------------------------------
 commons-lang3-3.12.0.jar                                       | No            | Java 8 (345)
 commons-io-2.11.0.jar                                          | No            | Java 8 (201)
-guice-4.2.3.jar                                                | No            | Java 8 (412), Java 5 (173)
+guice-5.1.0.jar                                                | No            | Java 8 (460), Java 5 (34)
 javax.inject-1.jar                                             | No            | Java 5 (6)
 aopalliance-1.0.jar                                            | No            | Java 1.3 (9)
-guava-27.1-jre.jar                                             | No            | Java 8 (1935)
+guava-30.1-jre.jar                                             | No            | Java 8 (2014)
 failureaccess-1.0.1.jar                                        | No            | Java 7 (2)
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | No            | [no class files]
 jsr305-3.0.2.jar                                               | No            | Java 5 (35)
-checker-qual-2.5.2.jar                                         | No            | Java 8 (302)
-error_prone_annotations-2.2.0.jar                              | No            | Java 7 (22)
-j2objc-annotations-1.1.jar                                     | No            | Java 5 (12)
-animal-sniffer-annotations-1.17.jar                            | No            | Java 7 (1)
-Classpath                                                      | -             | Java 8 (3195), Java 7 (25), Java 5 (226), Java 1.3 (9)
+checker-qual-3.5.0.jar                                         | No            | Java 8 (321)
+error_prone_annotations-2.3.4.jar                              | No            | Java 7 (22)
+j2objc-annotations-1.3.jar                                     | No            | Java 5 (12)
+Classpath                                                      | -             | Java 8 (3341), Java 7 (24), Java 5 (87), Java 1.3 (9)
 
 JAR Dependencies
 ----------------
 Dependencies between JAR files.
 
-JAR file                                                       | Uses                                | Used by
----------------------------------------------------------------+-------------------------------------+-------------------
-commons-lang3-3.12.0.jar                                       | [none]                              | [none]
-commons-io-2.11.0.jar                                          | [none]                              | [none]
-guice-4.2.3.jar                                                | aopalliance-1.0.jar                 | [none]
-                                                               | guava-27.1-jre.jar                  |
-                                                               | javax.inject-1.jar                  |
-javax.inject-1.jar                                             | [none]                              | guice-4.2.3.jar
-aopalliance-1.0.jar                                            | [none]                              | guice-4.2.3.jar
-guava-27.1-jre.jar                                             | animal-sniffer-annotations-1.17.jar | guice-4.2.3.jar
-                                                               | checker-qual-2.5.2.jar              |
-                                                               | error_prone_annotations-2.2.0.jar   |
-                                                               | failureaccess-1.0.1.jar             |
-                                                               | j2objc-annotations-1.1.jar          |
-                                                               | jsr305-3.0.2.jar                    |
-failureaccess-1.0.1.jar                                        | [none]                              | guava-27.1-jre.jar
-listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | [none]                              | [none]
-jsr305-3.0.2.jar                                               | [none]                              | guava-27.1-jre.jar
-checker-qual-2.5.2.jar                                         | [none]                              | guava-27.1-jre.jar
-error_prone_annotations-2.2.0.jar                              | [none]                              | guava-27.1-jre.jar
-j2objc-annotations-1.1.jar                                     | [none]                              | guava-27.1-jre.jar
-animal-sniffer-annotations-1.17.jar                            | [none]                              | guava-27.1-jre.jar
+JAR file                                                       | Uses                              | Used by
+---------------------------------------------------------------+-----------------------------------+-------------------
+commons-lang3-3.12.0.jar                                       | [none]                            | [none]
+commons-io-2.11.0.jar                                          | [none]                            | [none]
+guice-5.1.0.jar                                                | aopalliance-1.0.jar               | [none]
+                                                               | error_prone_annotations-2.3.4.jar |
+                                                               | guava-30.1-jre.jar                |
+                                                               | javax.inject-1.jar                |
+                                                               | jsr305-3.0.2.jar                  |
+javax.inject-1.jar                                             | [none]                            | guice-5.1.0.jar
+aopalliance-1.0.jar                                            | [none]                            | guice-5.1.0.jar
+guava-30.1-jre.jar                                             | checker-qual-3.5.0.jar            | guice-5.1.0.jar
+                                                               | error_prone_annotations-2.3.4.jar |
+                                                               | failureaccess-1.0.1.jar           |
+                                                               | j2objc-annotations-1.3.jar        |
+                                                               | jsr305-3.0.2.jar                  |
+failureaccess-1.0.1.jar                                        | [none]                            | guava-30.1-jre.jar
+listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | [none]                            | [none]
+jsr305-3.0.2.jar                                               | [none]                            | guava-30.1-jre.jar
+                                                               |                                   | guice-5.1.0.jar
+checker-qual-3.5.0.jar                                         | [none]                            | guava-30.1-jre.jar
+error_prone_annotations-2.3.4.jar                              | [none]                            | guava-30.1-jre.jar
+                                                               |                                   | guice-5.1.0.jar
+j2objc-annotations-1.3.jar                                     | [none]                            | guava-30.1-jre.jar
 
 Dependencies
 ------------
@@ -98,62 +97,58 @@ JAR file                                                       | Maven coordinat
 ---------------------------------------------------------------+-----------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------
 commons-lang3-3.12.0.jar                                       | org.apache.commons:commons-lang3:3.12.0                                     | [none]                                                                      |
 commons-io-2.11.0.jar                                          | commons-io:commons-io:2.11.0                                                | [none]                                                                      |
-guice-4.2.3.jar                                                | com.google.inject:guice:4.2.3                                               | javax.inject:javax.inject:1                                                 | OK
+guice-5.1.0.jar                                                | com.google.inject:guice:5.1.0                                               | javax.inject:javax.inject:1                                                 | OK
                                                                |                                                                             | aopalliance:aopalliance:1.0                                                 | OK
-                                                               |                                                                             | com.google.guava:guava:27.1-jre                                             | OK
-                                                               |                                                                             | org.ow2.asm:asm:7.2 (optional)                                              | Unsatisfied
-                                                               |                                                                             | cglib:cglib:3.3.0 (optional)                                                | Unsatisfied
+                                                               |                                                                             | com.google.guava:guava:30.1-jre                                             | OK
+                                                               |                                                                             | org.ow2.asm:asm:9.2 (optional)                                              | Unsatisfied
 javax.inject-1.jar                                             | javax.inject:javax.inject:1                                                 | [none]                                                                      |
 aopalliance-1.0.jar                                            | aopalliance:aopalliance:1.0                                                 | [none]                                                                      |
-guava-27.1-jre.jar                                             | com.google.guava:guava:27.1-jre                                             | com.google.guava:failureaccess:1.0.1                                        | OK
+guava-30.1-jre.jar                                             | com.google.guava:guava:30.1-jre                                             | com.google.guava:failureaccess:1.0.1                                        | OK
                                                                |                                                                             | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava | OK
                                                                |                                                                             | com.google.code.findbugs:jsr305:3.0.2                                       | OK
-                                                               |                                                                             | org.checkerframework:checker-qual:2.5.2                                     | OK
-                                                               |                                                                             | com.google.errorprone:error_prone_annotations:2.2.0                         | OK
-                                                               |                                                                             | com.google.j2objc:j2objc-annotations:1.1                                    | OK
-                                                               |                                                                             | org.codehaus.mojo:animal-sniffer-annotations:1.17                           | OK
+                                                               |                                                                             | org.checkerframework:checker-qual:3.5.0                                     | OK
+                                                               |                                                                             | com.google.errorprone:error_prone_annotations:2.3.4                         | OK
+                                                               |                                                                             | com.google.j2objc:j2objc-annotations:1.3                                    | OK
 failureaccess-1.0.1.jar                                        | com.google.guava:failureaccess:1.0.1                                        | [none]                                                                      |
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava | [none]                                                                      |
 jsr305-3.0.2.jar                                               | com.google.code.findbugs:jsr305:3.0.2                                       | [none]                                                                      |
-checker-qual-2.5.2.jar                                         | org.checkerframework:checker-qual:2.5.2                                     | [none]                                                                      |
-error_prone_annotations-2.2.0.jar                              | com.google.errorprone:error_prone_annotations:2.2.0                         | [none]                                                                      |
-j2objc-annotations-1.1.jar                                     | com.google.j2objc:j2objc-annotations:1.1                                    | [none]                                                                      |
-animal-sniffer-annotations-1.17.jar                            | org.codehaus.mojo:animal-sniffer-annotations:1.17                           | [none]                                                                      |
+checker-qual-3.5.0.jar                                         | org.checkerframework:checker-qual:3.5.0                                     | [none]                                                                      |
+error_prone_annotations-2.3.4.jar                              | com.google.errorprone:error_prone_annotations:2.3.4                         | [none]                                                                      |
+j2objc-annotations-1.3.jar                                     | com.google.j2objc:j2objc-annotations:1.3                                    | [none]                                                                      |
 
 Packages
 --------
 List of packages per JAR file.
 
-JAR file                            | Count | Packages                                          | Issues
-------------------------------------+-------+---------------------------------------------------+-------
-animal-sniffer-annotations-1.17.jar | 1     | org.codehaus.mojo.animal_sniffer                  |
-aopalliance-1.0.jar                 | 2     | org.aopalliance.* (2 subpackages)                 |
-checker-qual-2.5.2.jar              | 31    | org.checkerframework.* (31 subpackages)           |
-commons-io-2.11.0.jar               | 11    | org.apache.commons.io (+10 subpackages)           |
-commons-lang3-3.12.0.jar            | 17    | org.apache.commons.lang3 (+16 subpackages)        |
-error_prone_annotations-2.2.0.jar   | 2     | com.google.errorprone.annotations (+1 subpackage) |
-failureaccess-1.0.1.jar             | 1     | com.google.common.util.concurrent.internal        |
-guava-27.1-jre.jar                  | 18    | com.google.common.annotations                     |
-                                    |       | com.google.common.base (+1 subpackage)            |
-                                    |       | com.google.common.cache                           |
-                                    |       | com.google.common.collect                         |
-                                    |       | com.google.common.escape                          |
-                                    |       | com.google.common.eventbus                        |
-                                    |       | com.google.common.graph                           |
-                                    |       | com.google.common.hash                            |
-                                    |       | com.google.common.html                            |
-                                    |       | com.google.common.io                              |
-                                    |       | com.google.common.math                            |
-                                    |       | com.google.common.net                             |
-                                    |       | com.google.common.primitives                      |
-                                    |       | com.google.common.reflect                         |
-                                    |       | com.google.common.util.concurrent                 |
-                                    |       | com.google.common.xml                             |
-                                    |       | com.google.thirdparty.publicsuffix                |
-guice-4.2.3.jar                     | 15    | com.google.inject (+14 subpackages)               |
-j2objc-annotations-1.1.jar          | 1     | com.google.j2objc.annotations                     |
-javax.inject-1.jar                  | 1     | javax.inject                                      |
-jsr305-3.0.2.jar                    | 3     | javax.annotation (+2 subpackages)                 |
+JAR file                          | Count | Packages                                          | Issues
+----------------------------------+-------+---------------------------------------------------+-------
+aopalliance-1.0.jar               | 2     | org.aopalliance.* (2 subpackages)                 |
+checker-qual-3.5.0.jar            | 33    | org.checkerframework.* (33 subpackages)           |
+commons-io-2.11.0.jar             | 11    | org.apache.commons.io (+10 subpackages)           |
+commons-lang3-3.12.0.jar          | 17    | org.apache.commons.lang3 (+16 subpackages)        |
+error_prone_annotations-2.3.4.jar | 2     | com.google.errorprone.annotations (+1 subpackage) |
+failureaccess-1.0.1.jar           | 1     | com.google.common.util.concurrent.internal        |
+guava-30.1-jre.jar                | 18    | com.google.common.annotations                     |
+                                  |       | com.google.common.base (+1 subpackage)            |
+                                  |       | com.google.common.cache                           |
+                                  |       | com.google.common.collect                         |
+                                  |       | com.google.common.escape                          |
+                                  |       | com.google.common.eventbus                        |
+                                  |       | com.google.common.graph                           |
+                                  |       | com.google.common.hash                            |
+                                  |       | com.google.common.html                            |
+                                  |       | com.google.common.io                              |
+                                  |       | com.google.common.math                            |
+                                  |       | com.google.common.net                             |
+                                  |       | com.google.common.primitives                      |
+                                  |       | com.google.common.reflect                         |
+                                  |       | com.google.common.util.concurrent                 |
+                                  |       | com.google.common.xml                             |
+                                  |       | com.google.thirdparty.publicsuffix                |
+guice-5.1.0.jar                   | 11    | com.google.inject (+10 subpackages)               |
+j2objc-annotations-1.3.jar        | 1     | com.google.j2objc.annotations                     |
+javax.inject-1.jar                | 1     | javax.inject                                      |
+jsr305-3.0.2.jar                  | 3     | javax.annotation (+2 subpackages)                 |
 
 Duplicate Classes
 -----------------
@@ -177,7 +172,7 @@ JAR file              | Issues
 ----------------------+--------------------------------------------------------------------------------------------------------
 commons-io-2.11.0.jar | org.apache.commons.io.FileSystemUtils
                       | • java.lang.Process java.lang.Runtime.exec(java.lang.String[])
-guava-27.1-jre.jar    | com.google.common.cache.Striped64
+guava-30.1-jre.jar    | com.google.common.cache.Striped64
                       | • boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)
                       | • boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)
                       | • long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)
