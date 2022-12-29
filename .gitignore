@@ -1,10 +1,20 @@
-/.idea
+
+# Gradle installation
 /.gradle
-/build
-/target
-/out
-/temp
+
+# IntelliJ project files
+/.idea
 *.iml
-.DS_Store
+
+# build output
+build/
+
+# JarHC cache (note: moved to ~/.jarhc)
+/.jarhc
+
+# files used for local testing
 *.dat
+
+# macOS files
+.DS_Store
 
