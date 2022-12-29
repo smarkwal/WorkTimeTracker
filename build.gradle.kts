@@ -1,8 +1,11 @@
 plugins {
     java
-}
+    idea
 
-val mainClassName: String = "net.markwalder.tools.worktime.Main"
+    // Gradle Versions Plugin
+    // https://github.com/ben-manes/gradle-versions-plugin
+    id("com.github.ben-manes.versions") version "0.44.0"
+}
 
 repositories {
     mavenCentral()
@@ -19,6 +22,17 @@ java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
     }
+}
+
+// special settings for IntelliJ IDEA
+idea {
+
+    project {
+        jdkName = "11"
+        languageLevel = org.gradle.plugins.ide.idea.model.IdeaLanguageLevel(JavaVersion.VERSION_11)
+        vcs = "Git"
+    }
+
 }
 
 tasks {
@@ -38,7 +52,7 @@ tasks {
 
         // set Main-Class in MANIFEST.MF
         manifest {
-            attributes["Main-Class"] = mainClassName
+            attributes["Main-Class"] = "net.markwalder.tools.worktime.Main"
         }
 
         // include all compile time dependencies in JAR file
