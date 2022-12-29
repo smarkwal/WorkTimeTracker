@@ -57,10 +57,10 @@ jobs:
       if: ${{ always() }}
       with:
         name: reports
-        path: jarhc/build/reports
+        path: build/reports
 
     - name: Upload libs
       uses: actions/upload-artifact@v3
       with:
         name: libs
-        path: jarhc/build/libs
+        path: build/libs
