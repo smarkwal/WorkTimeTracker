@@ -1,6 +1,11 @@
 package net.markwalder.tools.worktime;
 
-import com.google.inject.*;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
+import com.google.inject.Singleton;
+import java.awt.*;
+import javax.swing.*;
 import net.markwalder.tools.worktime.db.Database;
 import net.markwalder.tools.worktime.db.DatabaseImpl;
 import net.markwalder.tools.worktime.db.store.FileStoreImpl;
@@ -12,9 +17,6 @@ import net.markwalder.tools.worktime.tracker.mouse.MouseActivityTrackerImpl;
 import net.markwalder.tools.worktime.tracker.mouse.MouseTracker;
 import net.markwalder.tools.worktime.ui.MacOSX;
 import net.markwalder.tools.worktime.ui.Window;
-
-import javax.swing.*;
-import java.awt.*;
 
 
 public class Main {
