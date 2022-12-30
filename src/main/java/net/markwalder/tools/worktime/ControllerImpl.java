@@ -159,7 +159,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 	}
 
 	@Override
-	public void wordDayMouseDragged(int slot) {
+	public void workDayMouseDragged(int slot) {
 		if (displayWorkDay == null) return;
 		if (slot < 0 || slot >= displayWorkDay.getSize()) return;
 

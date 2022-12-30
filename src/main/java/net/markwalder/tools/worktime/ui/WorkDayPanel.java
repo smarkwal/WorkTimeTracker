@@ -398,7 +398,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 	public void mouseDragged(MouseEvent e) {
 		// convert mouse coordinates into slot index
 		int slot = getSlot(e);
-		controller.wordDayMouseDragged(slot);
+		controller.workDayMouseDragged(slot);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public interface Controller {
 
 	void workDayMousePressed(int slot, boolean shift);
 
-	void wordDayMouseDragged(int slot);
+	void workDayMouseDragged(int slot);
 
 	void workDayMouseReleased();
 
