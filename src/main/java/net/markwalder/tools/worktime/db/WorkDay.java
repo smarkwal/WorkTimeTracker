@@ -18,6 +18,7 @@ package net.markwalder.tools.worktime.db;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class WorkDay extends TimeTable {
 
@@ -32,7 +33,7 @@ public class WorkDay extends TimeTable {
 	private int freeCount = 0;
 
 	public WorkDay(Date date, byte[] data) {
-		super(date, data);
+		super(DateTimeUtils.getStartOfDay(date), data);
 		for (byte bit : data) {
 			if ((bit & RUNNING) > 0) {
 				runningCount++;

@@ -95,6 +95,9 @@ public class DatabaseImpl implements Database {
 		// write data to database file
 		store.writeData(key, offset, data);
 
+		// add to cache
+		workDaysCache.put(date, workDay);
+
 	}
 
 	@Override
@@ -147,6 +150,9 @@ public class DatabaseImpl implements Database {
 
 		// write data to database file
 		store.writeData(key, 0, data);
+
+		// add to cache
+		workYearsCache.put(date, workYear);
 
 	}
 

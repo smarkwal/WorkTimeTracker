@@ -32,7 +32,7 @@ public class WorkYear extends TimeTable {
 	private int freeCount = 0;
 
 	public WorkYear(Date date, byte[] data) {
-		super(date, data);
+		super(DateTimeUtils.getStartOfYear(date), data);
 		for (byte bit : data) {
 			if ((bit & HOLIDAY) > 0) {
 				holidayCount++;
