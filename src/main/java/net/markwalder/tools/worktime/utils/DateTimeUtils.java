@@ -144,8 +144,13 @@ public class DateTimeUtils {
 		return new Date(year - 1900, month - 1, day);
 	}
 
+	public static Date getDate(int year, int month, int day, int hours, int minutes, int seconds) {
+		//noinspection MagicConstant
+		return new Date(year - 1900, month - 1, day, hours, minutes, seconds);
+	}
+
 	public static Date addMinutes(Date date, int minutes) {
-		return new Date(date.getTime() + minutes * 60 * 1000);
+		return new Date(date.getTime() + minutes * 60 * 1000L);
 	}
 
 	public static boolean isToday(Date date) {

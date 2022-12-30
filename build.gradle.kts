@@ -45,6 +45,7 @@ dependencies {
     implementation("commons-io:commons-io:2.11.0")
     implementation("com.google.inject:guice:5.1.0")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:4.11.0")
 }
 
 java {
