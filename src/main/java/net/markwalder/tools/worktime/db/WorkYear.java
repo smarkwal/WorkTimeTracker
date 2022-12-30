@@ -16,8 +16,8 @@
 
 package net.markwalder.tools.worktime.db;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class WorkYear extends TimeTable {
 
@@ -130,63 +130,54 @@ public class WorkYear extends TimeTable {
 
 		StringBuilder buffer = new StringBuilder(data.length);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		buffer.append("Date: ").append(dateFormat.format(date)).append("\n");
-
-		int h = 4;
-		int w = data.length / h;
-		for (int x = 0; x < w; x++) {
-			if (x % 12 == 0) buffer.append("+");
-			buffer.append("-");
-		}
+		int year = DateTimeUtils.getYear(date);
+		buffer.append("Year: ").append(year).append("\n");
+		buffer.append("+");
+		buffer.append("-".repeat(31));
 		buffer.append("+\n");
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				if (x % 12 == 0) buffer.append("|");
-				int i = y * w + x;
-				byte bit = data[i];
-				char sign = '?';
-				switch (bit) {
-					case 0: // no data
-						sign = ' ';
-						break;
-					case 1: // running
-						sign = '=';
-						break;
-					case 3: // running + active
-						sign = '0';
-						break;
-					case 4: // working
-						sign = 'x';
-						break;
-					case 5: // running + working (but not active)
-						sign = 'x';
-						break;
-					case 7: // running + active + working
-						sign = 'X';
-						break;
-					case 8: // free
-						sign = '-';
-						break;
-					case 9: // free + running (but not active)
-						sign = '-';
-						break;
-					case 11: // free + running + active
-						sign = '=';
-						break;
+
+		for (int month = 1; month <= 12; month++) {
+			int days = DateTimeUtils.getDaysInMonth(year, month);
+			int daysBeforeMonth = DateTimeUtils.getDayOfYear(DateTimeUtils.getDate(year, month, 1)) - 1;
+
+			for (int h = 0; h < 2; h++) { // morning (h = 0) and afternoon (h = 1)
+				buffer.append("|");
+				for (int day = 1; day <= days; day++) {
+					int slot = (daysBeforeMonth + day - 1) * 2 + h;
+					int bits = data[slot];
+					switch (bits) {
+						case 0:
+							buffer.append(" ");
+							break;
+						case HOLIDAY:
+							buffer.append("H");
+							break;
+						case COMPENSATION:
+							buffer.append("C");
+							break;
+						case VACATION:
+							buffer.append("V");
+							break;
+						case FREE:
+							buffer.append("F");
+							break;
+						default:
+							String sign = Integer.toHexString(bits);
+							buffer.append(sign);
+							break;
+					}
 				}
-				buffer.append(sign);
+				buffer.append("|\n");
 			}
-			buffer.append("|\n");
-			for (int x = 0; x < w; x++) {
-				if (x % 12 == 0) buffer.append("+");
-				buffer.append("-");
-			}
+
+			buffer.append("+");
+			buffer.append("-".repeat(31));
 			buffer.append("+\n");
 		}
-		buffer.append("Running: ").append(holidayCount);
-		buffer.append(", Active: ").append(compensationCount);
-		buffer.append(", Working: ").append(vacationCount);
+
+		buffer.append("Holiday: ").append(holidayCount);
+		buffer.append(", Compensation: ").append(compensationCount);
+		buffer.append(", Vacation: ").append(vacationCount);
 		buffer.append(", Free: ").append(freeCount).append("\n");
 
 		return buffer.toString();
