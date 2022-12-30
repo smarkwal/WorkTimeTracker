@@ -57,7 +57,7 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 		Container contentPane = this.getContentPane();
 		contentPane.add(workDayPanel);
 
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.setResizable(false);
@@ -117,7 +117,7 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 
 			ActionListener actionListener = event -> {
 				Window.this.setVisible(true);
-				Window.this.setExtendedState(Window.NORMAL);
+				Window.this.setExtendedState(NORMAL);
 				SystemTray.getSystemTray().remove(trayIcon);
 			};
 
@@ -171,7 +171,7 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 		int keyCode = e.getKeyCode();
 		char keyChar = e.getKeyChar();
 		if (keyCode == 27) { // escape
-			this.setState(Window.ICONIFIED);
+			this.setState(ICONIFIED);
 		} else if (keyCode == 37) { // arrow left
 			controller.decrementDisplayDate();
 		} else if (keyCode == 39) { // arrow right
