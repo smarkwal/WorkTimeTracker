@@ -17,6 +17,7 @@
 package net.markwalder.tools.worktime.tracker.mouse;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * Global mouse position with x and y coordinates.
@@ -49,6 +50,11 @@ class MousePosition {
 		if (obj == null || getClass() != obj.getClass()) return false;
 		MousePosition point = (MousePosition) obj;
 		return (point.x == x) && (point.y == y);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y);
 	}
 
 }
