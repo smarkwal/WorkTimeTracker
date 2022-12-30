@@ -153,10 +153,4 @@ public class DateTimeUtils {
 		return new Date(date.getTime() + minutes * 60 * 1000L);
 	}
 
-	public static boolean isToday(Date date) {
-		int today = getDayOfYear(getToday());
-		int day = getDayOfYear(date);
-		return day == today;
-	}
-
 }
