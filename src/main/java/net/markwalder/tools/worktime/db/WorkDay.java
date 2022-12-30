@@ -133,57 +133,56 @@ public class WorkDay extends TimeTable {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		buffer.append("Date: ").append(dateFormat.format(date)).append("\n");
 
-		int h = 4;
-		int w = data.length / h;
-		for (int x = 0; x < w; x++) {
+		for (int i = 0; i < data.length; i++) {
+			if (i % 72 == 0) {
+				if (i > 0) {
+					buffer.append("|\n");
+				}
+				for (int x = 0; x < 72; x++) {
+					if (x % 12 == 0) buffer.append("+");
+					buffer.append("-");
+				}
+				buffer.append("+\n");
+			}
+			if (i % 12 == 0) buffer.append("|");
+
+			byte bit = data[i];
+			char sign = '?';
+			switch (bit) {
+				case 0: // no data
+					sign = ' ';
+					break;
+				case 1: // running
+				case 11: // free + running + active
+					sign = '=';
+					break;
+				case 3: // running + active
+					sign = '0';
+					break;
+				case 4: // working
+				case 5: // running + working (but not active)
+					sign = 'x';
+					break;
+				case 7: // running + active + working
+					sign = 'X';
+					break;
+				case 8: // free
+				case 9: // free + running (but not active)
+					sign = '-';
+					break;
+			}
+			buffer.append(sign);
+		}
+
+		int lastLineLength = data.length % 72;
+		if (lastLineLength == 0) lastLineLength = 72;
+		buffer.append("|\n");
+		for (int x = 0; x < lastLineLength; x++) {
 			if (x % 12 == 0) buffer.append("+");
 			buffer.append("-");
 		}
 		buffer.append("+\n");
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				if (x % 12 == 0) buffer.append("|");
-				int i = y * w + x;
-				byte bit = data[i];
-				char sign = '?';
-				switch (bit) {
-					case 0: // no data
-						sign = ' ';
-						break;
-					case 1: // running
-						sign = '=';
-						break;
-					case 3: // running + active
-						sign = '0';
-						break;
-					case 4: // working
-						sign = 'x';
-						break;
-					case 5: // running + working (but not active)
-						sign = 'x';
-						break;
-					case 7: // running + active + working
-						sign = 'X';
-						break;
-					case 8: // free
-						sign = '-';
-						break;
-					case 9: // free + running (but not active)
-						sign = '-';
-						break;
-					case 11: // free + running + active
-						sign = '=';
-						break;
-				}
-				buffer.append(sign);
-			}
-			buffer.append("|\n");
-			for (int x = 0; x < w; x++) {
-				if (x % 12 == 0) buffer.append("+");
-				buffer.append("-");
-			}
-			buffer.append("+\n");
-		}
+
 		buffer.append("Running: ").append(runningCount);
 		buffer.append(", Active: ").append(activeCount);
 		buffer.append(", Working: ").append(workingCount);

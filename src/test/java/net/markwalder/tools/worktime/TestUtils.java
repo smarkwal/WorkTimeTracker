@@ -16,6 +16,10 @@
 
 package net.markwalder.tools.worktime;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+
 public class TestUtils {
 
 	public static void pause(long time) {
@@ -23,6 +27,15 @@ public class TestUtils {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	public static String readStringFromResource(String resourceName) {
+		try (InputStream stream = TestUtils.class.getClassLoader().getResourceAsStream(resourceName)) {
+			if (stream == null) throw new IllegalArgumentException("Resource not found: " + resourceName);
+			return new String(stream.readAllBytes());
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
 		}
 	}
 
