@@ -19,9 +19,10 @@ package net.markwalder.tools.worktime.db.store;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.UncheckedIOException;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import org.apache.commons.io.IOUtils;
+import javax.inject.Inject;
 
 public class FileStoreImpl implements Store {
 
@@ -29,8 +30,13 @@ public class FileStoreImpl implements Store {
 
 	private final File directory;
 
+	@Inject
 	public FileStoreImpl() {
-		directory = new File(".");
+		this(new File("."));
+	}
+
+	FileStoreImpl(File directory) {
+		this.directory = directory;
 	}
 
 	@Override
@@ -45,13 +51,11 @@ public class FileStoreImpl implements Store {
 			// prepare a new (empty) data array
 			byte[] data = new byte[length];
 
-			// if file does not exists -> return empty data array
+			// if file does not exist -> return empty data array
 			if (!file.exists()) return data;
 
 			// open database file
-			RandomAccessFile raf = null;
-			try {
-				raf = new RandomAccessFile(file, "r");
+			try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
 
 				// jump to offset
 				raf.seek(offset);
@@ -60,20 +64,18 @@ public class FileStoreImpl implements Store {
 				int pos = 0;
 				while (true) {
 					int bytes = raf.read(data, pos, length - pos);
-					if (bytes < 0) break; // todo: throw an exception ?
+					if (bytes < 0) break;
 					pos = pos + bytes;
 					if (pos == length) break;
 				}
 
-			} finally {
-				IOUtils.closeQuietly(raf);
 			}
 
 			// return data array
 			return data;
 
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new UncheckedIOException(e);
 		} finally {
 			lock.readLock().unlock();
 		}
@@ -87,25 +89,18 @@ public class FileStoreImpl implements Store {
 		File file = getFile(key);
 
 		lock.writeLock().lock();
-		try {
 
-			// open database file
-			RandomAccessFile raf = null;
-			try {
-				raf = new RandomAccessFile(file, "rw");
+		// open database file
+		try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
 
-				// jump to offset
-				raf.seek(offset);
+			// jump to offset
+			raf.seek(offset);
 
-				// write data
-				raf.write(data);
-
-			} finally {
-				IOUtils.closeQuietly(raf);
-			}
+			// write data
+			raf.write(data);
 
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new UncheckedIOException(e);
 		} finally {
 			lock.writeLock().unlock();
 		}
