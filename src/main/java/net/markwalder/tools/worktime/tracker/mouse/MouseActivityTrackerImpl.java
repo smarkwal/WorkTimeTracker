@@ -64,7 +64,7 @@ public class MouseActivityTrackerImpl extends ActivityTracker implements Runnabl
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
-			// ignore
+			Thread.currentThread().interrupt();
 		}
 		thread = null;
 	}
@@ -88,13 +88,13 @@ public class MouseActivityTrackerImpl extends ActivityTracker implements Runnabl
 					//noinspection BusyWait
 					Thread.sleep(pollInterval);
 				} catch (InterruptedException e) {
-					// ignore
+					Thread.currentThread().interrupt();
 				}
 
 			}
 
 		} catch (Exception e) {
-			System.err.println("unexpected error: " + e.toString());
+			System.err.println("unexpected error: " + e);
 			// todo: show error dialog
 		}
 
