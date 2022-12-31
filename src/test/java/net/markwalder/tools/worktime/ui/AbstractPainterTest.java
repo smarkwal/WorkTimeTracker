@@ -26,6 +26,7 @@ import net.markwalder.tools.worktime.TestUtils;
 import net.markwalder.tools.worktime.db.Database;
 import net.markwalder.tools.worktime.db.DatabaseImpl;
 import net.markwalder.tools.worktime.db.store.FileStoreImpl;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 
 abstract class AbstractPainterTest {
@@ -48,12 +49,18 @@ abstract class AbstractPainterTest {
 				ImageIO.write(image, "png", resourceFile);
 			}
 
-			// save image for manual inspection
+			// save generated image for manual inspection
 			File reportFile = new File("build/reports/tests/test/images/" + fileName);
+			FileUtils.createParentDirectories(reportFile);
 			ImageIO.write(image, "png", reportFile);
 
+			// save difference image for manual inspection
+			BufferedImage diffImage = TestUtils.diffImages(expectedImage, image);
+			File diffFile = new File(reportFile.getParentFile(), fileName.replace(".png", "-diff.png"));
+			ImageIO.write(diffImage, "png", diffFile);
+
 			// test failed
-			Assert.fail("Images differ by " + difference + " pixels. See " + reportFile.getPath());
+			Assert.fail("Images differ by " + difference + " pixels. See " + diffFile.getPath());
 		}
 	}
 

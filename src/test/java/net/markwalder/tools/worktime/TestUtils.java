@@ -94,4 +94,41 @@ public class TestUtils {
 		return diff;
 	}
 
+	public static BufferedImage diffImages(BufferedImage image1, BufferedImage image2) {
+
+		int width = image1.getWidth();
+		int height = image1.getHeight();
+		if (image2.getWidth() != width || image2.getHeight() != height) {
+			throw new IllegalArgumentException("Error: Images dimensions mismatch");
+		}
+
+		BufferedImage diffImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		int red = Color.RED.getRGB();
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+
+				int pixel1 = image1.getRGB(x, y);
+				Color color1 = new Color(pixel1, true);
+				int r1 = color1.getRed();
+				int g1 = color1.getGreen();
+				int b1 = color1.getBlue();
+
+				int pixel2 = image2.getRGB(x, y);
+				Color color2 = new Color(pixel2, true);
+				int r2 = color2.getRed();
+				int g2 = color2.getGreen();
+				int b2 = color2.getBlue();
+
+				// compare RGB values of the pixels
+				if (r1 != r2 || g1 != g2 || b1 != b2) {
+					diffImage.setRGB(x, y, red);
+				}
+
+			}
+		}
+
+		return diffImage;
+	}
+
 }
