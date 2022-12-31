@@ -24,6 +24,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URL;
+import java.time.Clock;
 import java.util.Date;
 import javax.swing.*;
 import net.markwalder.tools.worktime.Controller;
@@ -34,6 +35,7 @@ import org.apache.commons.lang3.SystemUtils;
 public class Window extends JFrame implements WindowListener, KeyListener {
 
 	private final transient Controller controller;
+	private final transient Clock clock;
 
 	private final WorkDayPanel workDayPanel;
 	private final WorkYearPanel workYearPanel;
@@ -45,12 +47,13 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 	public static final String TITLE = "Work Time Tracker";
 
 	@Inject
-	public Window(Controller controller, WorkDayPanel workDayPanel, WorkYearPanel workYearPanel) {
+	public Window(Controller controller, Clock clock, WorkDayPanel workDayPanel, WorkYearPanel workYearPanel) {
 
 		String version = Version.getVersion();
 		this.setTitle(TITLE + " " + version);
 
 		this.controller = controller;
+		this.clock = clock;
 		this.workDayPanel = workDayPanel;
 		this.workYearPanel = workYearPanel;
 
@@ -179,7 +182,7 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 		} else if (keyChar == 'y') {
 			switchView();
 		} else if (keyChar == 't') {
-			Date date = DateTimeUtils.getToday();
+			Date date = DateTimeUtils.getToday(clock);
 			controller.setDisplayDate(date);
 		}
 	}

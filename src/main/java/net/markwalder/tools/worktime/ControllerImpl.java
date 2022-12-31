@@ -17,6 +17,7 @@
 package net.markwalder.tools.worktime;
 
 import com.google.inject.Inject;
+import java.time.Clock;
 import java.util.Date;
 import net.markwalder.tools.worktime.db.Database;
 import net.markwalder.tools.worktime.db.DatabaseUtils;
@@ -34,6 +35,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 	private final Window window;
 	private final ActivityTracker activityTracker;
 	private final Database database;
+	private final Clock clock;
 
 	private Date activeDate;
 	private WorkDay activeWorkDay;
@@ -43,10 +45,11 @@ public class ControllerImpl implements Controller, ActivityListener {
 	private WorkYear displayWorkYear;
 
 	@Inject
-	public ControllerImpl(Window window, ActivityTracker activityTracker, Database database) {
+	public ControllerImpl(Window window, ActivityTracker activityTracker, Database database, Clock clock) {
 		this.window = window;
 		this.activityTracker = activityTracker;
 		this.database = database;
+		this.clock = clock;
 	}
 
 	@Override
@@ -62,11 +65,10 @@ public class ControllerImpl implements Controller, ActivityListener {
 	@Override
 	public void start() {
 
-		Date date = new Date();
-		activeDate = DateTimeUtils.getStartOfDay(date);
+		activeDate = DateTimeUtils.getToday(clock);
 		displayDate = activeDate;
 
-		// open database and load time tables
+		// open database and load timetables
 		activeWorkDay = database.getWorkDay(activeDate);
 		displayWorkDay = activeWorkDay;
 		displayWorkYear = database.getWorkYear(displayDate);
@@ -88,22 +90,22 @@ public class ControllerImpl implements Controller, ActivityListener {
 	public void reportActive(boolean active) {
 
 		// get current time, date and start of day
-		long time = System.currentTimeMillis();
-		Date date = DateTimeUtils.getStartOfDay(time);
-		long startOfDay = date.getTime();
+		long time = clock.millis();
+		Date today = DateTimeUtils.getToday(clock);
+		long startOfDay = today.getTime();
 
 		// if day has changed ...
-		if (!date.equals(activeDate)) {
-			// load new timeTable
-			activeWorkDay = database.getWorkDay(date);
+		if (!today.equals(activeDate)) {
+			// load new timetable
+			activeWorkDay = database.getWorkDay(today);
 			window.repaint();
-			activeDate = date;
+			activeDate = today;
 			if (displayDate.equals(activeDate)) {
 				displayWorkDay = activeWorkDay;
 			}
 		}
 
-		// check if timeTable needs to be modified ...
+		// check if timetable needs to be modified ...
 		int slot = DatabaseUtils.slot(time - startOfDay);
 
 		// make sure that the "application is running" flag is set
@@ -121,7 +123,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 
 		if (activeWorkDay.isModified()) {
 
-			// store modified timeTable
+			// store modified timetable
 			database.storeWorkDay(activeWorkDay);
 
 			// update UI
@@ -178,7 +180,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 		if (displayWorkDay == null) return;
 
 		if (displayWorkDay.isModified()) {
-			// store modified time table
+			// store modified timetable
 			database.storeWorkDay(displayWorkDay);
 		}
 

@@ -21,6 +21,7 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Singleton;
 import java.awt.*;
+import java.time.Clock;
 import javax.swing.*;
 import net.markwalder.tools.worktime.db.Database;
 import net.markwalder.tools.worktime.db.DatabaseImpl;
@@ -64,6 +65,9 @@ public class Main {
 
 		// configure dependency injection
 		Module module = binder -> {
+
+			// current date and time
+			binder.bind(Clock.class).toInstance(Clock.systemDefaultZone());
 
 			// main controller
 			binder.bind(Controller.class).to(ControllerImpl.class).in(Singleton.class);

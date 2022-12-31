@@ -16,6 +16,7 @@
 
 package net.markwalder.tools.worktime.utils;
 
+import java.time.Clock;
 import java.util.Calendar;
 import java.util.Date;
 import org.apache.commons.lang3.time.DateUtils;
@@ -26,17 +27,12 @@ public class DateTimeUtils {
 		throw new IllegalStateException("Utility class");
 	}
 
-	public static Date getNow() {
-		return new Date();
+	public static Date getNow(Clock clock) {
+		return new Date(clock.millis());
 	}
 
-	public static Date getToday() {
-		Date date = new Date();
-		return getStartOfDay(date);
-	}
-
-	public static Date getStartOfDay(long time) {
-		Date date = new Date(time);
+	public static Date getToday(Clock clock) {
+		Date date = getNow(clock);
 		return getStartOfDay(date);
 	}
 

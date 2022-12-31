@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
+import java.time.Clock;
 import java.util.Date;
 import javax.swing.*;
 import net.markwalder.tools.worktime.Controller;
@@ -56,11 +57,13 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 	private final transient Controller controller;
 	private final transient Database database;
+	private final transient Clock clock;
 
 	@Inject
-	public WorkYearPanel(Controller controller, Database database) {
+	public WorkYearPanel(Controller controller, Database database, Clock clock) {
 		this.controller = controller;
 		this.database = database;
+		this.clock = clock;
 
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -104,7 +107,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 		fillGrid(g2, year, workYear);
 
-		Date today = DateTimeUtils.getNow();
+		Date today = DateTimeUtils.getNow(clock);
 		if (year == DateTimeUtils.getYear(today)) {
 			markToday(g2, today);
 		}

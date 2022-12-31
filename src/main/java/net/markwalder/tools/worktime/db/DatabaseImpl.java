@@ -80,7 +80,7 @@ public class DatabaseImpl implements Database {
 		int offset = range[0];
 		int length = range[1];
 
-		// get timeTable data
+		// get timetable data
 		byte[] data = workDay.getData();
 
 		// validate data array size
@@ -139,7 +139,7 @@ public class DatabaseImpl implements Database {
 
 		Date date = workYear.getDate();
 
-		// get timeTable data
+		// get timetable data
 		byte[] data = workYear.getData();
 
 		// get key

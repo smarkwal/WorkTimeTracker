@@ -22,11 +22,12 @@ import org.apache.commons.lang3.time.DateUtils;
 
 public class Statistics {
 
-	public static Statistics getStatistics(Database database, Date startDate, Date endDate) {
+	public static Statistics getStatistics(Database database, Date today, Date startDate, Date endDate) {
+		if (today == null) throw new NullPointerException("today");
 		if (startDate == null) throw new NullPointerException("startDate");
 		if (endDate == null) throw new NullPointerException("endDate");
 
-		Statistics statistics = new Statistics();
+		Statistics statistics = new Statistics(today);
 		startDate = DateTimeUtils.getStartOfDay(startDate);
 		endDate = DateTimeUtils.getStartOfDay(endDate);
 
@@ -51,13 +52,14 @@ public class Statistics {
 
 	// ---------------------------------------------------------------------------------
 
-	private final long now = System.currentTimeMillis();
+	private final long now;
 
 	private int workingCount = 0;
 	private int freeCount = 0;
 	private int workTime = 0;
 
-	private Statistics() {
+	private Statistics(Date today) {
+		now = today.getTime();
 	}
 
 	private void update(Database database, WorkDay workDay) {

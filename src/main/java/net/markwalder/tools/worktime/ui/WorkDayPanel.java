@@ -30,6 +30,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.text.SimpleDateFormat;
+import java.time.Clock;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.*;
@@ -67,11 +68,13 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 	private final transient Controller controller;
 	private final transient Database database;
+	private final transient Clock clock;
 
 	@Inject
-	public WorkDayPanel(Controller controller, Database database) {
+	public WorkDayPanel(Controller controller, Database database, Clock clock) {
 		this.controller = controller;
 		this.database = database;
+		this.clock = clock;
 
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -97,7 +100,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		g2.translate(MARGIN_LEFT, MARGIN_TOP);
 
-		Date today = DateTimeUtils.getToday();
+		Date today = DateTimeUtils.getToday(clock);
 
 		drawTitle(0, -24, today, g2);
 
@@ -111,7 +114,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		int nowSlot = -1;
 		if (date.equals(today)) {
-			nowSlot = DatabaseUtils.slot(System.currentTimeMillis() - today.getTime());
+			nowSlot = DatabaseUtils.slot(clock.millis() - today.getTime());
 		}
 
 		fillSlots(workDay, nowSlot, hours, g2);
@@ -277,7 +280,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		// create statistics for the current week
 		Date startDate = DateTimeUtils.getStartOfWeek(date);
 		Date endDate = DateTimeUtils.getEndOfWeek(date);
-		Statistics statistics = Statistics.getStatistics(database, startDate, endDate);
+		Statistics statistics = Statistics.getStatistics(database, today, startDate, endDate);
 		int workingCount = statistics.getWorkingCount();
 
 		drawStats(x, y, date, today, g2, startDate, workingCount, "Week", statistics.getWorkTime(), statistics.getFreeCount());
@@ -288,7 +291,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		// create statistics for the current month
 		Date startDate = DateTimeUtils.getStartOfMonth(date);
 		Date endDate = DateTimeUtils.getEndOfMonth(date);
-		Statistics statistics = Statistics.getStatistics(database, startDate, endDate);
+		Statistics statistics = Statistics.getStatistics(database, today, startDate, endDate);
 		int workingCount = statistics.getWorkingCount();
 
 		drawStats(x, y, date, today, g2, startDate, workingCount, "Month", statistics.getWorkTime(), statistics.getFreeCount());
@@ -299,7 +302,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 		// create statistics for the current year
 		Date startDate = DateTimeUtils.getStartOfYear(date);
 		Date endDate = DateTimeUtils.getEndOfYear(date);
-		Statistics statistics = Statistics.getStatistics(database, startDate, endDate);
+		Statistics statistics = Statistics.getStatistics(database, today, startDate, endDate);
 		int workingCount = statistics.getWorkingCount();
 
 		drawStats(x, y, date, today, g2, startDate, workingCount, "Year", statistics.getWorkTime(), statistics.getFreeCount());
@@ -347,7 +350,7 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 			if (date.equals(today)) {
 				if (remainingTime > 0 && remainingTime < 24 * 60) {
-					Date now = DateTimeUtils.getNow();
+					Date now = DateTimeUtils.getNow(clock);
 					Date end = DateTimeUtils.addMinutes(now, remainingTime);
 					g2.setColor(DARK_GRAY);
 					SimpleDateFormat format = new SimpleDateFormat("H:mm");
