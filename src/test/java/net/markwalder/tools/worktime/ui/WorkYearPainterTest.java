@@ -20,28 +20,12 @@ import static net.markwalder.tools.worktime.ui.WorkYearPanel.MODE_VACATION;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.time.Clock;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import javax.imageio.ImageIO;
-import net.markwalder.tools.worktime.TestUtils;
-import net.markwalder.tools.worktime.db.Database;
-import net.markwalder.tools.worktime.db.DatabaseImpl;
 import net.markwalder.tools.worktime.db.WorkYear;
-import net.markwalder.tools.worktime.db.store.FileStoreImpl;
-import org.junit.Assert;
 import org.junit.Test;
 
-public class WorkYearPainterTest {
-
-	private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	private static final Instant instant = Instant.parse("2022-12-22T15:42:15.00Z");
-	private static final Clock clock = Clock.fixed(instant, Clock.systemDefaultZone().getZone());
-
-	private final Database database = new DatabaseImpl(new FileStoreImpl(new File("src/test/resources")));
+public class WorkYearPainterTest extends AbstractPainterTest {
 
 	@Test
 	public void paint_2020() throws IOException {
@@ -84,15 +68,7 @@ public class WorkYearPainterTest {
 			g2.dispose();
 		}
 
-		File file = new File("src/test/resources/calendar-" + year + ".png");
-		if (TestUtils.generateTestResources()) {
-			ImageIO.write(image, "png", file);
-		}
-
-		BufferedImage expectedImage = ImageIO.read(file);
-
-		long difference = TestUtils.compareImages(expectedImage, image);
-		Assert.assertEquals(0, difference);
+		checkImage(image, "calendar-" + year + ".png");
 	}
 
 }
