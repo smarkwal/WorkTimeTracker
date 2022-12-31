@@ -125,7 +125,12 @@ tasks {
     }
 
     test {
-        // no special configuration
+
+        // enable headless mode for tests
+        systemProperty("java.awt.headless", "true")
+
+        // set timezone for tests
+        systemProperty("user.timezone", "Europe/Zurich")
     }
 
     jar {

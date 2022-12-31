@@ -20,9 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 @SuppressWarnings("deprecation")
@@ -30,11 +28,6 @@ public class DateTimeUtilsTest {
 
 	private static final Date DATE = new Date(77, Calendar.FEBRUARY, 24, 13, 10, 51);
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-
-	@BeforeClass
-	public static void beforeClass() {
-		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"));
-	}
 
 	@Test
 	public void getNow() {
