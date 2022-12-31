@@ -44,12 +44,18 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 	public static final int MODE_VACATION = 3;
 	public static final int MODE_FREE = 4;
 
+	private static final Color COLOR_WEEKEND = new Color(175, 175, 175);
+	private static final Color COLOR_HOLIDAY = new Color(250, 150, 150);
+	private static final Color COLOR_COMPENSATION = new Color(225, 175, 125);
+	private static final Color COLOR_VACATION = new Color(150, 200, 150);
+	private static final Color COLOR_FREE = new Color(200, 200, 200);
+
 	private int mode = MODE_NONE;
 
 	private int mouseSlot = -1;
 
-	private final Controller controller;
-	private final Database database;
+	private final transient Controller controller;
+	private final transient Database database;
 
 	@Inject
 	public WorkYearPanel(Controller controller, Database database) {
@@ -72,12 +78,6 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		Color COLOR_WEEKEND = new Color(175, 175, 175);
-		Color COLOR_HOLIDAY = new Color(250, 150, 150);
-		Color COLOR_COMPENSATION = new Color(225, 175, 125);
-		Color COLOR_VACATION = new Color(150, 200, 150);
-		Color COLOR_FREE = new Color(200, 200, 200);
-
 		g2.setColor(getBackground());
 		g2.fillRect(0, 0, getWidth(), getHeight());
 
@@ -88,17 +88,30 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 		g2.translate(marginLeft, marginTop);
 
-		Date displayDate = controller.getDisplayDate();
-		if (displayDate != null) {
-			g2.setFont(new Font("DejaVu", Font.BOLD, 16));
-			g2.setColor(Color.BLACK);
-			g2.drawString("Year " + year, 0, -24);
-		}
+		g2.setFont(new Font("DejaVu", Font.BOLD, 16));
+		g2.setColor(Color.BLACK);
+		g2.drawString("Year " + year, 0, -24);
 
 		Font font = new Font("DejaVu", Font.PLAIN, 11);
 		g2.setFont(font);
 
-		// draw legend
+		drawLegend(g2);
+		drawLabels(g2, year);
+		drawGrid(g2, year);
+
+		WorkYear workYear = database.getWorkYear(date);
+		if (workYear == null) return;
+
+		fillGrid(g2, year, workYear);
+
+		Date today = DateTimeUtils.getNow();
+		if (year == DateTimeUtils.getYear(today)) {
+			markToday(g2, today);
+		}
+
+	}
+
+	private void drawLegend(Graphics2D g2) {
 
 		g2.setColor(Color.WHITE);
 		g2.fillRect(100, -40, 16, 16);
@@ -140,8 +153,9 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 			g2.drawRect(430, -40, 16, 16);
 		}
 		g2.setStroke(defaultStroke);
+	}
 
-		// draw grid
+	private void drawLabels(Graphics2D g2, int year) {
 
 		for (int month = 1; month <= 12; month++) {
 			int y = (month - 1) * (slotHeight * 2 + padding);
@@ -160,6 +174,9 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 			g2.fillRect(0, y, days * slotWidth, 2 * slotHeight);
 
 		}
+	}
+
+	private void drawGrid(Graphics2D g2, int year) {
 
 		g2.setStroke(new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
@@ -182,9 +199,9 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 			}
 
 		}
+	}
 
-		WorkYear workYear = database.getWorkYear(date);
-		if (workYear == null) return;
+	private void fillGrid(Graphics2D g2, int year, WorkYear workYear) {
 
 		int slot = -1;
 		for (int month = 1; month <= 12; month++) {
@@ -193,7 +210,8 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 			for (int day = 1; day <= days; day++) {
 
-				boolean weekend = DateTimeUtils.isWeekend(DateTimeUtils.getDate(year, month, day));
+				Date date = DateTimeUtils.getDate(year, month, day);
+				boolean weekend = DateTimeUtils.isWeekend(date);
 
 				for (int h = 0; h < 2; h++) {
 					slot++;
@@ -204,61 +222,62 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 						continue;
 					}
 
-					boolean holiday = workYear.isHoliday(slot);
-					boolean compensation = workYear.isCompensation(slot);
-					boolean vacation = workYear.isVacation(slot);
-					boolean free = workYear.isFree(slot);
-
-					Color color = null;
-					if (holiday) {
-						color = COLOR_HOLIDAY;
-					} else if (compensation) {
-						color = COLOR_COMPENSATION;
-					} else if (vacation) {
-						color = COLOR_VACATION;
-					} else if (free) {
-						color = COLOR_FREE;
-					}
-					if (color != null) {
-						g2.setColor(color);
-						g2.fillRect((day - 1) * slotWidth + 2, y + h * slotHeight + 2, slotWidth - 3, slotHeight - 3);
-					}
-
-					if (mode != MODE_NONE && slot == mouseSlot) {
-						boolean none = workYear.getValue(slot) == 0;
-						boolean enabled = none || (mode == MODE_HOLIDAY && holiday || mode == MODE_VACATION && vacation || mode == MODE_FREE && free);
-						if (enabled) {
-							g2.setColor(Color.BLACK);
-							g2.setStroke(new BasicStroke(2));
-							g2.drawRect((day - 1) * slotWidth + 1, y + h * slotHeight + 1, slotWidth - 2, slotHeight - 2);
-							g2.setStroke(defaultStroke);
-						}
-					}
-
+					fillDay(g2, workYear, slot, day, y, h);
 				}
 
 			}
 
 		}
+	}
 
-		// draw marker for today
+	private void fillDay(Graphics2D g2, WorkYear workYear, int slot, int day, int y, int h) {
 
-		Date today = DateTimeUtils.getNow();
-		if (year == DateTimeUtils.getYear(today)) {
+		boolean holiday = workYear.isHoliday(slot);
+		boolean compensation = workYear.isCompensation(slot);
+		boolean vacation = workYear.isVacation(slot);
+		boolean free = workYear.isFree(slot);
 
-			int month = today.getMonth() + 1;
-			int day = today.getDate();
-			int hour = today.getHours();
-
-			int x = (day - 1) * slotWidth;
-			int y = (month - 1) * (slotHeight * 2 + padding);
-			if (hour >= 12) y += slotHeight;
-
-			g2.setColor(Color.RED);
-			g2.setStroke(new BasicStroke(2));
-			g2.drawRect(x, y, slotWidth, slotHeight);
+		Color color = null;
+		if (holiday) {
+			color = COLOR_HOLIDAY;
+		} else if (compensation) {
+			color = COLOR_COMPENSATION;
+		} else if (vacation) {
+			color = COLOR_VACATION;
+		} else if (free) {
+			color = COLOR_FREE;
+		}
+		if (color != null) {
+			g2.setColor(color);
+			g2.fillRect((day - 1) * slotWidth + 2, y + h * slotHeight + 2, slotWidth - 3, slotHeight - 3);
 		}
 
+		if (mode != MODE_NONE && slot == mouseSlot) {
+			boolean none = workYear.getValue(slot) == 0;
+			boolean enabled = none || (mode == MODE_HOLIDAY && holiday || mode == MODE_VACATION && vacation || mode == MODE_FREE && free);
+			if (enabled) {
+				Stroke defaultStroke = g2.getStroke();
+				g2.setColor(Color.BLACK);
+				g2.setStroke(new BasicStroke(2));
+				g2.drawRect((day - 1) * slotWidth + 1, y + h * slotHeight + 1, slotWidth - 2, slotHeight - 2);
+				g2.setStroke(defaultStroke);
+			}
+		}
+	}
+
+	private void markToday(Graphics2D g2, Date today) {
+
+		int month = DateTimeUtils.getMonth(today);
+		int day = DateTimeUtils.getDay(today);
+		int hour = DateTimeUtils.getHour(today);
+
+		int x = (day - 1) * slotWidth;
+		int y = (month - 1) * (slotHeight * 2 + padding);
+		if (hour >= 12) y += slotHeight;
+
+		g2.setColor(Color.RED);
+		g2.setStroke(new BasicStroke(2));
+		g2.drawRect(x, y, slotWidth, slotHeight);
 	}
 
 	//---------------------------------------------------------------------------------
@@ -364,29 +383,6 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 			return -1;
 		}
 
-	}
-
-	private String formatTime(int slots) {
-		int hours = slots / 12;
-		int minutes = (slots % 12) * 5;
-		return String.format("%d:%02d", hours, minutes);
-	}
-
-	private String formatTimeDiff(int slots) {
-		int hours = Math.abs(slots) / 12;
-		int minutes = (Math.abs(slots) % 12) * 5;
-		String text = String.format("%d:%02d", hours, minutes);
-		if (slots > 0) {
-			return "+ " + text;
-		} else if (slots < 0) {
-			return "- " + text;
-		} else {
-			return "\u00B1 " + text;
-		}
-	}
-
-	private void drawString(Graphics2D g2, String text, int x, int y) {
-		g2.drawString(text, x, y);
 	}
 
 	private static final int LEFT = -1;

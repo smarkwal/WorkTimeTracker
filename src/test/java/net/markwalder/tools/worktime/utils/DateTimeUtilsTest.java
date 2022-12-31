@@ -122,6 +122,36 @@ public class DateTimeUtilsTest {
 	}
 
 	@Test
+	public void getMonth() {
+		// prepare
+		Date date = new Date(77, Calendar.FEBRUARY, 24, 13, 10, 51);
+		// test
+		int month = DateTimeUtils.getMonth(date);
+		// assert
+		Assert.assertEquals(2, month);
+	}
+
+	@Test
+	public void getDay() {
+		// prepare
+		Date date = new Date(77, Calendar.FEBRUARY, 24, 13, 10, 51);
+		// test
+		int day = DateTimeUtils.getDay(date);
+		// assert
+		Assert.assertEquals(24, day);
+	}
+
+	@Test
+	public void getHour() {
+		// prepare
+		Date date = new Date(77, Calendar.FEBRUARY, 24, 13, 10, 51);
+		// test
+		int hour = DateTimeUtils.getHour(date);
+		// assert
+		Assert.assertEquals(13, hour);
+	}
+
+	@Test
 	public void getStartOfYear() {
 		// prepare
 		Date date = new Date(77, Calendar.FEBRUARY, 24, 13, 10, 51);
@@ -244,12 +274,32 @@ public class DateTimeUtilsTest {
 	}
 
 	@Test
+	public void addMinutes() {
+		// prepare
+		Date date = new Date(77, Calendar.FEBRUARY, 24, 13, 10, 51);
+		// test
+		date = DateTimeUtils.addMinutes(date, 145);
+		// assert
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+		Assert.assertEquals("1977-02-24 15:35:51,000", format.format(date));
+	}
+
+	@Test
 	public void getDate() {
 		// test
 		Date date = DateTimeUtils.getDate(1977, 2, 24);
 		// assert
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
 		Assert.assertEquals("1977-02-24 00:00:00,000", format.format(date));
+	}
+
+	@Test
+	public void getDate_withTime() {
+		// test
+		Date date = DateTimeUtils.getDate(1977, 2, 24, 13, 10, 51);
+		// assert
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+		Assert.assertEquals("1977-02-24 13:10:51,000", format.format(date));
 	}
 
 }

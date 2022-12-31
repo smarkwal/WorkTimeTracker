@@ -58,14 +58,15 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 	private static final BasicStroke LINE_1 = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	private static final BasicStroke LINE_5 = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
-	private static final Font FONT_TITLE = new Font("DejaVu", Font.BOLD, 16);
-	private static final Font FONT_BOLD = new Font("DejaVu", Font.BOLD, 12);
-	private static final Font FONT_PLAIN = new Font("DejaVu", Font.PLAIN, 11);
+	private static final String FONT = "DejaVu";
+	private static final Font FONT_TITLE = new Font(FONT, Font.BOLD, 16);
+	private static final Font FONT_BOLD = new Font(FONT, Font.BOLD, 12);
+	private static final Font FONT_PLAIN = new Font(FONT, Font.PLAIN, 11);
 
 	private static final Locale LOCALE = Locale.US;
 
-	private final Controller controller;
-	private final Database database;
+	private final transient Controller controller;
+	private final transient Database database;
 
 	@Inject
 	public WorkDayPanel(Controller controller, Database database) {

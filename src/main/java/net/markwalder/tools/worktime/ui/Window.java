@@ -33,7 +33,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 public class Window extends JFrame implements WindowListener, KeyListener {
 
-	private final Controller controller;
+	private final transient Controller controller;
 
 	private final WorkDayPanel workDayPanel;
 	private final WorkYearPanel workYearPanel;

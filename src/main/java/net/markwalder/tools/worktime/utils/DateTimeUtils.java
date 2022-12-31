@@ -65,9 +65,19 @@ public class DateTimeUtils {
 	}
 
 	public static int getYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return calendar.get(Calendar.YEAR);
+		return getCalendarField(date, Calendar.YEAR);
+	}
+
+	public static int getMonth(Date date) {
+		return getCalendarField(date, Calendar.MONTH) + 1;
+	}
+
+	public static int getDay(Date date) {
+		return getCalendarField(date, Calendar.DAY_OF_MONTH);
+	}
+
+	public static int getHour(Date date) {
+		return getCalendarField(date, Calendar.HOUR_OF_DAY);
 	}
 
 	public static Date getStartOfYear(Date date) {
@@ -82,15 +92,11 @@ public class DateTimeUtils {
 	}
 
 	public static int getDayOfWeek(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return calendar.get(Calendar.DAY_OF_WEEK);
+		return getCalendarField(date, Calendar.DAY_OF_WEEK);
 	}
 
 	public static int getDayOfYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return calendar.get(Calendar.DAY_OF_YEAR);
+		return getCalendarField(date, Calendar.DAY_OF_YEAR);
 	}
 
 	public static int getDaysInMonth(int year, int month) {
@@ -140,17 +146,29 @@ public class DateTimeUtils {
 	}
 
 	public static Date getDate(int year, int month, int day) {
-		//noinspection MagicConstant
-		return new Date(year - 1900, month - 1, day);
+		return getDate(year, month, day, 0, 0, 0);
 	}
 
-	public static Date getDate(int year, int month, int day, int hours, int minutes, int seconds) {
-		//noinspection MagicConstant
-		return new Date(year - 1900, month - 1, day, hours, minutes, seconds);
+	public static Date getDate(int year, int month, int day, int hour, int minute, int second) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, day);
+		calendar.set(Calendar.HOUR_OF_DAY, hour);
+		calendar.set(Calendar.MINUTE, minute);
+		calendar.set(Calendar.SECOND, second);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
 	}
 
 	public static Date addMinutes(Date date, int minutes) {
 		return new Date(date.getTime() + minutes * 60 * 1000L);
+	}
+
+	private static int getCalendarField(Date date, int field) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(field);
 	}
 
 }
