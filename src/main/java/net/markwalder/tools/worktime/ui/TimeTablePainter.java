@@ -29,7 +29,7 @@ abstract class TimeTablePainter {
 	public static final int SLOT_HEIGHT = 20;
 	public static final int PADDING = 20;
 
-	protected static final String FONT = "DejaVu";
+	protected static final String FONT = Font.DIALOG;
 	protected static final Font FONT_TITLE = new Font(FONT, Font.BOLD, 16);
 	protected static final Font FONT_BOLD = new Font(FONT, Font.BOLD, 12);
 	protected static final Font FONT_PLAIN = new Font(FONT, Font.PLAIN, 11);
