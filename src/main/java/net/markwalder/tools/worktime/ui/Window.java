@@ -25,11 +25,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URL;
 import java.time.Clock;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.swing.*;
 import net.markwalder.tools.worktime.Controller;
 import net.markwalder.tools.worktime.Version;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.apache.commons.lang3.SystemUtils;
 
 public class Window extends JFrame implements WindowListener, KeyListener {
@@ -182,8 +181,8 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 		} else if (keyChar == 'y') {
 			switchView();
 		} else if (keyChar == 't') {
-			Date date = DateTimeUtils.getToday(clock);
-			controller.setDisplayDate(date);
+			LocalDate today = LocalDate.now(clock);
+			controller.setDisplayDate(today);
 		}
 	}
 

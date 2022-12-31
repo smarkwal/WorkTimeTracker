@@ -18,9 +18,8 @@ package net.markwalder.tools.worktime.db;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
+import java.time.LocalDate;
 import net.markwalder.tools.worktime.TestUtils;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.junit.Test;
 
 public class WorkYearTest {
@@ -55,9 +54,9 @@ public class WorkYearTest {
 
 	private static WorkYear prepareWorkYear(int year) {
 
-		Date date = DateTimeUtils.getDate(year, 1, 1);
+		LocalDate date = LocalDate.of(year, 1, 1);
 
-		int daysInYear = DateTimeUtils.getDaysInYear(year);
+		int daysInYear = date.lengthOfYear();
 		int slots = daysInYear * 2;
 		byte[] data = new byte[slots];
 

@@ -16,7 +16,7 @@
 
 package net.markwalder.tools.worktime.db;
 
-import java.util.Date;
+import java.time.LocalDate;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class WorkYear extends TimeTable {
@@ -31,8 +31,8 @@ public class WorkYear extends TimeTable {
 	private int vacationCount = 0;
 	private int freeCount = 0;
 
-	public WorkYear(Date date, byte[] data) {
-		super(DateTimeUtils.getStartOfYear(date), data);
+	public WorkYear(LocalDate date, byte[] data) {
+		super(date.withDayOfYear(1), data);
 		for (byte bit : data) {
 			if ((bit & HOLIDAY) > 0) {
 				holidayCount++;
@@ -130,7 +130,7 @@ public class WorkYear extends TimeTable {
 
 		StringBuilder buffer = new StringBuilder(data.length);
 
-		int year = DateTimeUtils.getYear(date);
+		int year = date.getYear();
 		buffer.append("Year: ").append(year).append("\n");
 		buffer.append("+");
 		buffer.append("-".repeat(31));
@@ -138,7 +138,8 @@ public class WorkYear extends TimeTable {
 
 		for (int month = 1; month <= 12; month++) {
 			int days = DateTimeUtils.getDaysInMonth(year, month);
-			int daysBeforeMonth = DateTimeUtils.getDayOfYear(DateTimeUtils.getDate(year, month, 1)) - 1;
+			LocalDate startOfMonth = LocalDate.of(year, month, 1);
+			int daysBeforeMonth = startOfMonth.getDayOfYear() - 1;
 
 			for (int h = 0; h < 2; h++) { // morning (h = 0) and afternoon (h = 1)
 				buffer.append("|");

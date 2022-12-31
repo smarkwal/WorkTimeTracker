@@ -17,18 +17,17 @@
 package net.markwalder.tools.worktime.db;
 
 import com.google.inject.Inject;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import net.markwalder.tools.worktime.db.store.Store;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class DatabaseImpl implements Database {
 
 	private final Store store;
 
-	private final Map<Date, WorkDay> workDaysCache = new HashMap<>();
-	private final Map<Date, WorkYear> workYearsCache = new HashMap<>();
+	private final Map<LocalDate, WorkDay> workDaysCache = new HashMap<>();
+	private final Map<Integer, WorkYear> workYearsCache = new HashMap<>();
 
 	@Inject
 	public DatabaseImpl(Store store) {
@@ -36,10 +35,9 @@ public class DatabaseImpl implements Database {
 	}
 
 	@Override
-	public synchronized WorkDay getWorkDay(Date date) {
+	public synchronized WorkDay getWorkDay(LocalDate date) {
 		if (date == null) throw new NullPointerException("date");
 
-		date = DateTimeUtils.getStartOfDay(date);
 		WorkDay workDay = workDaysCache.get(date);
 
 		if (workDay == null) {
@@ -50,7 +48,7 @@ public class DatabaseImpl implements Database {
 		return workDay;
 	}
 
-	private WorkDay loadWorkDay(Date date) {
+	private WorkDay loadWorkDay(LocalDate date) {
 		if (date == null) throw new NullPointerException("date");
 
 		// calculate day offset and length
@@ -72,7 +70,7 @@ public class DatabaseImpl implements Database {
 	public synchronized void storeWorkDay(WorkDay workDay) {
 		if (workDay == null) throw new NullPointerException("workDay");
 
-		Date date = workDay.getDate();
+		LocalDate date = workDay.getDate();
 
 		// calculate day offset and length
 		int[] range = getWorkDayRange(date);
@@ -100,26 +98,25 @@ public class DatabaseImpl implements Database {
 	}
 
 	@Override
-	public synchronized WorkYear getWorkYear(Date date) {
+	public synchronized WorkYear getWorkYear(LocalDate date) {
 		if (date == null) throw new NullPointerException("date");
 
-		date = DateTimeUtils.getStartOfYear(date);
-		WorkYear workYear = workYearsCache.get(date);
+		int year = date.getYear();
+		WorkYear workYear = workYearsCache.get(year);
 
 		if (workYear == null) {
 			workYear = loadWorkYear(date);
-			workYearsCache.put(date, workYear);
+			workYearsCache.put(year, workYear);
 		}
 
 		return workYear;
 	}
 
-	private synchronized WorkYear loadWorkYear(Date date) {
+	private synchronized WorkYear loadWorkYear(LocalDate date) {
 		if (date == null) throw new NullPointerException("date");
 
 		// calculate number of days
-		int year = DateTimeUtils.getYear(date);
-		int days = DateTimeUtils.getDaysInYear(year);
+		int days = date.lengthOfYear();
 		int length = days * 2;
 
 		// get key
@@ -136,7 +133,7 @@ public class DatabaseImpl implements Database {
 	public synchronized void storeWorkYear(WorkYear workYear) {
 		if (workYear == null) throw new NullPointerException("workYear");
 
-		Date date = workYear.getDate();
+		LocalDate date = workYear.getDate();
 
 		// get timetable data
 		byte[] data = workYear.getData();
@@ -151,33 +148,24 @@ public class DatabaseImpl implements Database {
 		store.writeData(key, 0, data);
 
 		// add to cache
-		workYearsCache.put(date, workYear);
+		int year = date.getYear();
+		workYearsCache.put(year, workYear);
 
 	}
 
 	// ------------------------------------------------------------------------------------------------------------
 	// private methods
 
-	private String getKey(String prefix, Date date) {
-		int year = DateTimeUtils.getYear(date);
-		return prefix + "-" + year;
+	private String getKey(String prefix, LocalDate date) {
+		return prefix + "-" + date.getYear();
 	}
 
-	private int[] getWorkDayRange(Date date) {
+	private int[] getWorkDayRange(LocalDate date) {
 
-		// get start of year and start/end of day
-		Date startOfYear = DateTimeUtils.getStartOfYear(date);
-		Date startOfDay = DateTimeUtils.getStartOfDay(date);
-		Date endOfDay = DateTimeUtils.addDays(startOfDay, 1);
+		int length = 24 * 12; // number of 5-minute slots per day
 
-		// convert date into timestamp
-		long startOfYearTime = startOfYear.getTime();
-		long startOfDayTime = startOfDay.getTime();
-		long endOfDayTime = endOfDay.getTime();
-
-		// calculate offset and length (number of 5-minute slots)
-		int offset = DatabaseUtils.slot(startOfDayTime - startOfYearTime);
-		int length = DatabaseUtils.slot(endOfDayTime - startOfDayTime);
+		int day = date.getDayOfYear();
+		int offset = (day - 1) * length;
 
 		return new int[] { offset, length };
 

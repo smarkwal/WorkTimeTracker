@@ -24,9 +24,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.util.Date;
+import java.time.LocalDate;
 import net.markwalder.tools.worktime.db.store.Store;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +36,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class DatabaseImplTest {
 
-	private static final Date DATE = DateTimeUtils.getDate(2022, 12, 30, 13, 51, 23);
+	private static final LocalDate DATE = LocalDate.of(2022, 12, 30);
+
 	@Mock
 	Store store;
 
@@ -56,7 +56,7 @@ public class DatabaseImplTest {
 
 		// assert
 		assertNotNull(workDay);
-		assertEquals(DateTimeUtils.getStartOfDay(DATE), workDay.getDate()); // date must have been rounded down to the beginning of the day
+		assertEquals(DATE, workDay.getDate());
 		assertArrayEquals(data, workDay.getData());
 
 		// verify
@@ -105,7 +105,7 @@ public class DatabaseImplTest {
 
 		// assert
 		assertNotNull(workYear);
-		assertEquals(DateTimeUtils.getStartOfYear(DATE), workYear.getDate()); // date must have been rounded down to the beginning of the year
+		assertEquals(DATE.withDayOfYear(1), workYear.getDate()); // date must have been rounded down to the beginning of the year
 		assertArrayEquals(data, workYear.getData());
 
 		// verify

@@ -18,7 +18,8 @@ package net.markwalder.tools.worktime;
 
 import com.google.inject.Inject;
 import java.time.Clock;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import net.markwalder.tools.worktime.db.Database;
 import net.markwalder.tools.worktime.db.DatabaseUtils;
 import net.markwalder.tools.worktime.db.WorkDay;
@@ -27,7 +28,6 @@ import net.markwalder.tools.worktime.tracker.ActivityListener;
 import net.markwalder.tools.worktime.tracker.ActivityTracker;
 import net.markwalder.tools.worktime.ui.Window;
 import net.markwalder.tools.worktime.ui.WorkYearPanel;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class ControllerImpl implements Controller, ActivityListener {
 
@@ -36,10 +36,10 @@ public class ControllerImpl implements Controller, ActivityListener {
 	private final Database database;
 	private final Clock clock;
 
-	private Date activeDate;
+	private LocalDate activeDate;
 	private WorkDay activeWorkDay;
 
-	private Date displayDate;
+	private LocalDate displayDate;
 	private WorkDay displayWorkDay;
 	private WorkYear displayWorkYear;
 
@@ -64,7 +64,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 	@Override
 	public void start() {
 
-		activeDate = DateTimeUtils.getToday(clock);
+		activeDate = LocalDate.now(clock);
 		displayDate = activeDate;
 
 		// open database and load timetables
@@ -88,12 +88,8 @@ public class ControllerImpl implements Controller, ActivityListener {
 	@Override
 	public void reportActive(boolean active) {
 
-		// get current time, date and start of day
-		long time = clock.millis();
-		Date today = DateTimeUtils.getToday(clock);
-		long startOfDay = today.getTime();
-
 		// if day has changed ...
+		LocalDate today = LocalDate.now(clock);
 		if (!today.equals(activeDate)) {
 			// load new timetable
 			activeWorkDay = database.getWorkDay(today);
@@ -105,7 +101,8 @@ public class ControllerImpl implements Controller, ActivityListener {
 		}
 
 		// check if timetable needs to be modified ...
-		int slot = DatabaseUtils.slot(time - startOfDay);
+		LocalDateTime now = LocalDateTime.now(clock);
+		int slot = DatabaseUtils.slot(now);
 
 		// make sure that the "application is running" flag is set
 		if (!activeWorkDay.isRunning(slot)) {
@@ -228,14 +225,12 @@ public class ControllerImpl implements Controller, ActivityListener {
 	}
 
 	@Override
-	public Date getDisplayDate() {
+	public LocalDate getDisplayDate() {
 		return displayDate;
 	}
 
 	@Override
-	public void setDisplayDate(Date date) {
-
-		date = DateTimeUtils.getStartOfDay(date);
+	public void setDisplayDate(LocalDate date) {
 
 		if (date.equals(activeDate)) {
 			displayDate = activeDate;
@@ -251,13 +246,13 @@ public class ControllerImpl implements Controller, ActivityListener {
 
 	@Override
 	public void incrementDisplayDate() {
-		Date date = DateTimeUtils.addDays(displayDate, 1);
+		LocalDate date = displayDate.plusDays(1);
 		setDisplayDate(date);
 	}
 
 	@Override
 	public void decrementDisplayDate() {
-		Date date = DateTimeUtils.addDays(displayDate, -1);
+		LocalDate date = displayDate.minusDays(1);
 		setDisplayDate(date);
 	}
 

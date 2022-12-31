@@ -18,9 +18,8 @@ package net.markwalder.tools.worktime.db;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
+import java.time.LocalDate;
 import net.markwalder.tools.worktime.TestUtils;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
 import org.junit.Test;
 
 public class WorkDayTest {
@@ -29,7 +28,7 @@ public class WorkDayTest {
 	public void test_toString() {
 
 		// prepare
-		Date date = DateTimeUtils.getDate(2022, 2, 24);
+		LocalDate date = LocalDate.of(2022, 2, 24);
 		byte[] data = new byte[24 * 12];
 		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) (i % 12);
@@ -48,7 +47,7 @@ public class WorkDayTest {
 	public void test_toString_forDSTStart() {
 
 		// prepare
-		Date date = DateTimeUtils.getDate(2022, 3, 27);
+		LocalDate date = LocalDate.of(2022, 3, 27);
 		byte[] data = new byte[23 * 12]; // 1 less hour due to DST change
 		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) (i % 12);
@@ -67,7 +66,7 @@ public class WorkDayTest {
 	public void test_toString_forDSTEnd() {
 
 		// prepare
-		Date date = DateTimeUtils.getDate(2022, 10, 30);
+		LocalDate date = LocalDate.of(2022, 10, 30);
 		byte[] data = new byte[25 * 12]; // 1 extra hour due to DST change
 		for (int i = 0; i < data.length; i++) {
 			data[i] = (byte) (i % 12);

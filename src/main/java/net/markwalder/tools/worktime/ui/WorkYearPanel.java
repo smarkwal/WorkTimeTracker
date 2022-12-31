@@ -23,7 +23,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.time.Clock;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.swing.*;
 import net.markwalder.tools.worktime.Controller;
 import net.markwalder.tools.worktime.db.Database;
@@ -84,10 +85,10 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		g2.setColor(getBackground());
 		g2.fillRect(0, 0, getWidth(), getHeight());
 
-		Date date = controller.getDisplayDate();
+		LocalDate date = controller.getDisplayDate();
 		if (date == null) return;
 
-		int year = DateTimeUtils.getYear(date);
+		int year = date.getYear();
 
 		g2.translate(MARGIN_LEFT, MARGIN_TOP);
 
@@ -107,9 +108,9 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 		fillGrid(g2, year, workYear);
 
-		Date today = DateTimeUtils.getNow(clock);
-		if (year == DateTimeUtils.getYear(today)) {
-			markToday(g2, today);
+		LocalDateTime now = LocalDateTime.now(clock);
+		if (year == now.getYear()) {
+			markToday(g2, now);
 		}
 
 	}
@@ -213,7 +214,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 			for (int day = 1; day <= days; day++) {
 
-				Date date = DateTimeUtils.getDate(year, month, day);
+				LocalDate date = LocalDate.of(year, month, day);
 				boolean weekend = DateTimeUtils.isWeekend(date);
 
 				for (int h = 0; h < 2; h++) {
@@ -268,11 +269,11 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		}
 	}
 
-	private void markToday(Graphics2D g2, Date today) {
+	private void markToday(Graphics2D g2, LocalDateTime now) {
 
-		int month = DateTimeUtils.getMonth(today);
-		int day = DateTimeUtils.getDay(today);
-		int hour = DateTimeUtils.getHour(today);
+		int month = now.getMonthValue();
+		int day = now.getDayOfMonth();
+		int hour = now.getHour();
 
 		int x = (day - 1) * SLOT_WIDTH;
 		int y = (month - 1) * (SLOT_HEIGHT * 2 + PADDING);
@@ -353,10 +354,10 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 	private int getSlot(MouseEvent e) {
 
-		Date displayDate = controller.getDisplayDate();
+		LocalDate displayDate = controller.getDisplayDate();
 		if (displayDate == null) return -1;
 
-		int year = DateTimeUtils.getYear(displayDate);
+		int year = displayDate.getYear();
 
 		// get relative mouse position relative
 		int x = e.getX() - MARGIN_LEFT;
@@ -367,13 +368,13 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		int month = y / (SLOT_HEIGHT * 2 + PADDING) + 1;
 		if (month < 1 || month > 12) return -1;
 
-		int daysInMonth = DateTimeUtils.getDaysInMonth(year, month);
+		int days = DateTimeUtils.getDaysInMonth(year, month);
 
 		int day = x / SLOT_WIDTH + 1;
-		if (day < 1 || day > daysInMonth) return -1;
+		if (day < 1 || day > days) return -1;
 
-		Date date = DateTimeUtils.getDate(year, month, day);
-		int dayOfYear = DateTimeUtils.getDayOfYear(date);
+		LocalDate date = LocalDate.of(year, month, day);
+		int dayOfYear = date.getDayOfYear();
 
 		int h = y - (month - 1) * (SLOT_HEIGHT * 2 + PADDING);
 		if (h < SLOT_HEIGHT) {
