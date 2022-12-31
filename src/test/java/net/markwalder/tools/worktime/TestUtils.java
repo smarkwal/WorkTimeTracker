@@ -16,6 +16,8 @@
 
 package net.markwalder.tools.worktime;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -30,13 +32,66 @@ public class TestUtils {
 		}
 	}
 
+	public static boolean generateTestResources() {
+		return System.getProperty("generate.test.resources") != null;
+	}
+
 	public static String readStringFromResource(String resourceName) {
+		return new String(readByteArrayFromResource(resourceName));
+	}
+
+	public static byte[] readByteArrayFromResource(String resourceName) {
 		try (InputStream stream = TestUtils.class.getClassLoader().getResourceAsStream(resourceName)) {
 			if (stream == null) throw new IllegalArgumentException("Resource not found: " + resourceName);
-			return new String(stream.readAllBytes());
+			return stream.readAllBytes();
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}
+	}
+
+
+	/**
+	 * Compares two images pixel by pixel.
+	 *
+	 * @param image1 Image 1
+	 * @param image2 Image 2
+	 * @return Number of different pixels.
+	 */
+	public static int compareImages(BufferedImage image1, BufferedImage image2) {
+
+		int width = image1.getWidth();
+		int height = image1.getHeight();
+		if (image2.getWidth() != width || image2.getHeight() != height) {
+			throw new IllegalArgumentException("Error: Images dimensions mismatch");
+		}
+
+		// count number of differing pixels
+		int diff = 0;
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+
+				int pixel1 = image1.getRGB(x, y);
+				Color color1 = new Color(pixel1, true);
+				int r1 = color1.getRed();
+				int g1 = color1.getGreen();
+				int b1 = color1.getBlue();
+
+				int pixel2 = image2.getRGB(x, y);
+				Color color2 = new Color(pixel2, true);
+				int r2 = color2.getRed();
+				int g2 = color2.getGreen();
+				int b2 = color2.getBlue();
+
+				// compare RGB values of the pixels
+				if (r1 != r2 || g1 != g2 || b1 != b2) {
+					diff++;
+				}
+
+			}
+		}
+
+		return diff;
 	}
 
 }

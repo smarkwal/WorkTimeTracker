@@ -131,6 +131,12 @@ tasks {
 
         // set timezone for tests
         systemProperty("user.timezone", "Europe/Zurich")
+
+        // check if test resources have to be regenerated
+        if (project.hasProperty("generate.test.resources")) {
+            systemProperty("generate.test.resources", "true")
+        }
+
     }
 
     jar {

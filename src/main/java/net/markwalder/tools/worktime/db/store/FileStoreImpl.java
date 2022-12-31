@@ -35,7 +35,8 @@ public class FileStoreImpl implements Store {
 		this(new File("."));
 	}
 
-	FileStoreImpl(File directory) {
+	// visible for testing
+	public FileStoreImpl(File directory) {
 		this.directory = directory;
 	}
 
