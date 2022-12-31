@@ -31,13 +31,13 @@ import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionListener {
 
-	private final int marginTop = 50;
-	private final int marginLeft = 20;
+	private static final int MARGIN_TOP = 50;
+	private static final int MARGIN_LEFT = 20;
 
-	private final int slotWidth = 20;
-	private final int slotHeight = 20;
+	private static final int SLOT_WIDTH = 20;
+	private static final int SLOT_HEIGHT = 20;
 
-	private final int padding = 20;
+	private static final int PADDING = 20;
 
 	public static final int MODE_NONE = 0;
 	public static final int MODE_HOLIDAY = 1;
@@ -86,7 +86,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 		int year = DateTimeUtils.getYear(date);
 
-		g2.translate(marginLeft, marginTop);
+		g2.translate(MARGIN_LEFT, MARGIN_TOP);
 
 		g2.setFont(new Font("DejaVu", Font.BOLD, 16));
 		g2.setColor(Color.BLACK);
@@ -158,20 +158,20 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 	private void drawLabels(Graphics2D g2, int year) {
 
 		for (int month = 1; month <= 12; month++) {
-			int y = (month - 1) * (slotHeight * 2 + padding);
+			int y = (month - 1) * (SLOT_HEIGHT * 2 + PADDING);
 
 			g2.setColor(Color.GRAY);
-			drawString(g2, String.valueOf(month), -4, y + slotHeight - 2, RIGHT, MIDDLE);
+			drawString(g2, String.valueOf(month), -4, y + SLOT_HEIGHT - 2, RIGHT, MIDDLE);
 
 			int days = DateTimeUtils.getDaysInMonth(year, month);
 
 			for (int day = 1; day <= days; day++) {
-				int x = day * slotWidth - (slotWidth / 2);
+				int x = day * SLOT_WIDTH - (SLOT_WIDTH / 2);
 				drawString(g2, String.valueOf(day), x, y - 4, MIDDLE, BOTTOM);
 			}
 
 			g2.setColor(Color.WHITE);
-			g2.fillRect(0, y, days * slotWidth, 2 * slotHeight);
+			g2.fillRect(0, y, days * SLOT_WIDTH, 2 * SLOT_HEIGHT);
 
 		}
 	}
@@ -181,20 +181,20 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		g2.setStroke(new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
 		for (int month = 1; month <= 12; month++) {
-			int y = (month - 1) * (slotHeight * 2 + padding);
+			int y = (month - 1) * (SLOT_HEIGHT * 2 + PADDING);
 
 			int days = DateTimeUtils.getDaysInMonth(year, month);
 
 			g2.setColor(Color.GRAY);
 			for (int i = 0; i < 3; i++) {
-				int w = days * slotWidth;
-				int y2 = y + i * slotHeight;
+				int w = days * SLOT_WIDTH;
+				int y2 = y + i * SLOT_HEIGHT;
 				g2.drawLine(0, y2, w, y2);
 			}
 
 			for (int day = 0; day <= days; day++) {
-				int x = day * slotWidth;
-				int h = y + 2 * slotHeight;
+				int x = day * SLOT_WIDTH;
+				int h = y + 2 * SLOT_HEIGHT;
 				g2.drawLine(x, y, x, h);
 			}
 
@@ -206,7 +206,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		int slot = -1;
 		for (int month = 1; month <= 12; month++) {
 			int days = DateTimeUtils.getDaysInMonth(year, month);
-			int y = (month - 1) * (slotHeight * 2 + padding);
+			int y = (month - 1) * (SLOT_HEIGHT * 2 + PADDING);
 
 			for (int day = 1; day <= days; day++) {
 
@@ -218,7 +218,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 
 					if (weekend) {
 						g2.setColor(COLOR_WEEKEND);
-						g2.fillRect((day - 1) * slotWidth + 1, y + h * slotHeight + 1, slotWidth - 1, slotHeight - 1);
+						g2.fillRect((day - 1) * SLOT_WIDTH + 1, y + h * SLOT_HEIGHT + 1, SLOT_WIDTH - 1, SLOT_HEIGHT - 1);
 						continue;
 					}
 
@@ -249,7 +249,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		}
 		if (color != null) {
 			g2.setColor(color);
-			g2.fillRect((day - 1) * slotWidth + 2, y + h * slotHeight + 2, slotWidth - 3, slotHeight - 3);
+			g2.fillRect((day - 1) * SLOT_WIDTH + 2, y + h * SLOT_HEIGHT + 2, SLOT_WIDTH - 3, SLOT_HEIGHT - 3);
 		}
 
 		if (mode != MODE_NONE && slot == mouseSlot) {
@@ -259,7 +259,7 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 				Stroke defaultStroke = g2.getStroke();
 				g2.setColor(Color.BLACK);
 				g2.setStroke(new BasicStroke(2));
-				g2.drawRect((day - 1) * slotWidth + 1, y + h * slotHeight + 1, slotWidth - 2, slotHeight - 2);
+				g2.drawRect((day - 1) * SLOT_WIDTH + 1, y + h * SLOT_HEIGHT + 1, SLOT_WIDTH - 2, SLOT_HEIGHT - 2);
 				g2.setStroke(defaultStroke);
 			}
 		}
@@ -271,13 +271,13 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		int day = DateTimeUtils.getDay(today);
 		int hour = DateTimeUtils.getHour(today);
 
-		int x = (day - 1) * slotWidth;
-		int y = (month - 1) * (slotHeight * 2 + padding);
-		if (hour >= 12) y += slotHeight;
+		int x = (day - 1) * SLOT_WIDTH;
+		int y = (month - 1) * (SLOT_HEIGHT * 2 + PADDING);
+		if (hour >= 12) y += SLOT_HEIGHT;
 
 		g2.setColor(Color.RED);
 		g2.setStroke(new BasicStroke(2));
-		g2.drawRect(x, y, slotWidth, slotHeight);
+		g2.drawRect(x, y, SLOT_WIDTH, SLOT_HEIGHT);
 	}
 
 	//---------------------------------------------------------------------------------
@@ -292,8 +292,8 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 	public void mousePressed(MouseEvent e) {
 
 		// get relative mouse position relative
-		int x = e.getX() - marginLeft;
-		int y = e.getY() - marginTop;
+		int x = e.getX() - MARGIN_LEFT;
+		int y = e.getY() - MARGIN_TOP;
 
 		if (y > -40 && y < -24) {
 			// click on legend
@@ -356,27 +356,27 @@ public class WorkYearPanel extends JPanel implements MouseListener, MouseMotionL
 		int year = DateTimeUtils.getYear(displayDate);
 
 		// get relative mouse position relative
-		int x = e.getX() - marginLeft;
-		int y = e.getY() - marginTop;
+		int x = e.getX() - MARGIN_LEFT;
+		int y = e.getY() - MARGIN_TOP;
 
 		if (y < 0) return -1;
 
-		int month = y / (slotHeight * 2 + padding) + 1;
+		int month = y / (SLOT_HEIGHT * 2 + PADDING) + 1;
 		if (month < 1 || month > 12) return -1;
 
 		int daysInMonth = DateTimeUtils.getDaysInMonth(year, month);
 
-		int day = x / slotWidth + 1;
+		int day = x / SLOT_WIDTH + 1;
 		if (day < 1 || day > daysInMonth) return -1;
 
 		Date date = DateTimeUtils.getDate(year, month, day);
 		int dayOfYear = DateTimeUtils.getDayOfYear(date);
 
-		int h = y - (month - 1) * (slotHeight * 2 + padding);
-		if (h < slotHeight) {
+		int h = y - (month - 1) * (SLOT_HEIGHT * 2 + PADDING);
+		if (h < SLOT_HEIGHT) {
 			// AM
 			return (dayOfYear - 1) * 2;
-		} else if (h < 2 * slotHeight) {
+		} else if (h < 2 * SLOT_HEIGHT) {
 			// PM
 			return (dayOfYear - 1) * 2 + 1;
 		} else {

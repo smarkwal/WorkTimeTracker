@@ -133,8 +133,8 @@ public class ControllerImpl implements Controller, ActivityListener {
 
 	}
 
-	private boolean working = false;
-	private boolean free = false;
+	private boolean markWorking = false;
+	private boolean markFree = false;
 
 	@Override
 	public void workDayMousePressed(int slot, boolean shift) {
@@ -143,17 +143,17 @@ public class ControllerImpl implements Controller, ActivityListener {
 
 		if (!shift) {
 			// invert working mode
-			working = !displayWorkDay.isWorking(slot);
-			free = false;
+			markWorking = !displayWorkDay.isWorking(slot);
+			markFree = false;
 		} else {
 			// invert free mode
-			working = false;
-			free = !displayWorkDay.isFree(slot);
+			markWorking = false;
+			markFree = !displayWorkDay.isFree(slot);
 		}
 
 		// set new slot value and repaint
-		displayWorkDay.setWorking(slot, working);
-		displayWorkDay.setFree(slot, free);
+		displayWorkDay.setWorking(slot, markWorking);
+		displayWorkDay.setFree(slot, markFree);
 		window.repaint();
 
 	}
@@ -164,11 +164,11 @@ public class ControllerImpl implements Controller, ActivityListener {
 		if (slot < 0 || slot >= displayWorkDay.getSize()) return;
 
 		// ignore if slot is already set to correct value
-		if (displayWorkDay.isWorking(slot) == working && displayWorkDay.isFree(slot) == free) return;
+		if (displayWorkDay.isWorking(slot) == markWorking && displayWorkDay.isFree(slot) == markFree) return;
 
 		// set new slot value and repaint
-		displayWorkDay.setWorking(slot, working);
-		displayWorkDay.setFree(slot, free);
+		displayWorkDay.setWorking(slot, markWorking);
+		displayWorkDay.setFree(slot, markFree);
 		window.repaint();
 
 	}

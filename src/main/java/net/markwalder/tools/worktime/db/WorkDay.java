@@ -148,7 +148,7 @@ public class WorkDay extends TimeTable {
 			if (i % 12 == 0) buffer.append("|");
 
 			byte bit = data[i];
-			char sign = '?';
+			char sign;
 			switch (bit) {
 				case 0: // no data
 					sign = ' ';
@@ -170,6 +170,9 @@ public class WorkDay extends TimeTable {
 				case 8: // free
 				case 9: // free + running (but not active)
 					sign = '-';
+					break;
+				default: // unexpected combination
+					sign = '?';
 					break;
 			}
 			buffer.append(sign);
