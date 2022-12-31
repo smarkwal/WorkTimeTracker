@@ -21,6 +21,10 @@ import java.net.URL;
 
 public class MacOSX {
 
+	private MacOSX() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	/**
 	 * Replaces the default Java icon in the Dock with the application icon.
 	 */

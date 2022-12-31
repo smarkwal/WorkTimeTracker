@@ -143,7 +143,6 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 			} else if (displayDate.equals(DateUtils.addDays(today, 1))) {
 				dateFormat = new SimpleDateFormat("'Tomorrow' | EEEE", LOCALE);
 			} else if (displayDate.equals(DateUtils.addDays(today, -1))) {
-				//noinspection SuspiciousDateFormat
 				dateFormat = new SimpleDateFormat("'Yesterday' | EEEE", LOCALE);
 			} else {
 				dateFormat = new SimpleDateFormat("dd.MM.yyyy | EEEE", LOCALE);
@@ -261,8 +260,6 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 
 				if (slot == nowSlot) {
 					g2.setColor(NOW);
-					// g2.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER));
-					// g2.drawRect(x, y, dx, dy);
 					g2.fillOval(x + 5, y + 5, SLOT_WIDTH - 9, SLOT_HEIGHT - 9);
 				}
 

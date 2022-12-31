@@ -21,6 +21,10 @@ import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class DatabaseUtils {
 
+	private DatabaseUtils() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	/**
 	 * Get work time in minutes.
 	 */

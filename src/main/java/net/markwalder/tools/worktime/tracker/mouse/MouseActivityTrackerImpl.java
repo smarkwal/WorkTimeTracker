@@ -83,14 +83,7 @@ public class MouseActivityTrackerImpl extends ActivityTracker implements Runnabl
 				// report result to controller
 				reportActive(active);
 
-				// sleep
-				try {
-					//noinspection BusyWait
-					Thread.sleep(pollInterval);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-
+				waitForNextCheck();
 			}
 
 		} catch (Exception e) {
@@ -98,6 +91,14 @@ public class MouseActivityTrackerImpl extends ActivityTracker implements Runnabl
 			// todo: show error dialog
 		}
 
+	}
+
+	private void waitForNextCheck() {
+		try {
+			Thread.sleep(pollInterval);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	/**

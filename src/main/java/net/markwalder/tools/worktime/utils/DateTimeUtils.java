@@ -22,6 +22,10 @@ import org.apache.commons.lang3.time.DateUtils;
 
 public class DateTimeUtils {
 
+	private DateTimeUtils() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static Date getNow() {
 		return new Date();
 	}

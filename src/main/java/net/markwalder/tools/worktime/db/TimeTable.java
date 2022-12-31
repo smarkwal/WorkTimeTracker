@@ -27,7 +27,7 @@ public abstract class TimeTable {
 
 	protected int updates = 0;
 
-	public TimeTable(Date date, byte[] data) {
+	protected TimeTable(Date date, byte[] data) {
 		if (date == null) throw new IllegalArgumentException("date == null");
 		if (data == null) throw new IllegalArgumentException("data == null");
 		this.date = DateUtils.truncate(date, Calendar.DATE);

@@ -34,9 +34,9 @@ public class GuiceDebug {
 	static {
 
 		Formatter formatter = new Formatter() {
-			public String format(LogRecord record) {
-				String message = record.getMessage();
-				Level level = record.getLevel();
+			public String format(LogRecord logRecord) {
+				String message = logRecord.getMessage();
+				Level level = logRecord.getLevel();
 				return String.format("[Guice %s] %s%n", level.getName(), message);
 			}
 		};
@@ -47,6 +47,7 @@ public class GuiceDebug {
 	}
 
 	private GuiceDebug() {
+		throw new IllegalStateException("Utility class");
 	}
 
 	private static Logger getLogger() {

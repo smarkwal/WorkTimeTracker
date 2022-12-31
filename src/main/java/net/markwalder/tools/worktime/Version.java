@@ -25,6 +25,10 @@ public class Version {
 
 	public static final String UNKNOWN = "[unknown]";
 
+	private Version() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	/**
 	 * Get the current version number.
 	 *
