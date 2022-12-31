@@ -18,7 +18,6 @@ package net.markwalder.tools.worktime.db;
 
 import java.util.Date;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 public class Statistics {
 
@@ -43,7 +42,7 @@ public class Statistics {
 		while (!date.after(endDate)) {
 			WorkDay workDay = database.getWorkDay(date);
 			statistics.update(database, workDay);
-			date = DateUtils.addDays(date, 1);
+			date = DateTimeUtils.addDays(date, 1);
 		}
 
 		return statistics;

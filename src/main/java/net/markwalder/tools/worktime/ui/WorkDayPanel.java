@@ -40,7 +40,6 @@ import net.markwalder.tools.worktime.db.DatabaseUtils;
 import net.markwalder.tools.worktime.db.Statistics;
 import net.markwalder.tools.worktime.db.WorkDay;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 @SuppressWarnings("SameParameterValue")
 public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionListener {
@@ -143,9 +142,9 @@ public class WorkDayPanel extends JPanel implements MouseListener, MouseMotionLi
 			SimpleDateFormat dateFormat;
 			if (displayDate.equals(today)) {
 				dateFormat = new SimpleDateFormat("'Today' | EEEE", LOCALE);
-			} else if (displayDate.equals(DateUtils.addDays(today, 1))) {
+			} else if (displayDate.equals(DateTimeUtils.addDays(today, 1))) {
 				dateFormat = new SimpleDateFormat("'Tomorrow' | EEEE", LOCALE);
-			} else if (displayDate.equals(DateUtils.addDays(today, -1))) {
+			} else if (displayDate.equals(DateTimeUtils.addDays(today, -1))) {
 				dateFormat = new SimpleDateFormat("'Yesterday' | EEEE", LOCALE);
 			} else {
 				dateFormat = new SimpleDateFormat("dd.MM.yyyy | EEEE", LOCALE);

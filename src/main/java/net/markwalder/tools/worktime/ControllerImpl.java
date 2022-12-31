@@ -28,7 +28,6 @@ import net.markwalder.tools.worktime.tracker.ActivityTracker;
 import net.markwalder.tools.worktime.ui.Window;
 import net.markwalder.tools.worktime.ui.WorkYearPanel;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 public class ControllerImpl implements Controller, ActivityListener {
 
@@ -252,13 +251,13 @@ public class ControllerImpl implements Controller, ActivityListener {
 
 	@Override
 	public void incrementDisplayDate() {
-		Date date = DateUtils.addDays(displayDate, 1);
+		Date date = DateTimeUtils.addDays(displayDate, 1);
 		setDisplayDate(date);
 	}
 
 	@Override
 	public void decrementDisplayDate() {
-		Date date = DateUtils.addDays(displayDate, -1);
+		Date date = DateTimeUtils.addDays(displayDate, -1);
 		setDisplayDate(date);
 	}
 

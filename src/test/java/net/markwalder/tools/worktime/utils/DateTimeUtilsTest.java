@@ -235,6 +235,14 @@ public class DateTimeUtilsTest {
 	}
 
 	@Test
+	public void addDays() {
+		// test
+		Date result = DateTimeUtils.addDays(DATE, 145);
+		// assert
+		Assert.assertEquals("1977-07-19 13:10:51.000", FORMAT.format(result));
+	}
+
+	@Test
 	public void addMinutes() {
 		// test
 		Date result = DateTimeUtils.addMinutes(DATE, 145);

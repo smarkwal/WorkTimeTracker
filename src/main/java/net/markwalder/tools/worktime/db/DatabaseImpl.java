@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 import net.markwalder.tools.worktime.db.store.Store;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 public class DatabaseImpl implements Database {
 
@@ -169,7 +168,7 @@ public class DatabaseImpl implements Database {
 		// get start of year and start/end of day
 		Date startOfYear = DateTimeUtils.getStartOfYear(date);
 		Date startOfDay = DateTimeUtils.getStartOfDay(date);
-		Date endOfDay = DateUtils.addDays(startOfDay, 1);
+		Date endOfDay = DateTimeUtils.addDays(startOfDay, 1);
 
 		// convert date into timestamp
 		long startOfYearTime = startOfYear.getTime();

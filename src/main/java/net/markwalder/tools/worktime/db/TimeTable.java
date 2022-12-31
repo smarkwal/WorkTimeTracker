@@ -16,9 +16,7 @@
 
 package net.markwalder.tools.worktime.db;
 
-import java.util.Calendar;
 import java.util.Date;
-import org.apache.commons.lang3.time.DateUtils;
 
 public abstract class TimeTable {
 
@@ -30,7 +28,7 @@ public abstract class TimeTable {
 	protected TimeTable(Date date, byte[] data) {
 		if (date == null) throw new IllegalArgumentException("date == null");
 		if (data == null) throw new IllegalArgumentException("data == null");
-		this.date = DateUtils.truncate(date, Calendar.DATE);
+		this.date = date;
 		this.data = data;
 	}
 

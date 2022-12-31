@@ -161,6 +161,10 @@ public class DateTimeUtils {
 		return calendar.getTime();
 	}
 
+	public static Date addDays(Date date, int days) {
+		return DateUtils.addDays(date, days);
+	}
+
 	public static Date addMinutes(Date date, int minutes) {
 		return new Date(date.getTime() + minutes * 60 * 1000L);
 	}
