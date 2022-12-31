@@ -26,19 +26,24 @@ public class DateTimeUtils {
 	}
 
 	public static LocalDate getStartOfWeek(LocalDate date) {
-		return date.minusDays(date.getDayOfWeek().getValue() - 1);
+		long dayOfWeek = date.getDayOfWeek().getValue();
+		return date.minusDays(dayOfWeek - 1);
 	}
 
 	public static LocalDate getEndOfWeek(LocalDate date) {
-		return date.plusDays(7 - date.getDayOfWeek().getValue());
+		long dayOfWeek = date.getDayOfWeek().getValue();
+		return date.plusDays(7 - dayOfWeek);
 	}
 
 	public static LocalDate getStartOfMonth(LocalDate date) {
-		return date.minusDays(date.getDayOfMonth() - 1);
+		long dayOfMonth = date.getDayOfMonth();
+		return date.minusDays(dayOfMonth - 1);
 	}
 
 	public static LocalDate getEndOfMonth(LocalDate date) {
-		return date.plusDays(date.lengthOfMonth() - date.getDayOfMonth());
+		long daysInMonth = date.lengthOfMonth();
+		long dayOfMonth = date.getDayOfMonth();
+		return date.plusDays(daysInMonth - dayOfMonth);
 	}
 
 	public static LocalDate getStartOfYear(LocalDate date) {

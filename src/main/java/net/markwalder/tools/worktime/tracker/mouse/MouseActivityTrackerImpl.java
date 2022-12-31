@@ -19,8 +19,12 @@ package net.markwalder.tools.worktime.tracker.mouse;
 import com.google.inject.Inject;
 import net.markwalder.tools.worktime.tracker.ActivityListener;
 import net.markwalder.tools.worktime.tracker.ActivityTracker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MouseActivityTrackerImpl extends ActivityTracker implements Runnable {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MouseActivityTrackerImpl.class);
 
 	private static final int DEFAULT_POLL_INTERVAL = 15 * 1000; // 15 seconds
 
@@ -87,8 +91,7 @@ public class MouseActivityTrackerImpl extends ActivityTracker implements Runnabl
 			}
 
 		} catch (Exception e) {
-			System.err.println("unexpected error: " + e);
-			// todo: show error dialog
+			LOGGER.error("Unexpected error in activity tracker.", e);
 		}
 
 	}

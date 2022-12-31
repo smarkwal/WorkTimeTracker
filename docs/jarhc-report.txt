@@ -10,6 +10,8 @@ JAR file                                                       | Size    | Class
 commons-lang3-3.12.0.jar                                       | 574 KB  | 345     | 0         | c6842c86792ff03b9f1d1fe2aab8dc23aa6c6f0e | org.apache.commons:commons-lang3:3.12.0
 commons-io-2.11.0.jar                                          | 319 KB  | 201     | 0         | a2503f302b11ebde7ebc3df41daebe0e4eea3689 | commons-io:commons-io:2.11.0
 guice-5.1.0.jar                                                | 759 KB  | 494     | 1         | da25056c694c54ba16e78e4fc35f17fc60f0d1b4 | com.google.inject:guice:5.1.0
+slf4j-simple-2.0.6.jar                                         | 14.9 KB | 7       | 0         | 78c57967fe87a823697fe6cf0f5b394b0aa18337 | org.slf4j:slf4j-simple:2.0.6
+slf4j-api-2.0.6.jar                                            | 61.1 KB | 51      | 0         | 88c40d8b4f33326f19a7d3c0aaf2c7e8721d4953 | org.slf4j:slf4j-api:2.0.6
 javax.inject-1.jar                                             | 2.44 KB | 6       | 0         | 6975da39a7040257bd51d21a231b76c915872d38 | javax.inject:javax.inject:1
 aopalliance-1.0.jar                                            | 4.36 KB | 9       | 0         | 0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8 | aopalliance:aopalliance:1.0
 guava-30.1-jre.jar                                             | 2.73 MB | 2014    | 0         | 00d0c3ce2311c9e36e73228da25a6e99b2ab826f | com.google.guava:guava:30.1-jre
@@ -19,26 +21,32 @@ jsr305-3.0.2.jar                                               | 19.5 KB | 35   
 checker-qual-3.5.0.jar                                         | 209 KB  | 321     | 0         | 2f50520c8abea66fbd8d26e481d3aef5c673b510 | org.checkerframework:checker-qual:3.5.0
 error_prone_annotations-2.3.4.jar                              | 13.6 KB | 22      | 0         | dac170e4594de319655ffb62f41cbd6dbb5e601e | com.google.errorprone:error_prone_annotations:2.3.4
 j2objc-annotations-1.3.jar                                     | 8.58 KB | 12      | 0         | ba035118bc8bac37d7eff77700720999acd9986d | com.google.j2objc:j2objc-annotations:1.3
-Classpath                                                      | 4.60 MB | 3461    | 1         | -                                        | -
+Classpath                                                      | 4.68 MB | 3519    | 1         | -                                        | -
 
 Modules
 -------
 List of Java Modules found in classpath.
 
-JAR file                                                       | Module name                                         | Definition     | Automatic | Requires | Exports
----------------------------------------------------------------+-----------------------------------------------------+----------------+-----------+----------+---------------
-commons-lang3-3.12.0.jar                                       | org.apache.commons.lang3                            | Manifest       | Yes       | -        | [all packages]
-commons-io-2.11.0.jar                                          | org.apache.commons.io                               | Manifest       | Yes       | -        | [all packages]
-guice-5.1.0.jar                                                | com.google.guice                                    | Manifest       | Yes       | -        | [all packages]
-javax.inject-1.jar                                             | javax.inject                                        | Auto-generated | Yes       | -        | [all packages]
-aopalliance-1.0.jar                                            | aopalliance                                         | Auto-generated | Yes       | -        | [all packages]
-guava-30.1-jre.jar                                             | com.google.common                                   | Manifest       | Yes       | -        | [all packages]
-failureaccess-1.0.1.jar                                        | failureaccess                                       | Auto-generated | Yes       | -        | [all packages]
-listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | listenablefuture.empty.to.avoid.conflict.with.guava | Auto-generated | Yes       | -        | [all packages]
-jsr305-3.0.2.jar                                               | jsr305                                              | Auto-generated | Yes       | -        | [all packages]
-checker-qual-3.5.0.jar                                         | org.checkerframework.checker.qual                   | Manifest       | Yes       | -        | [all packages]
-error_prone_annotations-2.3.4.jar                              | com.google.errorprone.annotations                   | Manifest       | Yes       | -        | [all packages]
-j2objc-annotations-1.3.jar                                     | j2objc.annotations                                  | Auto-generated | Yes       | -        | [all packages]
+JAR file                                                       | Module name                                         | Definition     | Automatic | Requires  | Exports
+---------------------------------------------------------------+-----------------------------------------------------+----------------+-----------+-----------+------------------
+commons-lang3-3.12.0.jar                                       | org.apache.commons.lang3                            | Manifest       | Yes       | -         | [all packages]
+commons-io-2.11.0.jar                                          | org.apache.commons.io                               | Manifest       | Yes       | -         | [all packages]
+guice-5.1.0.jar                                                | com.google.guice                                    | Manifest       | Yes       | -         | [all packages]
+slf4j-simple-2.0.6.jar                                         | org.slf4j.simple                                    | Module-Info    | No        | org.slf4j |
+                                                               |                                                     |                |           | java.base |
+slf4j-api-2.0.6.jar                                            | org.slf4j                                           | Module-Info    | No        | java.base | org.slf4j
+                                                               |                                                     |                |           |           | org.slf4j.event
+                                                               |                                                     |                |           |           | org.slf4j.helpers
+                                                               |                                                     |                |           |           | org.slf4j.spi
+javax.inject-1.jar                                             | javax.inject                                        | Auto-generated | Yes       | -         | [all packages]
+aopalliance-1.0.jar                                            | aopalliance                                         | Auto-generated | Yes       | -         | [all packages]
+guava-30.1-jre.jar                                             | com.google.common                                   | Manifest       | Yes       | -         | [all packages]
+failureaccess-1.0.1.jar                                        | failureaccess                                       | Auto-generated | Yes       | -         | [all packages]
+listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | listenablefuture.empty.to.avoid.conflict.with.guava | Auto-generated | Yes       | -         | [all packages]
+jsr305-3.0.2.jar                                               | jsr305                                              | Auto-generated | Yes       | -         | [all packages]
+checker-qual-3.5.0.jar                                         | org.checkerframework.checker.qual                   | Manifest       | Yes       | -         | [all packages]
+error_prone_annotations-2.3.4.jar                              | com.google.errorprone.annotations                   | Manifest       | Yes       | -         | [all packages]
+j2objc-annotations-1.3.jar                                     | j2objc.annotations                                  | Auto-generated | Yes       | -         | [all packages]
 
 Class Versions
 --------------
@@ -49,6 +57,8 @@ JAR file                                                       | Multi-release |
 commons-lang3-3.12.0.jar                                       | No            | Java 8 (345)
 commons-io-2.11.0.jar                                          | No            | Java 8 (201)
 guice-5.1.0.jar                                                | No            | Java 8 (460), Java 5 (34)
+slf4j-simple-2.0.6.jar                                         | Yes (Java 9)  | Java 8 (7)
+slf4j-api-2.0.6.jar                                            | Yes (Java 9)  | Java 8 (51)
 javax.inject-1.jar                                             | No            | Java 5 (6)
 aopalliance-1.0.jar                                            | No            | Java 1.3 (9)
 guava-30.1-jre.jar                                             | No            | Java 8 (2014)
@@ -58,14 +68,14 @@ jsr305-3.0.2.jar                                               | No            |
 checker-qual-3.5.0.jar                                         | No            | Java 8 (321)
 error_prone_annotations-2.3.4.jar                              | No            | Java 7 (22)
 j2objc-annotations-1.3.jar                                     | No            | Java 5 (12)
-Classpath                                                      | -             | Java 8 (3341), Java 7 (24), Java 5 (87), Java 1.3 (9)
+Classpath                                                      | -             | Java 8 (3399), Java 7 (24), Java 5 (87), Java 1.3 (9)
 
 JAR Dependencies
 ----------------
 Dependencies between JAR files.
 
 JAR file                                                       | Uses                              | Used by
----------------------------------------------------------------+-----------------------------------+-------------------
+---------------------------------------------------------------+-----------------------------------+-----------------------
 commons-lang3-3.12.0.jar                                       | [none]                            | [none]
 commons-io-2.11.0.jar                                          | [none]                            | [none]
 guice-5.1.0.jar                                                | aopalliance-1.0.jar               | [none]
@@ -73,6 +83,8 @@ guice-5.1.0.jar                                                | aopalliance-1.0
                                                                | guava-30.1-jre.jar                |
                                                                | javax.inject-1.jar                |
                                                                | jsr305-3.0.2.jar                  |
+slf4j-simple-2.0.6.jar                                         | slf4j-api-2.0.6.jar               | [none]
+slf4j-api-2.0.6.jar                                            | [none]                            | slf4j-simple-2.0.6.jar
 javax.inject-1.jar                                             | [none]                            | guice-5.1.0.jar
 aopalliance-1.0.jar                                            | [none]                            | guice-5.1.0.jar
 guava-30.1-jre.jar                                             | checker-qual-3.5.0.jar            | guice-5.1.0.jar
@@ -101,6 +113,8 @@ guice-5.1.0.jar                                                | com.google.inje
                                                                |                                                                             | aopalliance:aopalliance:1.0                                                 | OK
                                                                |                                                                             | com.google.guava:guava:30.1-jre                                             | OK
                                                                |                                                                             | org.ow2.asm:asm:9.2 (optional)                                              | Unsatisfied
+slf4j-simple-2.0.6.jar                                         | org.slf4j:slf4j-simple:2.0.6                                                | org.slf4j:slf4j-api:2.0.6                                                   | OK
+slf4j-api-2.0.6.jar                                            | org.slf4j:slf4j-api:2.0.6                                                   | [none]                                                                      |
 javax.inject-1.jar                                             | javax.inject:javax.inject:1                                                 | [none]                                                                      |
 aopalliance-1.0.jar                                            | aopalliance:aopalliance:1.0                                                 | [none]                                                                      |
 guava-30.1-jre.jar                                             | com.google.guava:guava:30.1-jre                                             | com.google.guava:failureaccess:1.0.1                                        | OK
@@ -149,6 +163,11 @@ guice-5.1.0.jar                   | 11    | com.google.inject (+10 subpackages) 
 j2objc-annotations-1.3.jar        | 1     | com.google.j2objc.annotations                     |
 javax.inject-1.jar                | 1     | javax.inject                                      |
 jsr305-3.0.2.jar                  | 3     | javax.annotation (+2 subpackages)                 |
+slf4j-api-2.0.6.jar               | 4     | org.slf4j                                         |
+                                  |       | org.slf4j.event                                   |
+                                  |       | org.slf4j.helpers                                 |
+                                  |       | org.slf4j.spi                                     |
+slf4j-simple-2.0.6.jar            | 1     | org.slf4j.simple                                  |
 
 Duplicate Classes
 -----------------

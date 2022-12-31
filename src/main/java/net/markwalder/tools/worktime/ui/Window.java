@@ -30,8 +30,12 @@ import javax.swing.*;
 import net.markwalder.tools.worktime.Controller;
 import net.markwalder.tools.worktime.Version;
 import org.apache.commons.lang3.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Window extends JFrame implements WindowListener, KeyListener {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(Window.class);
 
 	private final transient Controller controller;
 	private final transient Clock clock;
@@ -136,7 +140,7 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 			try {
 				SystemTray.getSystemTray().add(trayIcon);
 			} catch (AWTException ex) {
-				ex.printStackTrace();
+				LOGGER.warn("Failed to set System Tray icon.", ex);
 			}
 
 			this.setVisible(false);

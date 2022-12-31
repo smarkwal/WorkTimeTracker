@@ -37,7 +37,7 @@ public class WorkYearPainter extends TimeTablePainter {
 	private static final Color COLOR_VACATION = new Color(150, 200, 150);
 	private static final Color COLOR_FREE = new Color(200, 200, 200);
 
-	private final transient Clock clock;
+	private final Clock clock;
 
 	@Inject
 	public WorkYearPainter(Clock clock) {

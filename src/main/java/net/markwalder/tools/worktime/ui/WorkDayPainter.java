@@ -94,18 +94,23 @@ public class WorkDayPainter extends TimeTablePainter {
 		g2.setFont(FONT_TITLE);
 		g2.setColor(BLACK);
 
+		String datePrefix;
 		DateTimeFormatter dateFormat;
 		if (date.equals(today)) {
-			dateFormat = DateTimeFormatter.ofPattern("'Today' | EEEE", LOCALE);
+			datePrefix = "Today | ";
+			dateFormat = DateTimeFormatter.ofPattern("EEEE", LOCALE);
 		} else if (date.equals(today.plusDays(1))) {
-			dateFormat = DateTimeFormatter.ofPattern("'Tomorrow' | EEEE", LOCALE);
+			datePrefix = "Tomorrow | ";
+			dateFormat = DateTimeFormatter.ofPattern("EEEE", LOCALE);
 		} else if (date.equals(today.minusDays(1))) {
-			dateFormat = DateTimeFormatter.ofPattern("'Yesterday' | EEEE", LOCALE);
+			datePrefix = "Yesterday | ";
+			dateFormat = DateTimeFormatter.ofPattern("EEEE", LOCALE);
 		} else {
+			datePrefix = "";
 			dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy | EEEE", LOCALE);
 		}
 
-		g2.drawString(dateFormat.format(date), x, y);
+		g2.drawString(datePrefix + dateFormat.format(date), x, y);
 	}
 
 	private void drawGrid(Graphics2D g2) {
@@ -162,6 +167,7 @@ public class WorkDayPainter extends TimeTablePainter {
 		g2.drawLine(0, 17 * SLOT_WIDTH, width, 17 * SLOT_WIDTH);
 	}
 
+	@SuppressWarnings("java:S3776") // Cognitive Complexity of methods should not be too high
 	private void fillSlots(WorkDay workDay, int nowSlot, Graphics2D g2) {
 
 		for (int h = 0; h < 24; h++) {
@@ -245,6 +251,10 @@ public class WorkDayPainter extends TimeTablePainter {
 		drawStats(x, y, date, today, g2, startDate, workingCount, "Year", statistics.getWorkTime(), statistics.getFreeCount());
 	}
 
+	@SuppressWarnings({
+			"java:S107", // Methods should not have too many parameters
+			"java:S1066" // Collapsible "if" statements should be merged
+	})
 	private void drawStats(int x, int y, LocalDate date, LocalDate today, Graphics2D g2, LocalDate startDate, int workingCount, String label, int workTime, int freeCount) {
 
 		g2.setColor(new Color(245, 245, 245));

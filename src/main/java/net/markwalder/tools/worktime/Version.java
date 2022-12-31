@@ -19,9 +19,12 @@ package net.markwalder.tools.worktime;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Version {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(Version.class);
 
 	public static final String UNKNOWN = "[unknown]";
 
@@ -46,16 +49,12 @@ public class Version {
 	 */
 	private static Properties loadProperties() {
 		Properties properties = new Properties();
-		InputStream stream = null;
-		try {
-			stream = Version.class.getClassLoader().getResourceAsStream("version.properties");
+		try (InputStream stream = Version.class.getClassLoader().getResourceAsStream("version.properties")) {
 			if (stream != null) {
 				properties.load(stream);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			IOUtils.closeQuietly(stream);
+			LOGGER.warn("Failed to load version.properties.", e);
 		}
 		return properties;
 	}

@@ -23,8 +23,12 @@ import java.io.UncheckedIOException;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileStoreImpl implements Store {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileStoreImpl.class);
 
 	private final ReadWriteLock lock = new ReentrantReadWriteLock(true);
 
@@ -42,6 +46,8 @@ public class FileStoreImpl implements Store {
 
 	@Override
 	public byte[] readData(String key, int offset, int length) {
+
+		LOGGER.debug("Reading data for key '{}' from offset {} with length {}.", key, offset, length);
 
 		// get database file
 		File file = getFile(key);
@@ -85,6 +91,8 @@ public class FileStoreImpl implements Store {
 
 	@Override
 	public void writeData(String key, int offset, byte[] data) {
+
+		LOGGER.debug("Writing data for key '{}' from offset {} with length {}.", key, offset, data.length);
 
 		// get database file
 		File file = getFile(key);

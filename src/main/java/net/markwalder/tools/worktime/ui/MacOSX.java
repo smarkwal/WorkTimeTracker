@@ -18,8 +18,12 @@ package net.markwalder.tools.worktime.ui;
 
 import java.awt.*;
 import java.net.URL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MacOSX {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MacOSX.class);
 
 	private MacOSX() {
 		throw new IllegalStateException("Utility class");
@@ -39,7 +43,7 @@ public class MacOSX {
 			Taskbar taskbar = Taskbar.getTaskbar();
 			taskbar.setIconImage(image);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.warn("Failed to set Dock icon.", e);
 		}
 	}
 

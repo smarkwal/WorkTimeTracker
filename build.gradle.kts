@@ -44,6 +44,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("commons-io:commons-io:2.11.0")
     implementation("com.google.inject:guice:5.1.0")
+    implementation("org.slf4j:slf4j-api:2.0.6")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.6")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.11.0")
 }
@@ -152,8 +154,8 @@ tasks {
         // add LICENSE to JAR file
         from("../LICENSE")
 
-        // include all compile time dependencies in JAR file
-        from(configurations.compileClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+        // include all runtime dependencies in JAR file
+        from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 
         // include license report in JAR file
         from("${buildDir}/reports/dependency-license") {
