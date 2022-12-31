@@ -18,6 +18,8 @@ package net.markwalder.tools.worktime.ui;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
 
 abstract class TimeTablePainter {
@@ -29,10 +31,11 @@ abstract class TimeTablePainter {
 	public static final int SLOT_HEIGHT = 20;
 	public static final int PADDING = 20;
 
-	protected static final String FONT = Font.DIALOG;
-	protected static final Font FONT_TITLE = new Font(FONT, Font.BOLD, 16);
-	protected static final Font FONT_BOLD = new Font(FONT, Font.BOLD, 12);
-	protected static final Font FONT_PLAIN = new Font(FONT, Font.PLAIN, 11);
+	private static final Font BASE_FONT_BOLD = loadFont("fonts/DejaVu/DejaVuSansCondensed-Bold.ttf");
+	private static final Font BASE_FONT_PLAIN = loadFont("fonts/DejaVu/DejaVuSansCondensed.ttf");
+	protected static final Font FONT_TITLE = BASE_FONT_BOLD.deriveFont(16f);
+	protected static final Font FONT_BOLD = BASE_FONT_BOLD.deriveFont(12f);
+	protected static final Font FONT_PLAIN = BASE_FONT_PLAIN.deriveFont(11f);
 
 	protected static final Locale LOCALE = Locale.US;
 
@@ -57,6 +60,15 @@ abstract class TimeTablePainter {
 			y = (int) (y + bounds.getHeight());
 		}
 		g2.drawString(text, x, y);
+	}
+
+	private static Font loadFont(String resourceName) {
+		try (InputStream stream = TimeTablePainter.class.getClassLoader().getResourceAsStream(resourceName)) {
+			if (stream == null) throw new IllegalArgumentException("Font resource not found: " + resourceName);
+			return Font.createFont(Font.TRUETYPE_FONT, stream);
+		} catch (IOException | FontFormatException e) {
+			throw new RuntimeException("Failed to load font: " + resourceName, e);
+		}
 	}
 
 }
