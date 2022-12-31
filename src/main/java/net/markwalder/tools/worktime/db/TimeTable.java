@@ -16,16 +16,16 @@
 
 package net.markwalder.tools.worktime.db;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class TimeTable {
 
-	protected final Date date;
+	protected final LocalDate date;
 	protected final byte[] data;
 
 	protected int updates = 0;
 
-	protected TimeTable(Date date, byte[] data) {
+	protected TimeTable(LocalDate date, byte[] data) {
 		if (date == null) throw new IllegalArgumentException("date == null");
 		if (data == null) throw new IllegalArgumentException("data == null");
 		this.date = date;
@@ -40,7 +40,7 @@ public abstract class TimeTable {
 		updates = 0;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 

@@ -16,33 +16,30 @@
 
 package net.markwalder.tools.worktime.db;
 
-import java.util.Date;
-import net.markwalder.tools.worktime.utils.DateTimeUtils;
+import java.time.LocalDate;
 
 public class Statistics {
 
-	public static Statistics getStatistics(Database database, Date today, Date startDate, Date endDate) {
+	public static Statistics getStatistics(Database database, LocalDate today, LocalDate startDate, LocalDate endDate) {
 		if (today == null) throw new NullPointerException("today");
 		if (startDate == null) throw new NullPointerException("startDate");
 		if (endDate == null) throw new NullPointerException("endDate");
 
 		Statistics statistics = new Statistics(today);
-		startDate = DateTimeUtils.getStartOfDay(startDate);
-		endDate = DateTimeUtils.getStartOfDay(endDate);
 
 		// if start date is after end date ...
-		if (startDate.after(endDate)) {
+		if (startDate.isAfter(endDate)) {
 			// switch start and end date
-			Date tmp = startDate;
+			LocalDate tmp = startDate;
 			startDate = endDate;
 			endDate = tmp;
 		}
 
-		Date date = startDate;
-		while (!date.after(endDate)) {
+		LocalDate date = startDate;
+		while (!date.isAfter(endDate)) {
 			WorkDay workDay = database.getWorkDay(date);
 			statistics.update(database, workDay);
-			date = DateTimeUtils.addDays(date, 1);
+			date = date.plusDays(1);
 		}
 
 		return statistics;
@@ -51,21 +48,21 @@ public class Statistics {
 
 	// ---------------------------------------------------------------------------------
 
-	private final long now;
+	private final LocalDate today;
 
 	private int workingCount = 0;
 	private int freeCount = 0;
 	private int workTime = 0;
 
-	private Statistics(Date today) {
-		now = today.getTime();
+	private Statistics(LocalDate today) {
+		this.today = today;
 	}
 
 	private void update(Database database, WorkDay workDay) {
 		workingCount += workDay.getWorkingCount();
 		freeCount += workDay.getFreeCount();
-		Date date = workDay.getDate();
-		if (date.getTime() <= now) {
+		LocalDate date = workDay.getDate();
+		if (!date.isAfter(today)) {
 			workTime += DatabaseUtils.getWorkTime(database, date);
 		}
 	}

@@ -16,15 +16,15 @@
 
 package net.markwalder.tools.worktime.db;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface Database {
 
-	WorkDay getWorkDay(Date date);
+	WorkDay getWorkDay(LocalDate date);
 
 	void storeWorkDay(WorkDay workDay);
 
-	WorkYear getWorkYear(Date date);
+	WorkYear getWorkYear(LocalDate date);
 
 	void storeWorkYear(WorkYear workYear);
 

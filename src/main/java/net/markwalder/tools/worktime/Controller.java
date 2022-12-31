@@ -16,7 +16,7 @@
 
 package net.markwalder.tools.worktime;
 
-import java.util.Date;
+import java.time.LocalDate;
 import net.markwalder.tools.worktime.db.WorkDay;
 import net.markwalder.tools.worktime.db.WorkYear;
 
@@ -38,9 +38,9 @@ public interface Controller {
 
 	void workYearMouseClicked(int slot, int mode);
 
-	Date getDisplayDate();
+	LocalDate getDisplayDate();
 
-	void setDisplayDate(Date date);
+	void setDisplayDate(LocalDate date);
 
 	void incrementDisplayDate();
 

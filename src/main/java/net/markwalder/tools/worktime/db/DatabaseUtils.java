@@ -16,7 +16,8 @@
 
 package net.markwalder.tools.worktime.db;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class DatabaseUtils {
@@ -28,7 +29,7 @@ public class DatabaseUtils {
 	/**
 	 * Get work time in minutes.
 	 */
-	public static int getWorkTime(Database database, Date date) {
+	public static int getWorkTime(Database database, LocalDate date) {
 
 		if (DateTimeUtils.isWeekend(date)) {
 			return 0;
@@ -37,7 +38,7 @@ public class DatabaseUtils {
 		int time = 0;
 
 		WorkYear workYear = database.getWorkYear(date);
-		int dayOfYear = DateTimeUtils.getDayOfYear(date);
+		int dayOfYear = date.getDayOfYear();
 		int slot = (dayOfYear - 1) * 2;
 
 		// morning
@@ -53,15 +54,15 @@ public class DatabaseUtils {
 		}
 
 		// from 2021-06-01 on, count only 80% for every day
-		if (date.getTime() >= 1622498400000L) {
+		if (date.isAfter(LocalDate.of(2021, 5, 31))) {
 			time = time * 4 / 5; // 80%
 		}
 
 		return time;
 	}
 
-	public static int slot(long time) {
-		return (int) (time / 1000 / 60 / 5);
+	public static int slot(LocalDateTime time) {
+		return time.getHour() * 12 + time.getMinute() / 5;
 	}
 
 }
