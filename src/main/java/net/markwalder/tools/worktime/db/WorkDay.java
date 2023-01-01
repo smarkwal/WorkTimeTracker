@@ -126,6 +126,7 @@ public class WorkDay extends TimeTable {
 	}
 
 	@Override
+	@SuppressWarnings("java:S3776") // Cognitive Complexity of methods should not be too high
 	public String toString() {
 
 		StringBuilder buffer = new StringBuilder(data.length);

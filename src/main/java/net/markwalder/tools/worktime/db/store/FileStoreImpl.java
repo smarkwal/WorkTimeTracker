@@ -70,10 +70,10 @@ public class FileStoreImpl implements Store {
 				// read data
 				int pos = 0;
 				while (true) {
-					int bytes = raf.read(data, pos, length - pos);
-					if (bytes < 0) break;
+					int remaining = length - pos;
+					int bytes = raf.read(data, pos, remaining);
+					if (bytes < 0 || bytes == remaining) break;
 					pos = pos + bytes;
-					if (pos == length) break;
 				}
 
 			}

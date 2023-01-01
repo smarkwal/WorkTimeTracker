@@ -183,6 +183,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 	}
 
 	@Override
+	@SuppressWarnings("java:S3776") // Cognitive Complexity of methods should not be too high
 	public void workYearMouseClicked(int slot, int mode) {
 		if (displayWorkYear == null) return;
 		if (slot < 0 || slot >= displayWorkYear.getSize()) return;

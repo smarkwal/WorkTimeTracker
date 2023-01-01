@@ -24,6 +24,7 @@ import java.io.UncheckedIOException;
 
 public class TestUtils {
 
+	@SuppressWarnings("java:S2925") // "Thread.sleep" should not be used in tests
 	public static void pause(long time) {
 		try {
 			Thread.sleep(time);
