@@ -97,6 +97,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 			activeDate = today;
 			if (displayDate.equals(activeDate)) {
 				displayWorkDay = activeWorkDay;
+				displayWorkYear = database.getWorkYear(displayDate);
 			}
 		}
 
@@ -237,9 +238,10 @@ public class ControllerImpl implements Controller, ActivityListener {
 			displayDate = activeDate;
 			displayWorkDay = activeWorkDay;
 		} else {
+			displayDate = date;
 			displayWorkDay = database.getWorkDay(date);
-			displayDate = displayWorkDay.getDate();
 		}
+		displayWorkYear = database.getWorkYear(displayDate);
 
 		window.repaint();
 
