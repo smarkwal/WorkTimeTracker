@@ -30,8 +30,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.inject.Inject;
 import net.markwalder.tools.worktime.db.Database;
-import net.markwalder.tools.worktime.db.DatabaseUtils;
 import net.markwalder.tools.worktime.db.Statistics;
+import net.markwalder.tools.worktime.db.TimeTableUtils;
+import net.markwalder.tools.worktime.db.WorkContract;
 import net.markwalder.tools.worktime.db.WorkDay;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
@@ -46,11 +47,13 @@ public class WorkDayPainter extends TimeTablePainter {
 	private static final BasicStroke LINE_1 = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 	private static final BasicStroke LINE_5 = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
+	private final WorkContract workContract;
 	private final Database database;
 	private final Clock clock;
 
 	@Inject
-	public WorkDayPainter(Database database, Clock clock) {
+	public WorkDayPainter(WorkContract workContract, Database database, Clock clock) {
+		this.workContract = workContract;
 		this.database = database;
 		this.clock = clock;
 	}
@@ -72,7 +75,7 @@ public class WorkDayPainter extends TimeTablePainter {
 		int nowSlot = -1;
 		if (date.equals(today)) {
 			LocalDateTime now = LocalDateTime.now(clock);
-			nowSlot = DatabaseUtils.slot(now);
+			nowSlot = TimeTableUtils.slot(now);
 		}
 
 		fillSlots(workDay, nowSlot, g2);
@@ -215,7 +218,9 @@ public class WorkDayPainter extends TimeTablePainter {
 
 	private void drawStatsForDay(int x, int y, int workingCount, int freeCount, LocalDate date, LocalDate today, Graphics2D g2) {
 
-		drawStats(x, y, date, today, g2, date, workingCount, "Day", DatabaseUtils.getWorkTime(database, date), freeCount);
+		int workTime = workContract.getWorkTime(date, database);
+
+		drawStats(x, y, date, today, g2, date, workingCount, "Day", workTime, freeCount);
 	}
 
 	private void drawStatsForWeek(int x, int y, LocalDate date, LocalDate today, Graphics2D g2) {
@@ -223,10 +228,12 @@ public class WorkDayPainter extends TimeTablePainter {
 		// create statistics for the current week
 		LocalDate startDate = DateTimeUtils.getStartOfWeek(date);
 		LocalDate endDate = DateTimeUtils.getEndOfWeek(date);
-		Statistics statistics = Statistics.getStatistics(database, today, startDate, endDate);
+		Statistics statistics = Statistics.getStatistics(startDate, endDate, today, workContract, database);
 		int workingCount = statistics.getWorkingCount();
+		int freeCount = statistics.getFreeCount();
+		int workTime = statistics.getWorkTime();
 
-		drawStats(x, y, date, today, g2, startDate, workingCount, "Week", statistics.getWorkTime(), statistics.getFreeCount());
+		drawStats(x, y, date, today, g2, startDate, workingCount, "Week", workTime, freeCount);
 	}
 
 	private void drawStatsForMonth(int x, int y, LocalDate date, LocalDate today, Graphics2D g2) {
@@ -234,10 +241,12 @@ public class WorkDayPainter extends TimeTablePainter {
 		// create statistics for the current month
 		LocalDate startDate = DateTimeUtils.getStartOfMonth(date);
 		LocalDate endDate = DateTimeUtils.getEndOfMonth(date);
-		Statistics statistics = Statistics.getStatistics(database, today, startDate, endDate);
+		Statistics statistics = Statistics.getStatistics(startDate, endDate, today, workContract, database);
 		int workingCount = statistics.getWorkingCount();
+		int freeCount = statistics.getFreeCount();
+		int workTime = statistics.getWorkTime();
 
-		drawStats(x, y, date, today, g2, startDate, workingCount, "Month", statistics.getWorkTime(), statistics.getFreeCount());
+		drawStats(x, y, date, today, g2, startDate, workingCount, "Month", workTime, freeCount);
 	}
 
 	private void drawStatsForYear(int x, int y, LocalDate date, LocalDate today, Graphics2D g2) {
@@ -245,10 +254,12 @@ public class WorkDayPainter extends TimeTablePainter {
 		// create statistics for the current year
 		LocalDate startDate = DateTimeUtils.getStartOfYear(date);
 		LocalDate endDate = DateTimeUtils.getEndOfYear(date);
-		Statistics statistics = Statistics.getStatistics(database, today, startDate, endDate);
+		Statistics statistics = Statistics.getStatistics(startDate, endDate, today, workContract, database);
 		int workingCount = statistics.getWorkingCount();
+		int freeCount = statistics.getFreeCount();
+		int workTime = statistics.getWorkTime();
 
-		drawStats(x, y, date, today, g2, startDate, workingCount, "Year", statistics.getWorkTime(), statistics.getFreeCount());
+		drawStats(x, y, date, today, g2, startDate, workingCount, "Year", workTime, freeCount);
 	}
 
 	@SuppressWarnings({

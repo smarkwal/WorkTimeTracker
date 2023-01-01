@@ -20,10 +20,10 @@ import java.time.LocalDate;
 
 public class Statistics {
 
-	public static Statistics getStatistics(Database database, LocalDate today, LocalDate startDate, LocalDate endDate) {
-		if (today == null) throw new NullPointerException("today");
+	public static Statistics getStatistics(LocalDate startDate, LocalDate endDate, LocalDate today, WorkContract workContract, Database database) {
 		if (startDate == null) throw new NullPointerException("startDate");
 		if (endDate == null) throw new NullPointerException("endDate");
+		if (today == null) throw new NullPointerException("today");
 
 		Statistics statistics = new Statistics(today);
 
@@ -38,7 +38,7 @@ public class Statistics {
 		LocalDate date = startDate;
 		while (!date.isAfter(endDate)) {
 			WorkDay workDay = database.getWorkDay(date);
-			statistics.update(database, workDay);
+			statistics.update(workContract, database, workDay);
 			date = date.plusDays(1);
 		}
 
@@ -58,12 +58,12 @@ public class Statistics {
 		this.today = today;
 	}
 
-	private void update(Database database, WorkDay workDay) {
+	private void update(WorkContract workContract, Database database, WorkDay workDay) {
 		workingCount += workDay.getWorkingCount();
 		freeCount += workDay.getFreeCount();
 		LocalDate date = workDay.getDate();
 		if (!date.isAfter(today)) {
-			workTime += DatabaseUtils.getWorkTime(database, date);
+			workTime += workContract.getWorkTime(date, database);
 		}
 	}
 

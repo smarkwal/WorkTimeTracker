@@ -21,7 +21,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import net.markwalder.tools.worktime.db.Database;
-import net.markwalder.tools.worktime.db.DatabaseUtils;
+import net.markwalder.tools.worktime.db.TimeTableUtils;
 import net.markwalder.tools.worktime.db.WorkDay;
 import net.markwalder.tools.worktime.db.WorkYear;
 import net.markwalder.tools.worktime.tracker.ActivityListener;
@@ -102,7 +102,7 @@ public class ControllerImpl implements Controller, ActivityListener {
 
 		// check if timetable needs to be modified ...
 		LocalDateTime now = LocalDateTime.now(clock);
-		int slot = DatabaseUtils.slot(now);
+		int slot = TimeTableUtils.slot(now);
 
 		// make sure that the "application is running" flag is set
 		if (!activeWorkDay.isRunning(slot)) {

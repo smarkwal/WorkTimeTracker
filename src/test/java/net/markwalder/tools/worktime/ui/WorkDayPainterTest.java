@@ -21,12 +21,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import net.markwalder.tools.worktime.db.WorkContract;
 import net.markwalder.tools.worktime.db.WorkDay;
 import org.junit.Test;
 
 public class WorkDayPainterTest extends AbstractPainterTest {
 
 	static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+	private final WorkContract workContract = new WorkContract();
 
 	@Test
 	public void paint_2020_12_31() throws IOException {
@@ -104,7 +107,7 @@ public class WorkDayPainterTest extends AbstractPainterTest {
 		WorkDay workDay = database.getWorkDay(date);
 
 		// prepare: painter
-		WorkDayPainter painter = new WorkDayPainter(database, clock);
+		WorkDayPainter painter = new WorkDayPainter(workContract, database, clock);
 		BufferedImage image = new BufferedImage(WorkDayPanel.WIDTH, WorkDayPanel.HEIGHT, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = image.createGraphics();
 		try {

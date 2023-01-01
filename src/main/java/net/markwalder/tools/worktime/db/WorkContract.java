@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Stephan Markwalder
+ * Copyright 2023 Stephan Markwalder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,18 @@
 package net.markwalder.tools.worktime.db;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
-public class DatabaseUtils {
+public class WorkContract {
 
-	private DatabaseUtils() {
-		throw new IllegalStateException("Utility class");
-	}
+	private static final int WORK_MINUTES_PER_DAY = 504; // 8.4 h
 
 	/**
 	 * Get work time in minutes.
 	 */
-	public static int getWorkTime(Database database, LocalDate date) {
+	public int getWorkTime(LocalDate date, Database database) {
 
+		// do not work on weekends
 		if (DateTimeUtils.isWeekend(date)) {
 			return 0;
 		}
@@ -43,26 +41,24 @@ public class DatabaseUtils {
 
 		// morning
 		byte value = workYear.getValue(slot);
-		if (value == 0) {
-			time += 252; // 4.2 hours * 60 minutes
+		if (value == 0) { // no holiday, no vacation, ...
+			time += WORK_MINUTES_PER_DAY / 2;
 		}
 
 		// afternoon
 		value = workYear.getValue(slot + 1);
-		if (value == 0) {
-			time += 252; // 4.2 hours * 60 minutes
+		if (value == 0) { // no holiday, no vacation, ...
+			time += WORK_MINUTES_PER_DAY / 2;
 		}
 
 		// from 2021-06-01 on, count only 80% for every day
+		// before: Monday is marked as free day
+		// after: work 80% every day of the week
 		if (date.isAfter(LocalDate.of(2021, 5, 31))) {
 			time = time * 4 / 5; // 80%
 		}
 
 		return time;
-	}
-
-	public static int slot(LocalDateTime time) {
-		return time.getHour() * 12 + time.getMinute() / 5;
 	}
 
 }
