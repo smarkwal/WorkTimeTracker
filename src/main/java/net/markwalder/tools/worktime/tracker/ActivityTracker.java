@@ -26,10 +26,6 @@ package net.markwalder.tools.worktime.tracker;
  */
 public abstract class ActivityTracker {
 
-	// TODO: invert the communication pattern
-	// so that the tracker is asked for the last time
-	// the user has been active.
-
 	private final ActivityListener activityListener;
 
 	protected ActivityTracker(ActivityListener activityListener) {

@@ -61,8 +61,6 @@ public class Main {
 
 		}
 
-		// GuiceDebug.enable();
-
 		// configure dependency injection
 		Module module = binder -> {
 

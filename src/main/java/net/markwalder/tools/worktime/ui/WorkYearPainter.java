@@ -188,6 +188,7 @@ public class WorkYearPainter extends TimeTablePainter {
 		}
 	}
 
+	@SuppressWarnings("java:S107") // Methods should not have too many parameters
 	private void fillDay(Graphics2D g2, WorkYear workYear, int slot, int day, int y, int h, int mode, int mouseSlot) {
 
 		boolean holiday = workYear.isHoliday(slot);

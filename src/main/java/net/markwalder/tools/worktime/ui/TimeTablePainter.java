@@ -21,8 +21,12 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 abstract class TimeTablePainter {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(TimeTablePainter.class);
 
 	public static final int MARGIN_TOP = 50;
 	public static final int MARGIN_LEFT = 20;
@@ -64,10 +68,13 @@ abstract class TimeTablePainter {
 
 	private static Font loadFont(String resourceName) {
 		try (InputStream stream = TimeTablePainter.class.getClassLoader().getResourceAsStream(resourceName)) {
-			if (stream == null) throw new IllegalArgumentException("Font resource not found: " + resourceName);
+			if (stream == null) throw new IOException("Font resource not found: " + resourceName);
 			return Font.createFont(Font.TRUETYPE_FONT, stream);
 		} catch (IOException | FontFormatException e) {
-			throw new RuntimeException("Failed to load font: " + resourceName, e);
+			LOGGER.warn("Failed to load font: " + resourceName, e);
+
+			// return replacement font
+			return new Font("SansSerif", Font.PLAIN, 11);
 		}
 	}
 
