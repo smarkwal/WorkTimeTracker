@@ -1,5 +1,5 @@
-JarHC Report for WorkTimeTracker 3.0.0
-======================================
+JarHC Report for WorkTimeTracker 3.0.1-SNAPSHOT
+===============================================
 
 JAR Files
 ---------
