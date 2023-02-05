@@ -21,7 +21,7 @@ plugins {
 
     // Gradle Versions Plugin
     // https://github.com/ben-manes/gradle-versions-plugin
-    id("com.github.ben-manes.versions") version "0.44.0"
+    id("com.github.ben-manes.versions") version "0.45.0"
 
     // create report with all open-source licenses
     id("com.github.jk1.dependency-license-report") version "2.1"
@@ -47,7 +47,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.6")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.6")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.0.0")
+    testImplementation("org.mockito:mockito-core:5.1.1")
 }
 
 java {
