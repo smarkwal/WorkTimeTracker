@@ -47,7 +47,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.6")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.6")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.1.1")
+    testImplementation("org.mockito:mockito-core:5.2.0")
 }
 
 java {
