@@ -30,7 +30,7 @@ plugins {
     id("org.sonarqube") version "4.0.0.2929"
 
     // get current Git branch name
-    id("org.ajoberstar.grgit") version "5.0.0"
+    id("org.ajoberstar.grgit") version "5.2.0"
 
     // JarHC Gradle plugin
     id("org.jarhc") version "1.0.1"
@@ -47,7 +47,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.7")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.7")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.2.0")
+    testImplementation("org.mockito:mockito-core:5.3.1")
 }
 
 java {
