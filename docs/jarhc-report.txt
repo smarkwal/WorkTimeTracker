@@ -8,7 +8,7 @@ List of JAR files found in classpath.
 JAR file                                                       | Size    | Classes | Resources | Checksum (SHA-1)                         | Artifact coordinates
 ---------------------------------------------------------------+---------+---------+-----------+------------------------------------------+----------------------------------------------------------------------------
 commons-lang3-3.12.0.jar                                       | 574 KB  | 345     | 0         | c6842c86792ff03b9f1d1fe2aab8dc23aa6c6f0e | org.apache.commons:commons-lang3:3.12.0
-commons-io-2.11.0.jar                                          | 319 KB  | 201     | 0         | a2503f302b11ebde7ebc3df41daebe0e4eea3689 | commons-io:commons-io:2.11.0
+commons-io-2.12.0.jar                                          | 463 KB  | 309     | 0         | e5e3eb2ff05b494287f51476bc715161412c525f | commons-io:commons-io:2.12.0
 guice-5.1.0.jar                                                | 759 KB  | 494     | 1         | da25056c694c54ba16e78e4fc35f17fc60f0d1b4 | com.google.inject:guice:5.1.0
 slf4j-simple-2.0.7.jar                                         | 15.6 KB | 7       | 0         | bfa4d4dad645a5b11c022ae0043bac2df6cf16b5 | org.slf4j:slf4j-simple:2.0.7
 slf4j-api-2.0.7.jar                                            | 62.1 KB | 51      | 0         | 41eb7184ea9d556f23e18b5cb99cad1f8581fc00 | org.slf4j:slf4j-api:2.0.7
@@ -21,7 +21,7 @@ jsr305-3.0.2.jar                                               | 19.5 KB | 35   
 checker-qual-3.5.0.jar                                         | 209 KB  | 321     | 0         | 2f50520c8abea66fbd8d26e481d3aef5c673b510 | org.checkerframework:checker-qual:3.5.0
 error_prone_annotations-2.3.4.jar                              | 13.6 KB | 22      | 0         | dac170e4594de319655ffb62f41cbd6dbb5e601e | com.google.errorprone:error_prone_annotations:2.3.4
 j2objc-annotations-1.3.jar                                     | 8.58 KB | 12      | 0         | ba035118bc8bac37d7eff77700720999acd9986d | com.google.j2objc:j2objc-annotations:1.3
-Classpath                                                      | 4.68 MB | 3519    | 1         | -                                        | -
+Classpath                                                      | 4.82 MB | 3627    | 1         | -                                        | -
 
 Modules
 -------
@@ -30,7 +30,7 @@ List of Java Modules found in classpath.
 JAR file                                                       | Module name                                         | Definition     | Automatic | Requires  | Exports
 ---------------------------------------------------------------+-----------------------------------------------------+----------------+-----------+-----------+------------------
 commons-lang3-3.12.0.jar                                       | org.apache.commons.lang3                            | Manifest       | Yes       | -         | [all packages]
-commons-io-2.11.0.jar                                          | org.apache.commons.io                               | Manifest       | Yes       | -         | [all packages]
+commons-io-2.12.0.jar                                          | org.apache.commons.io                               | Manifest       | Yes       | -         | [all packages]
 guice-5.1.0.jar                                                | com.google.guice                                    | Manifest       | Yes       | -         | [all packages]
 slf4j-simple-2.0.7.jar                                         | org.slf4j.simple                                    | Module-Info    | No        | org.slf4j |
                                                                |                                                     |                |           | java.base |
@@ -55,7 +55,7 @@ Java class file format information.
 JAR file                                                       | Multi-release | Class files by Java version
 ---------------------------------------------------------------+---------------+------------------------------------------------------
 commons-lang3-3.12.0.jar                                       | No            | Java 8 (345)
-commons-io-2.11.0.jar                                          | No            | Java 8 (201)
+commons-io-2.12.0.jar                                          | No            | Java 8 (309)
 guice-5.1.0.jar                                                | No            | Java 8 (460), Java 5 (34)
 slf4j-simple-2.0.7.jar                                         | Yes (Java 9)  | Java 8 (7)
 slf4j-api-2.0.7.jar                                            | Yes (Java 9)  | Java 8 (51)
@@ -68,7 +68,7 @@ jsr305-3.0.2.jar                                               | No            |
 checker-qual-3.5.0.jar                                         | No            | Java 8 (321)
 error_prone_annotations-2.3.4.jar                              | No            | Java 7 (22)
 j2objc-annotations-1.3.jar                                     | No            | Java 5 (12)
-Classpath                                                      | -             | Java 8 (3399), Java 7 (24), Java 5 (87), Java 1.3 (9)
+Classpath                                                      | -             | Java 8 (3507), Java 7 (24), Java 5 (87), Java 1.3 (9)
 
 JAR Dependencies
 ----------------
@@ -77,7 +77,7 @@ Dependencies between JAR files.
 JAR file                                                       | Uses                              | Used by
 ---------------------------------------------------------------+-----------------------------------+-----------------------
 commons-lang3-3.12.0.jar                                       | [none]                            | [none]
-commons-io-2.11.0.jar                                          | [none]                            | [none]
+commons-io-2.12.0.jar                                          | [none]                            | [none]
 guice-5.1.0.jar                                                | aopalliance-1.0.jar               | [none]
                                                                | error_prone_annotations-2.3.4.jar |
                                                                | guava-30.1-jre.jar                |
@@ -108,7 +108,7 @@ Dependencies as declared in POM file.
 JAR file                                                       | Maven coordinates                                                           | Direct dependencies                                                         | Status
 ---------------------------------------------------------------+-----------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------
 commons-lang3-3.12.0.jar                                       | org.apache.commons:commons-lang3:3.12.0                                     | [none]                                                                      |
-commons-io-2.11.0.jar                                          | commons-io:commons-io:2.11.0                                                | [none]                                                                      |
+commons-io-2.12.0.jar                                          | commons-io:commons-io:2.12.0                                                | [none]                                                                      |
 guice-5.1.0.jar                                                | com.google.inject:guice:5.1.0                                               | javax.inject:javax.inject:1                                                 | OK
                                                                |                                                                             | aopalliance:aopalliance:1.0                                                 | OK
                                                                |                                                                             | com.google.guava:guava:30.1-jre                                             | OK
@@ -138,7 +138,7 @@ JAR file                          | Count | Packages                            
 ----------------------------------+-------+---------------------------------------------------+-------
 aopalliance-1.0.jar               | 2     | org.aopalliance.* (2 subpackages)                 |
 checker-qual-3.5.0.jar            | 33    | org.checkerframework.* (33 subpackages)           |
-commons-io-2.11.0.jar             | 11    | org.apache.commons.io (+10 subpackages)           |
+commons-io-2.12.0.jar             | 14    | org.apache.commons.io (+13 subpackages)           |
 commons-lang3-3.12.0.jar          | 17    | org.apache.commons.lang3 (+16 subpackages)        |
 error_prone_annotations-2.3.4.jar | 2     | com.google.errorprone.annotations (+1 subpackage) |
 failureaccess-1.0.1.jar           | 1     | com.google.common.util.concurrent.internal        |
@@ -189,7 +189,7 @@ Use of dangerous, unsafe, unstable, or deprecated classes and methods.
 
 JAR file              | Issues
 ----------------------+--------------------------------------------------------------------------------------------------------
-commons-io-2.11.0.jar | org.apache.commons.io.FileSystemUtils
+commons-io-2.12.0.jar | org.apache.commons.io.FileSystemUtils
                       | • java.lang.Process java.lang.Runtime.exec(java.lang.String[])
 guava-30.1-jre.jar    | com.google.common.cache.Striped64
                       | • boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)

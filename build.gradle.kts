@@ -24,10 +24,10 @@ plugins {
     id("com.github.ben-manes.versions") version "0.46.0"
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "2.1"
+    id("com.github.jk1.dependency-license-report") version "2.4"
 
     // run Sonar analysis
-    id("org.sonarqube") version "4.0.0.2929"
+    id("org.sonarqube") version "4.2.0.3129"
 
     // get current Git branch name
     id("org.ajoberstar.grgit") version "5.2.0"
@@ -42,7 +42,7 @@ repositories {
 
 dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
-    implementation("commons-io:commons-io:2.11.0")
+    implementation("commons-io:commons-io:2.12.0")
     implementation("com.google.inject:guice:5.1.0")
     implementation("org.slf4j:slf4j-api:2.0.7")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.7")
