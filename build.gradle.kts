@@ -209,6 +209,13 @@ tasks {
         dependsOn(jarhcReport)
     }
 
+    dependencyUpdates {
+        rejectVersionIf {
+            isNonStable(candidate.version)
+                    || candidate.group == "com.google.inject" && candidate.module == "guice" && candidate.version >= "6.0"
+        }
+    }
+
 }
 
 tasks.sonar {
@@ -220,4 +227,12 @@ tasks.sonar {
 
 fun getGitBranchName(): String {
     return grgit.branch.current().name
+}
+
+fun isNonStable(version: String): Boolean {
+    if (version.contains("-SNAPSHOT")) return true
+    if (version.contains("-alpha")) return true
+    if (version.contains("-beta")) return true
+    if (version.contains("-rc")) return true
+    return false
 }
