@@ -97,14 +97,14 @@ sonar {
 
         // paths to test sources and test classes
         property("sonar.tests", "${projectDir}/src/test/java")
-        property("sonar.java.test.binaries", "${buildDir}/classes/java/test")
+        property("sonar.java.test.binaries", "${layout.buildDirectory.get()}/classes/java/test")
 
         // include test results
-        property("sonar.junit.reportPaths", "${buildDir}/test-results/test")
+        property("sonar.junit.reportPaths", "${layout.buildDirectory.get()}/test-results/test")
 
         // include test coverage results
         property("sonar.java.coveragePlugin", "jacoco")
-        property("sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
 
@@ -158,7 +158,7 @@ tasks {
         from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 
         // include license report in JAR file
-        from("${buildDir}/reports/dependency-license") {
+        from("${layout.buildDirectory.get()}/reports/dependency-license") {
             into("META-INF/licenses")
         }
 
