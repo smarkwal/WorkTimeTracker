@@ -21,16 +21,16 @@ plugins {
 
     // Gradle Versions Plugin
     // https://github.com/ben-manes/gradle-versions-plugin
-    id("com.github.ben-manes.versions") version "0.48.0"
+    id("com.github.ben-manes.versions") version "0.49.0"
 
     // create report with all open-source licenses
     id("com.github.jk1.dependency-license-report") version "2.5"
 
     // run Sonar analysis
-    id("org.sonarqube") version "4.4.0.3356"
+    id("org.sonarqube") version "4.4.1.3373"
 
     // get current Git branch name
-    id("org.ajoberstar.grgit") version "5.2.0"
+    id("org.ajoberstar.grgit") version "5.2.1"
 
     // JarHC Gradle plugin
     id("org.jarhc") version "1.0.1"
@@ -47,7 +47,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.9")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.9")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.5.0")
+    testImplementation("org.mockito:mockito-core:5.7.0")
 }
 
 java {
