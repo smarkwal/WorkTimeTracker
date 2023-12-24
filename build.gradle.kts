@@ -21,7 +21,7 @@ plugins {
 
     // Gradle Versions Plugin
     // https://github.com/ben-manes/gradle-versions-plugin
-    id("com.github.ben-manes.versions") version "0.49.0"
+    id("com.github.ben-manes.versions") version "0.50.0"
 
     // create report with all open-source licenses
     id("com.github.jk1.dependency-license-report") version "2.5"
@@ -41,13 +41,13 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.13.0")
-    implementation("commons-io:commons-io:2.14.0")
+    implementation("org.apache.commons:commons-lang3:3.14.0")
+    implementation("commons-io:commons-io:2.15.1")
     implementation("com.google.inject:guice:5.1.0")
     implementation("org.slf4j:slf4j-api:2.0.9")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.9")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.7.0")
+    testImplementation("org.mockito:mockito-core:5.8.0")
 }
 
 java {
