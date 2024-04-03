@@ -53,14 +53,14 @@ jobs:
         cache-read-only: false
 
     - name: Upload reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: ${{ always() }}
       with:
         name: reports
         path: build/reports
 
     - name: Upload libs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: libs
         path: build/libs
