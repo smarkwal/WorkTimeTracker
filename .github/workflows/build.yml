@@ -47,7 +47,7 @@ jobs:
       run: echo "PUSH_GRADLE_OPTIONS=sonar" >> $GITHUB_ENV
 
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       with:
         arguments: '--no-daemon build ${{ env.PUSH_GRADLE_OPTIONS }} ${{ github.event.inputs.additionalGradleOptions }}'
         cache-read-only: false
