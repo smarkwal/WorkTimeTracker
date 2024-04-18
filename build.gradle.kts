@@ -24,7 +24,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.51.0"
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "2.6"
+    id("com.github.jk1.dependency-license-report") version "2.7"
 
     // run Sonar analysis
     id("org.sonarqube") version "5.0.0.4638"
@@ -33,7 +33,7 @@ plugins {
     id("org.ajoberstar.grgit") version "5.2.2"
 
     // JarHC Gradle plugin
-    id("org.jarhc") version "1.0.1"
+    id("org.jarhc") version "1.1.0"
 }
 
 buildscript {
@@ -51,10 +51,10 @@ repositories {
 
 dependencies {
     implementation("org.apache.commons:commons-lang3:3.14.0")
-    implementation("commons-io:commons-io:2.16.0")
+    implementation("commons-io:commons-io:2.16.1")
     implementation("com.google.inject:guice:5.1.0")
-    implementation("org.slf4j:slf4j-api:2.0.12")
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.12")
+    implementation("org.slf4j:slf4j-api:2.0.13")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.13")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:5.11.0")
 }
