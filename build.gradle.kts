@@ -24,7 +24,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.51.0"
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "2.7"
+    id("com.github.jk1.dependency-license-report") version "2.8"
 
     // run Sonar analysis
     id("org.sonarqube") version "5.0.0.4638"
@@ -56,11 +56,11 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.13")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.13")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.11.0")
+    testImplementation("org.mockito:mockito-core:5.12.0")
 
     // fix vulnerabilities in transitive dependencies
     // fix CVE-2018-10237 and CVE-2020-8908
-    implementation("com.google.guava:guava:33.1.0-jre")
+    implementation("com.google.guava:guava:33.2.1-jre")
 }
 
 java {
@@ -223,6 +223,7 @@ tasks {
     }
 
     dependencyUpdates {
+        gradleReleaseChannel = "current"
         rejectVersionIf {
             isNonStable(candidate.version)
                     || candidate.group == "com.google.inject" && candidate.module == "guice" && candidate.version >= "6.0"

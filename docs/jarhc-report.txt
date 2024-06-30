@@ -12,7 +12,7 @@ commons-io-2.16.1.jar                                          | 497 KB  | 331  
 guice-5.1.0.jar                                                | 759 KB  | 494     | 1         | da25056c694c54ba16e78e4fc35f17fc60f0d1b4 | com.google.inject:guice:5.1.0
 slf4j-simple-2.0.13.jar                                        | 15.3 KB | 6       | 0         | be11a3f05f7cf546524b07ad252719d840f4daed | org.slf4j:slf4j-simple:2.0.13
 slf4j-api-2.0.13.jar                                           | 67.0 KB | 54      | 0         | 80229737f704b121a318bba5d5deacbcf395bc77 | org.slf4j:slf4j-api:2.0.13
-guava-33.1.0-jre.jar                                           | 2.91 MB | 2006    | 0         | 9b7ed39143d59e8eabcc6f91ffe4d23db2efe558 | com.google.guava:guava:33.1.0-jre
+guava-33.2.1-jre.jar                                           | 2.91 MB | 2005    | 0         | 818e780da2c66c63bbb6480fef1f3855eeafa3e4 | com.google.guava:guava:33.2.1-jre
 javax.inject-1.jar                                             | 2.44 KB | 6       | 0         | 6975da39a7040257bd51d21a231b76c915872d38 | javax.inject:javax.inject:1
 aopalliance-1.0.jar                                            | 4.36 KB | 9       | 0         | 0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8 | aopalliance:aopalliance:1.0
 failureaccess-1.0.2.jar                                        | 4.63 KB | 2       | 0         | c4a06a64e650562f30b7bf9aaec1bfed43aca12b | com.google.guava:failureaccess:1.0.2
@@ -20,7 +20,7 @@ listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | 2.15 KB | 0    
 jsr305-3.0.2.jar                                               | 19.5 KB | 35      | 0         | 25ea2e8b0c338a877313bd4672d3fe056ea78f0d | com.google.code.findbugs:jsr305:3.0.2
 checker-qual-3.42.0.jar                                        | 225 KB  | 369     | 0         | 638ec33f363a94d41a4f03c3e7d3dcfba64e402d | org.checkerframework:checker-qual:3.42.0
 error_prone_annotations-2.26.1.jar                             | 18.9 KB | 27      | 0         | c1fde57694bdc14e8618899aaa6e857d9465d7de | com.google.errorprone:error_prone_annotations:2.26.1
-Classpath                                                      | 5.12 MB | 3724    | 1         | -                                        | -
+Classpath                                                      | 5.12 MB | 3723    | 1         | -                                        | -
 
 Modules
 -------
@@ -68,7 +68,7 @@ slf4j-api-2.0.13.jar                                           | org.slf4j      
                                                                |                                                     |                |           |               | org.slf4j.event
                                                                |                                                     |                |           |               | org.slf4j.helpers
                                                                |                                                     |                |           |               | org.slf4j.spi
-guava-33.1.0-jre.jar                                           | com.google.common                                   | Manifest       | Yes       | -             | [all packages]
+guava-33.2.1-jre.jar                                           | com.google.common                                   | Manifest       | Yes       | -             | [all packages]
 javax.inject-1.jar                                             | javax.inject                                        | Auto-generated | Yes       | -             | [all packages]
 aopalliance-1.0.jar                                            | aopalliance                                         | Auto-generated | Yes       | -             | [all packages]
 failureaccess-1.0.2.jar                                        | com.google.common.util.concurrent.internal          | Manifest       | Yes       | -             | [all packages]
@@ -89,7 +89,7 @@ commons-io-2.16.1.jar                                          | Yes (Java 9)  |
 guice-5.1.0.jar                                                | No            | Java 8 (460), Java 5 (34)
 slf4j-simple-2.0.13.jar                                        | Yes (Java 9)  | Java 8 (6)
 slf4j-api-2.0.13.jar                                           | Yes (Java 9)  | Java 8 (54)
-guava-33.1.0-jre.jar                                           | No            | Java 8 (2006)
+guava-33.2.1-jre.jar                                           | No            | Java 8 (2005)
 javax.inject-1.jar                                             | No            | Java 5 (6)
 aopalliance-1.0.jar                                            | No            | Java 1.3 (9)
 failureaccess-1.0.2.jar                                        | No            | Java 7 (2)
@@ -97,7 +97,7 @@ listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | No            |
 jsr305-3.0.2.jar                                               | No            | Java 5 (35)
 checker-qual-3.42.0.jar                                        | No            | Java 8 (369)
 error_prone_annotations-2.26.1.jar                             | Yes (Java 9)  | Java 8 (27)
-Classpath                                                      | -             | Java 8 (3638), Java 7 (2), Java 5 (75), Java 1.3 (9)
+Classpath                                                      | -             | Java 8 (3637), Java 7 (2), Java 5 (75), Java 1.3 (9)
 
 JAR Dependencies
 ----------------
@@ -109,23 +109,23 @@ commons-lang3-3.14.0.jar                                       | [none]         
 commons-io-2.16.1.jar                                          | [none]                             | [none]
 guice-5.1.0.jar                                                | aopalliance-1.0.jar                | [none]
                                                                | error_prone_annotations-2.26.1.jar |
-                                                               | guava-33.1.0-jre.jar               |
+                                                               | guava-33.2.1-jre.jar               |
                                                                | javax.inject-1.jar                 |
                                                                | jsr305-3.0.2.jar                   |
 slf4j-simple-2.0.13.jar                                        | slf4j-api-2.0.13.jar               | [none]
 slf4j-api-2.0.13.jar                                           | [none]                             | slf4j-simple-2.0.13.jar
-guava-33.1.0-jre.jar                                           | checker-qual-3.42.0.jar            | guice-5.1.0.jar
+guava-33.2.1-jre.jar                                           | checker-qual-3.42.0.jar            | guice-5.1.0.jar
                                                                | error_prone_annotations-2.26.1.jar |
                                                                | failureaccess-1.0.2.jar            |
                                                                | jsr305-3.0.2.jar                   |
 javax.inject-1.jar                                             | [none]                             | guice-5.1.0.jar
 aopalliance-1.0.jar                                            | [none]                             | guice-5.1.0.jar
-failureaccess-1.0.2.jar                                        | [none]                             | guava-33.1.0-jre.jar
+failureaccess-1.0.2.jar                                        | [none]                             | guava-33.2.1-jre.jar
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | [none]                             | [none]
-jsr305-3.0.2.jar                                               | [none]                             | guava-33.1.0-jre.jar
+jsr305-3.0.2.jar                                               | [none]                             | guava-33.2.1-jre.jar
                                                                |                                    | guice-5.1.0.jar
-checker-qual-3.42.0.jar                                        | [none]                             | guava-33.1.0-jre.jar
-error_prone_annotations-2.26.1.jar                             | [none]                             | guava-33.1.0-jre.jar
+checker-qual-3.42.0.jar                                        | [none]                             | guava-33.2.1-jre.jar
+error_prone_annotations-2.26.1.jar                             | [none]                             | guava-33.2.1-jre.jar
                                                                |                                    | guice-5.1.0.jar
 
 Dependencies
@@ -138,11 +138,11 @@ commons-lang3-3.14.0.jar                                       | org.apache.comm
 commons-io-2.16.1.jar                                          | commons-io:commons-io:2.16.1                                                | [none]                                                                      |
 guice-5.1.0.jar                                                | com.google.inject:guice:5.1.0                                               | javax.inject:javax.inject:1                                                 | OK
                                                                |                                                                             | aopalliance:aopalliance:1.0                                                 | OK
-                                                               |                                                                             | com.google.guava:guava:30.1-jre                                             | OK (version 33.1.0-jre)
+                                                               |                                                                             | com.google.guava:guava:30.1-jre                                             | OK (version 33.2.1-jre)
                                                                |                                                                             | org.ow2.asm:asm:9.2 (optional)                                              | Unsatisfied
 slf4j-simple-2.0.13.jar                                        | org.slf4j:slf4j-simple:2.0.13                                               | org.slf4j:slf4j-api:2.0.13                                                  | OK
 slf4j-api-2.0.13.jar                                           | org.slf4j:slf4j-api:2.0.13                                                  | [none]                                                                      |
-guava-33.1.0-jre.jar                                           | com.google.guava:guava:33.1.0-jre                                           | com.google.guava:failureaccess:1.0.2                                        | OK
+guava-33.2.1-jre.jar                                           | com.google.guava:guava:33.2.1-jre                                           | com.google.guava:failureaccess:1.0.2                                        | OK
                                                                |                                                                             | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava | OK
                                                                |                                                                             | com.google.code.findbugs:jsr305:3.0.2                                       | OK
                                                                |                                                                             | org.checkerframework:checker-qual:3.42.0                                    | OK
@@ -168,7 +168,7 @@ commons-io-2.16.1.jar              | 15    | org.apache.commons.io (+14 subpacka
 commons-lang3-3.14.0.jar           | 18    | org.apache.commons.lang3 (+17 subpackages)        |
 error_prone_annotations-2.26.1.jar | 2     | com.google.errorprone.annotations (+1 subpackage) |
 failureaccess-1.0.2.jar            | 1     | com.google.common.util.concurrent.internal        |
-guava-33.1.0-jre.jar               | 18    | com.google.common.annotations                     |
+guava-33.2.1-jre.jar               | 18    | com.google.common.annotations                     |
                                    |       | com.google.common.base (+1 subpackage)            |
                                    |       | com.google.common.cache                           |
                                    |       | com.google.common.collect                         |
@@ -207,7 +207,7 @@ Compatibility issues between JAR files.
 
 JAR file             | Issues
 ---------------------+---------------------------------------------------------------------------------------------
-guava-33.1.0-jre.jar | com.google.common.base.Converter
+guava-33.2.1-jre.jar | com.google.common.base.Converter
                      | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
                      |
                      | com.google.common.cache.LocalCache
@@ -378,7 +378,7 @@ slf4j-api-2.0.13.jar    | org.slf4j.LoggerFactory
                         |
                         | org.slf4j.helpers.Util$ClassContextSecurityManager
                         | • @Deprecated: public class java.lang.SecurityManager
-guava-33.1.0-jre.jar    | com.google.common.cache.Striped64
+guava-33.2.1-jre.jar    | com.google.common.cache.Striped64
                         | • @Deprecated: public final class java.security.AccessController
                         | • boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)
                         | • boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)
@@ -439,8 +439,8 @@ Java Runtime
 ------------
 Information about JRE/JDK runtime.
 
-Java home    : /home/markwalder/.jdks/temurin-17.0.10
+Java home    : /home/markwalder/.jdks/temurin-17.0.11
 Java runtime : OpenJDK Runtime Environment
-Java version : 17.0.10
+Java version : 17.0.11
 Java vendor  : Eclipse Adoptium
 
