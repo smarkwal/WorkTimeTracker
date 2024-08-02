@@ -27,7 +27,7 @@ plugins {
     id("com.github.jk1.dependency-license-report") version "2.8"
 
     // run Sonar analysis
-    id("org.sonarqube") version "5.0.0.4638"
+    id("org.sonarqube") version "5.1.0.4882"
 
     // get current Git branch name
     id("org.ajoberstar.grgit") version "5.2.2"
@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.14.0")
+    implementation("org.apache.commons:commons-lang3:3.15.0")
     implementation("commons-io:commons-io:2.16.1")
     implementation("com.google.inject:guice:5.1.0")
     implementation("org.slf4j:slf4j-api:2.0.13")
