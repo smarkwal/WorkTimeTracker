@@ -24,7 +24,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.51.0"
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "2.8"
+    id("com.github.jk1.dependency-license-report") version "2.9"
 
     // run Sonar analysis
     id("org.sonarqube") version "5.1.0.4882"
