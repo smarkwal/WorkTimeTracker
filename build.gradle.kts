@@ -24,7 +24,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.51.0"
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "2.8"
+    id("com.github.jk1.dependency-license-report") version "2.9"
 
     // run Sonar analysis
     id("org.sonarqube") version "5.1.0.4882"
@@ -33,15 +33,15 @@ plugins {
     id("org.ajoberstar.grgit") version "5.2.2"
 
     // JarHC Gradle plugin
-    id("org.jarhc") version "1.1.0"
+    id("org.jarhc") version "1.1.1"
 }
 
 buildscript {
     dependencies {
         // fix CVE-2023-3635 in Okio < 3.4.0
         // (indirect dependency of Gradle Versions Plugin 0.51.0)
-        classpath("com.squareup.okio:okio:3.9.0")
-        classpath("com.squareup.okio:okio-jvm:3.9.0")
+        classpath("com.squareup.okio:okio:3.9.1")
+        classpath("com.squareup.okio:okio-jvm:3.9.1")
     }
 }
 
@@ -50,17 +50,17 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.15.0")
-    implementation("commons-io:commons-io:2.16.1")
+    implementation("org.apache.commons:commons-lang3:3.17.0")
+    implementation("commons-io:commons-io:2.17.0")
     implementation("com.google.inject:guice:5.1.0")
-    implementation("org.slf4j:slf4j-api:2.0.13")
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.13")
+    implementation("org.slf4j:slf4j-api:2.0.16")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.16")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.12.0")
+    testImplementation("org.mockito:mockito-core:5.13.0")
 
     // fix vulnerabilities in transitive dependencies
     // fix CVE-2018-10237 and CVE-2020-8908
-    implementation("com.google.guava:guava:33.2.1-jre")
+    implementation("com.google.guava:guava:33.3.0-jre")
 }
 
 java {

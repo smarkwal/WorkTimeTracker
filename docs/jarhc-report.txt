@@ -7,28 +7,28 @@ List of JAR files found in classpath.
 
 JAR file                                                       | Size    | Classes | Resources | Checksum (SHA-1)                         | Artifact coordinates
 ---------------------------------------------------------------+---------+---------+-----------+------------------------------------------+----------------------------------------------------------------------------
-commons-lang3-3.15.0.jar                                       | 655 KB  | 377     | 0         | 21581109b4be710ea4b195d5760392ec284f9f11 | org.apache.commons:commons-lang3:3.15.0
-commons-io-2.16.1.jar                                          | 497 KB  | 331     | 0         | 377d592e740dc77124e0901291dbfaa6810a200e | commons-io:commons-io:2.16.1
+commons-lang3-3.17.0.jar                                       | 658 KB  | 377     | 0         | b17d2136f0460dcc0d2016ceefca8723bdf4ee70 | org.apache.commons:commons-lang3:3.17.0
+commons-io-2.17.0.jar                                          | 504 KB  | 335     | 0         | ddcc8433eb019fb48fe25207c0278143f3e1d7e2 | commons-io:commons-io:2.17.0
 guice-5.1.0.jar                                                | 759 KB  | 494     | 1         | da25056c694c54ba16e78e4fc35f17fc60f0d1b4 | com.google.inject:guice:5.1.0
-slf4j-simple-2.0.13.jar                                        | 15.3 KB | 6       | 0         | be11a3f05f7cf546524b07ad252719d840f4daed | org.slf4j:slf4j-simple:2.0.13
-slf4j-api-2.0.13.jar                                           | 67.0 KB | 54      | 0         | 80229737f704b121a318bba5d5deacbcf395bc77 | org.slf4j:slf4j-api:2.0.13
-guava-33.2.1-jre.jar                                           | 2.91 MB | 2005    | 0         | 818e780da2c66c63bbb6480fef1f3855eeafa3e4 | com.google.guava:guava:33.2.1-jre
+slf4j-simple-2.0.16.jar                                        | 15.3 KB | 6       | 0         | 56d3d8e59293543780ad35af4ee4a5d9c111a588 | org.slf4j:slf4j-simple:2.0.16
+slf4j-api-2.0.16.jar                                           | 67.8 KB | 55      | 0         | 0172931663a09a1fa515567af5fbef00897d3c04 | org.slf4j:slf4j-api:2.0.16
+guava-33.3.0-jre.jar                                           | 2.94 MB | 2001    | 0         | 13b4d0924e6023eda04b4c7aa83b32dfedf735a7 | com.google.guava:guava:33.3.0-jre
 javax.inject-1.jar                                             | 2.44 KB | 6       | 0         | 6975da39a7040257bd51d21a231b76c915872d38 | javax.inject:javax.inject:1
 aopalliance-1.0.jar                                            | 4.36 KB | 9       | 0         | 0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8 | aopalliance:aopalliance:1.0
 failureaccess-1.0.2.jar                                        | 4.63 KB | 2       | 0         | c4a06a64e650562f30b7bf9aaec1bfed43aca12b | com.google.guava:failureaccess:1.0.2
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | 2.15 KB | 0       | 0         | b421526c5f297295adef1c886e5246c39d4ac629 | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
 jsr305-3.0.2.jar                                               | 19.5 KB | 35      | 0         | 25ea2e8b0c338a877313bd4672d3fe056ea78f0d | com.google.code.findbugs:jsr305:3.0.2
-checker-qual-3.42.0.jar                                        | 225 KB  | 369     | 0         | 638ec33f363a94d41a4f03c3e7d3dcfba64e402d | org.checkerframework:checker-qual:3.42.0
-error_prone_annotations-2.26.1.jar                             | 18.9 KB | 27      | 0         | c1fde57694bdc14e8618899aaa6e857d9465d7de | com.google.errorprone:error_prone_annotations:2.26.1
-Classpath                                                      | 5.13 MB | 3715    | 1         | -                                        | -
+checker-qual-3.43.0.jar                                        | 226 KB  | 369     | 0         | 9425eee39e56b116d2b998b7c2cebcbd11a3c98b | org.checkerframework:checker-qual:3.43.0
+error_prone_annotations-2.28.0.jar                             | 18.9 KB | 27      | 0         | 59fc00087ce372de42e394d2c789295dff2d19f0 | com.google.errorprone:error_prone_annotations:2.28.0
+Classpath                                                      | 5.16 MB | 3716    | 1         | -                                        | -
 
 Modules
 -------
 List of Java Modules found in classpath.
 
 JAR file                                                       | Module name                                         | Definition     | Automatic | Requires      | Exports
----------------------------------------------------------------+-----------------------------------------------------+----------------+-----------+---------------+---------------------------------------------
-commons-lang3-3.15.0.jar                                       | org.apache.commons.lang3                            | Module-Info    | No        | java.desktop  | org.apache.commons.lang3
+---------------------------------------------------------------+-----------------------------------------------------+----------------+-----------+---------------+---------------------------------------------------
+commons-lang3-3.17.0.jar                                       | org.apache.commons.lang3                            | Module-Info    | No        | java.desktop  | org.apache.commons.lang3
                                                                |                                                     |                |           | java.base     | org.apache.commons.lang3.arch
                                                                |                                                     |                |           |               | org.apache.commons.lang3.builder
                                                                |                                                     |                |           |               | org.apache.commons.lang3.compare
@@ -46,7 +46,7 @@ commons-lang3-3.15.0.jar                                       | org.apache.comm
                                                                |                                                     |                |           |               | org.apache.commons.lang3.time
                                                                |                                                     |                |           |               | org.apache.commons.lang3.tuple
                                                                |                                                     |                |           |               | org.apache.commons.lang3.util
-commons-io-2.16.1.jar                                          | org.apache.commons.io                               | Module-Info    | No        | java.base     | org.apache.commons.io
+commons-io-2.17.0.jar                                          | org.apache.commons.io                               | Module-Info    | No        | java.base     | org.apache.commons.io
                                                                |                                                     |                |           |               | org.apache.commons.io.build
                                                                |                                                     |                |           |               | org.apache.commons.io.channels
                                                                |                                                     |                |           |               | org.apache.commons.io.charset
@@ -62,20 +62,49 @@ commons-io-2.16.1.jar                                          | org.apache.comm
                                                                |                                                     |                |           |               | org.apache.commons.io.output
                                                                |                                                     |                |           |               | org.apache.commons.io.serialization
 guice-5.1.0.jar                                                | com.google.guice                                    | Manifest       | Yes       | -             | [all packages]
-slf4j-simple-2.0.13.jar                                        | org.slf4j.simple                                    | Module-Info    | No        | org.slf4j     | org.slf4j.simple
+slf4j-simple-2.0.16.jar                                        | org.slf4j.simple                                    | Module-Info    | No        | org.slf4j     | org.slf4j.simple
                                                                |                                                     |                |           | java.base     |
-slf4j-api-2.0.13.jar                                           | org.slf4j                                           | Module-Info    | No        | java.base     | org.slf4j
+slf4j-api-2.0.16.jar                                           | org.slf4j                                           | Module-Info    | No        | java.base     | org.slf4j
                                                                |                                                     |                |           |               | org.slf4j.event
                                                                |                                                     |                |           |               | org.slf4j.helpers
                                                                |                                                     |                |           |               | org.slf4j.spi
-guava-33.2.1-jre.jar                                           | com.google.common                                   | Manifest       | Yes       | -             | [all packages]
+guava-33.3.0-jre.jar                                           | com.google.common                                   | Manifest       | Yes       | -             | [all packages]
 javax.inject-1.jar                                             | javax.inject                                        | Auto-generated | Yes       | -             | [all packages]
 aopalliance-1.0.jar                                            | aopalliance                                         | Auto-generated | Yes       | -             | [all packages]
 failureaccess-1.0.2.jar                                        | com.google.common.util.concurrent.internal          | Manifest       | Yes       | -             | [all packages]
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | listenablefuture.empty.to.avoid.conflict.with.guava | Auto-generated | Yes       | -             | [all packages]
 jsr305-3.0.2.jar                                               | jsr305                                              | Auto-generated | Yes       | -             | [all packages]
-checker-qual-3.42.0.jar                                        | org.checkerframework.checker.qual                   | Manifest       | Yes       | -             | [all packages]
-error_prone_annotations-2.26.1.jar                             | com.google.errorprone.annotations                   | Module-Info    | No        | java.compiler | com.google.errorprone.annotations
+checker-qual-3.43.0.jar                                        | org.checkerframework.checker.qual                   | Module-Info    | No        | java.compiler | org.checkerframework.checker.builder.qual
+                                                               |                                                     |                |           | java.desktop  | org.checkerframework.checker.calledmethods.qual
+                                                               |                                                     |                |           | java.base     | org.checkerframework.checker.compilermsgs.qual
+                                                               |                                                     |                |           | jdk.compiler  | org.checkerframework.checker.fenum.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.formatter.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.guieffect.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.i18n.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.i18nformatter.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.index.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.initialization.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.interning.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.lock.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.mustcall.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.nullness.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.optional.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.propkey.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.regex.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.signature.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.signedness.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.tainting.qual
+                                                               |                                                     |                |           |               | org.checkerframework.checker.units.qual
+                                                               |                                                     |                |           |               | org.checkerframework.common.aliasing.qual
+                                                               |                                                     |                |           |               | org.checkerframework.common.initializedfields.qual
+                                                               |                                                     |                |           |               | org.checkerframework.common.reflection.qual
+                                                               |                                                     |                |           |               | org.checkerframework.common.returnsreceiver.qual
+                                                               |                                                     |                |           |               | org.checkerframework.common.subtyping.qual
+                                                               |                                                     |                |           |               | org.checkerframework.common.util.count.report.qual
+                                                               |                                                     |                |           |               | org.checkerframework.common.value.qual
+                                                               |                                                     |                |           |               | org.checkerframework.dataflow.qual
+                                                               |                                                     |                |           |               | org.checkerframework.framework.qual
+error_prone_annotations-2.28.0.jar                             | com.google.errorprone.annotations                   | Module-Info    | No        | java.compiler | com.google.errorprone.annotations
                                                                |                                                     |                |           | java.base     | com.google.errorprone.annotations.concurrent
 
 Class Versions
@@ -84,20 +113,20 @@ Java class file format information.
 
 JAR file                                                       | Multi-release | Class files by Java version
 ---------------------------------------------------------------+---------------+-----------------------------------------------------
-commons-lang3-3.15.0.jar                                       | Yes (Java 9)  | Java 8 (377)
-commons-io-2.16.1.jar                                          | Yes (Java 9)  | Java 8 (331)
+commons-lang3-3.17.0.jar                                       | Yes (Java 9)  | Java 8 (377)
+commons-io-2.17.0.jar                                          | Yes (Java 9)  | Java 8 (335)
 guice-5.1.0.jar                                                | No            | Java 8 (460), Java 5 (34)
-slf4j-simple-2.0.13.jar                                        | Yes (Java 9)  | Java 8 (6)
-slf4j-api-2.0.13.jar                                           | Yes (Java 9)  | Java 8 (54)
-guava-33.2.1-jre.jar                                           | No            | Java 8 (2005)
+slf4j-simple-2.0.16.jar                                        | Yes (Java 9)  | Java 8 (6)
+slf4j-api-2.0.16.jar                                           | Yes (Java 9)  | Java 8 (55)
+guava-33.3.0-jre.jar                                           | No            | Java 8 (2001)
 javax.inject-1.jar                                             | No            | Java 5 (6)
 aopalliance-1.0.jar                                            | No            | Java 1.3 (9)
 failureaccess-1.0.2.jar                                        | No            | Java 7 (2)
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | No            | [no class files]
 jsr305-3.0.2.jar                                               | No            | Java 5 (35)
-checker-qual-3.42.0.jar                                        | No            | Java 8 (369)
-error_prone_annotations-2.26.1.jar                             | Yes (Java 9)  | Java 8 (27)
-Classpath                                                      | -             | Java 8 (3629), Java 7 (2), Java 5 (75), Java 1.3 (9)
+checker-qual-3.43.0.jar                                        | No            | Java 8 (369)
+error_prone_annotations-2.28.0.jar                             | Yes (Java 9)  | Java 8 (27)
+Classpath                                                      | -             | Java 8 (3630), Java 7 (2), Java 5 (75), Java 1.3 (9)
 
 JAR Dependencies
 ----------------
@@ -105,27 +134,27 @@ Dependencies between JAR files.
 
 JAR file                                                       | Uses                               | Used by
 ---------------------------------------------------------------+------------------------------------+------------------------
-commons-lang3-3.15.0.jar                                       | [none]                             | [none]
-commons-io-2.16.1.jar                                          | [none]                             | [none]
+commons-lang3-3.17.0.jar                                       | [none]                             | [none]
+commons-io-2.17.0.jar                                          | [none]                             | [none]
 guice-5.1.0.jar                                                | aopalliance-1.0.jar                | [none]
-                                                               | error_prone_annotations-2.26.1.jar |
-                                                               | guava-33.2.1-jre.jar               |
+                                                               | error_prone_annotations-2.28.0.jar |
+                                                               | guava-33.3.0-jre.jar               |
                                                                | javax.inject-1.jar                 |
                                                                | jsr305-3.0.2.jar                   |
-slf4j-simple-2.0.13.jar                                        | slf4j-api-2.0.13.jar               | [none]
-slf4j-api-2.0.13.jar                                           | [none]                             | slf4j-simple-2.0.13.jar
-guava-33.2.1-jre.jar                                           | checker-qual-3.42.0.jar            | guice-5.1.0.jar
-                                                               | error_prone_annotations-2.26.1.jar |
+slf4j-simple-2.0.16.jar                                        | slf4j-api-2.0.16.jar               | [none]
+slf4j-api-2.0.16.jar                                           | [none]                             | slf4j-simple-2.0.16.jar
+guava-33.3.0-jre.jar                                           | checker-qual-3.43.0.jar            | guice-5.1.0.jar
+                                                               | error_prone_annotations-2.28.0.jar |
                                                                | failureaccess-1.0.2.jar            |
                                                                | jsr305-3.0.2.jar                   |
 javax.inject-1.jar                                             | [none]                             | guice-5.1.0.jar
 aopalliance-1.0.jar                                            | [none]                             | guice-5.1.0.jar
-failureaccess-1.0.2.jar                                        | [none]                             | guava-33.2.1-jre.jar
+failureaccess-1.0.2.jar                                        | [none]                             | guava-33.3.0-jre.jar
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | [none]                             | [none]
-jsr305-3.0.2.jar                                               | [none]                             | guava-33.2.1-jre.jar
+jsr305-3.0.2.jar                                               | [none]                             | guava-33.3.0-jre.jar
                                                                |                                    | guice-5.1.0.jar
-checker-qual-3.42.0.jar                                        | [none]                             | guava-33.2.1-jre.jar
-error_prone_annotations-2.26.1.jar                             | [none]                             | guava-33.2.1-jre.jar
+checker-qual-3.43.0.jar                                        | [none]                             | guava-33.3.0-jre.jar
+error_prone_annotations-2.28.0.jar                             | [none]                             | guava-33.3.0-jre.jar
                                                                |                                    | guice-5.1.0.jar
 
 Dependencies
@@ -134,27 +163,27 @@ Dependencies as declared in POM file.
 
 JAR file                                                       | Maven coordinates                                                           | Direct dependencies                                                         | Status
 ---------------------------------------------------------------+-----------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------------------
-commons-lang3-3.15.0.jar                                       | org.apache.commons:commons-lang3:3.15.0                                     | org.apache.commons:commons-text:1.12.0 (provided)                           | Unsatisfied
-commons-io-2.16.1.jar                                          | commons-io:commons-io:2.16.1                                                | [none]                                                                      |
+commons-lang3-3.17.0.jar                                       | org.apache.commons:commons-lang3:3.17.0                                     | org.apache.commons:commons-text:1.12.0 (provided)                           | Unsatisfied
+commons-io-2.17.0.jar                                          | commons-io:commons-io:2.17.0                                                | [none]                                                                      |
 guice-5.1.0.jar                                                | com.google.inject:guice:5.1.0                                               | javax.inject:javax.inject:1                                                 | OK
                                                                |                                                                             | aopalliance:aopalliance:1.0                                                 | OK
-                                                               |                                                                             | com.google.guava:guava:30.1-jre                                             | OK (version 33.2.1-jre)
+                                                               |                                                                             | com.google.guava:guava:30.1-jre                                             | OK (version 33.3.0-jre)
                                                                |                                                                             | org.ow2.asm:asm:9.2 (optional)                                              | Unsatisfied
-slf4j-simple-2.0.13.jar                                        | org.slf4j:slf4j-simple:2.0.13                                               | org.slf4j:slf4j-api:2.0.13                                                  | OK
-slf4j-api-2.0.13.jar                                           | org.slf4j:slf4j-api:2.0.13                                                  | [none]                                                                      |
-guava-33.2.1-jre.jar                                           | com.google.guava:guava:33.2.1-jre                                           | com.google.guava:failureaccess:1.0.2                                        | OK
+slf4j-simple-2.0.16.jar                                        | org.slf4j:slf4j-simple:2.0.16                                               | org.slf4j:slf4j-api:2.0.16                                                  | OK
+slf4j-api-2.0.16.jar                                           | org.slf4j:slf4j-api:2.0.16                                                  | [none]                                                                      |
+guava-33.3.0-jre.jar                                           | com.google.guava:guava:33.3.0-jre                                           | com.google.guava:failureaccess:1.0.2                                        | OK
                                                                |                                                                             | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava | OK
                                                                |                                                                             | com.google.code.findbugs:jsr305:3.0.2                                       | OK
-                                                               |                                                                             | org.checkerframework:checker-qual:3.42.0                                    | OK
-                                                               |                                                                             | com.google.errorprone:error_prone_annotations:2.26.1                        | OK
+                                                               |                                                                             | org.checkerframework:checker-qual:3.43.0                                    | OK
+                                                               |                                                                             | com.google.errorprone:error_prone_annotations:2.28.0                        | OK
                                                                |                                                                             | com.google.j2objc:j2objc-annotations:3.0.0                                  | Unsatisfied
 javax.inject-1.jar                                             | javax.inject:javax.inject:1                                                 | [none]                                                                      |
 aopalliance-1.0.jar                                            | aopalliance:aopalliance:1.0                                                 | [none]                                                                      |
 failureaccess-1.0.2.jar                                        | com.google.guava:failureaccess:1.0.2                                        | [none]                                                                      |
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava | [none]                                                                      |
 jsr305-3.0.2.jar                                               | com.google.code.findbugs:jsr305:3.0.2                                       | [none]                                                                      |
-checker-qual-3.42.0.jar                                        | org.checkerframework:checker-qual:3.42.0                                    | [none]                                                                      |
-error_prone_annotations-2.26.1.jar                             | com.google.errorprone:error_prone_annotations:2.26.1                        | [none]                                                                      |
+checker-qual-3.43.0.jar                                        | org.checkerframework:checker-qual:3.43.0                                    | [none]                                                                      |
+error_prone_annotations-2.28.0.jar                             | com.google.errorprone:error_prone_annotations:2.28.0                        | [none]                                                                      |
 
 Packages
 --------
@@ -163,12 +192,12 @@ List of packages per JAR file.
 JAR file                           | Count | Packages                                          | Issues
 -----------------------------------+-------+---------------------------------------------------+-------
 aopalliance-1.0.jar                | 2     | org.aopalliance.* (2 subpackages)                 |
-checker-qual-3.42.0.jar            | 30    | org.checkerframework.* (30 subpackages)           |
-commons-io-2.16.1.jar              | 15    | org.apache.commons.io (+14 subpackages)           |
-commons-lang3-3.15.0.jar           | 18    | org.apache.commons.lang3 (+17 subpackages)        |
-error_prone_annotations-2.26.1.jar | 2     | com.google.errorprone.annotations (+1 subpackage) |
+checker-qual-3.43.0.jar            | 30    | org.checkerframework.* (30 subpackages)           |
+commons-io-2.17.0.jar              | 15    | org.apache.commons.io (+14 subpackages)           |
+commons-lang3-3.17.0.jar           | 18    | org.apache.commons.lang3 (+17 subpackages)        |
+error_prone_annotations-2.28.0.jar | 2     | com.google.errorprone.annotations (+1 subpackage) |
 failureaccess-1.0.2.jar            | 1     | com.google.common.util.concurrent.internal        |
-guava-33.2.1-jre.jar               | 18    | com.google.common.annotations                     |
+guava-33.3.0-jre.jar               | 18    | com.google.common.annotations                     |
                                    |       | com.google.common.base (+1 subpackage)            |
                                    |       | com.google.common.cache                           |
                                    |       | com.google.common.collect                         |
@@ -188,11 +217,11 @@ guava-33.2.1-jre.jar               | 18    | com.google.common.annotations      
 guice-5.1.0.jar                    | 11    | com.google.inject (+10 subpackages)               |
 javax.inject-1.jar                 | 1     | javax.inject                                      |
 jsr305-3.0.2.jar                   | 3     | javax.annotation (+2 subpackages)                 |
-slf4j-api-2.0.13.jar               | 4     | org.slf4j                                         |
+slf4j-api-2.0.16.jar               | 4     | org.slf4j                                         |
                                    |       | org.slf4j.event                                   |
                                    |       | org.slf4j.helpers                                 |
                                    |       | org.slf4j.spi                                     |
-slf4j-simple-2.0.13.jar            | 1     | org.slf4j.simple                                  |
+slf4j-simple-2.0.16.jar            | 1     | org.slf4j.simple                                  |
 
 Duplicate Classes
 -----------------
@@ -207,7 +236,7 @@ Compatibility issues between JAR files.
 
 JAR file             | Issues
 ---------------------+---------------------------------------------------------------------------------------------
-guava-33.2.1-jre.jar | com.google.common.base.Converter
+guava-33.3.0-jre.jar | com.google.common.base.Converter
                      | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
                      |
                      | com.google.common.cache.LocalCache
@@ -370,15 +399,15 @@ guice-5.1.0.jar         | com.google.inject.internal.InternalFlags
                         |
                         | com.google.inject.internal.aop.UnsafeClassDefiner
                         | • @Deprecated: public final class java.security.AccessController
-slf4j-simple-2.0.13.jar | org.slf4j.simple.SimpleLoggerConfiguration
+slf4j-simple-2.0.16.jar | org.slf4j.simple.SimpleLoggerConfiguration
                         | • @Deprecated: public final class java.security.AccessController
-slf4j-api-2.0.13.jar    | org.slf4j.LoggerFactory
+slf4j-api-2.0.16.jar    | org.slf4j.LoggerFactory
                         | • @Deprecated: public class java.lang.SecurityManager
                         | • @Deprecated: public final class java.security.AccessController
                         |
                         | org.slf4j.helpers.Util$ClassContextSecurityManager
                         | • @Deprecated: public class java.lang.SecurityManager
-guava-33.2.1-jre.jar    | com.google.common.cache.Striped64
+guava-33.3.0-jre.jar    | com.google.common.cache.Striped64
                         | • @Deprecated: public final class java.security.AccessController
                         | • boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)
                         | • boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)
@@ -439,8 +468,8 @@ Java Runtime
 ------------
 Information about JRE/JDK runtime.
 
-Java home    : /home/markwalder/.jdks/temurin-17.0.11
+Java home    : /home/markwalder/.jdks/temurin-17.0.12
 Java runtime : OpenJDK Runtime Environment
-Java version : 17.0.11
+Java version : 17.0.12
 Java vendor  : Eclipse Adoptium
 
