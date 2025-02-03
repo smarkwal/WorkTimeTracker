@@ -8,19 +8,20 @@ List of JAR files found in classpath.
 JAR file                                                       | Size    | Classes | Resources | Checksum (SHA-1)                         | Artifact coordinates
 ---------------------------------------------------------------+---------+---------+-----------+------------------------------------------+----------------------------------------------------------------------------
 commons-lang3-3.17.0.jar                                       | 658 KB  | 377     | 0         | b17d2136f0460dcc0d2016ceefca8723bdf4ee70 | org.apache.commons:commons-lang3:3.17.0
-commons-io-2.17.0.jar                                          | 504 KB  | 335     | 0         | ddcc8433eb019fb48fe25207c0278143f3e1d7e2 | commons-io:commons-io:2.17.0
+commons-io-2.18.0.jar                                          | 526 KB  | 355     | 0         | 44084ef756763795b31c578403dd028ff4a22950 | commons-io:commons-io:2.18.0
 guice-5.1.0.jar                                                | 759 KB  | 494     | 1         | da25056c694c54ba16e78e4fc35f17fc60f0d1b4 | com.google.inject:guice:5.1.0
 slf4j-simple-2.0.16.jar                                        | 15.3 KB | 6       | 0         | 56d3d8e59293543780ad35af4ee4a5d9c111a588 | org.slf4j:slf4j-simple:2.0.16
 slf4j-api-2.0.16.jar                                           | 67.8 KB | 55      | 0         | 0172931663a09a1fa515567af5fbef00897d3c04 | org.slf4j:slf4j-api:2.0.16
-guava-33.3.0-jre.jar                                           | 2.94 MB | 2001    | 0         | 13b4d0924e6023eda04b4c7aa83b32dfedf735a7 | com.google.guava:guava:33.3.0-jre
+guava-33.4.0-jre.jar                                           | 2.94 MB | 2002    | 0         | 03fcc0a259f724c7de54a6a55ea7e26d3d5c0cac | com.google.guava:guava:33.4.0-jre
 javax.inject-1.jar                                             | 2.44 KB | 6       | 0         | 6975da39a7040257bd51d21a231b76c915872d38 | javax.inject:javax.inject:1
 aopalliance-1.0.jar                                            | 4.36 KB | 9       | 0         | 0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8 | aopalliance:aopalliance:1.0
 failureaccess-1.0.2.jar                                        | 4.63 KB | 2       | 0         | c4a06a64e650562f30b7bf9aaec1bfed43aca12b | com.google.guava:failureaccess:1.0.2
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | 2.15 KB | 0       | 0         | b421526c5f297295adef1c886e5246c39d4ac629 | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
 jsr305-3.0.2.jar                                               | 19.5 KB | 35      | 0         | 25ea2e8b0c338a877313bd4672d3fe056ea78f0d | com.google.code.findbugs:jsr305:3.0.2
 checker-qual-3.43.0.jar                                        | 226 KB  | 369     | 0         | 9425eee39e56b116d2b998b7c2cebcbd11a3c98b | org.checkerframework:checker-qual:3.43.0
-error_prone_annotations-2.28.0.jar                             | 18.9 KB | 27      | 0         | 59fc00087ce372de42e394d2c789295dff2d19f0 | com.google.errorprone:error_prone_annotations:2.28.0
-Classpath                                                      | 5.16 MB | 3716    | 1         | -                                        | -
+error_prone_annotations-2.36.0.jar                             | 18.9 KB | 27      | 0         | 227d4d4957ccc3dc5761bd897e3a0ee587e750a7 | com.google.errorprone:error_prone_annotations:2.36.0
+j2objc-annotations-3.0.0.jar                                   | 12.2 KB | 17      | 0         | 7399e65dd7e9ff3404f4535b2f017093bdb134c7 | com.google.j2objc:j2objc-annotations:3.0.0
+Classpath                                                      | 5.20 MB | 3754    | 1         | -                                        | -
 
 Modules
 -------
@@ -46,7 +47,7 @@ commons-lang3-3.17.0.jar                                       | org.apache.comm
                                                                |                                                     |                |           |               | org.apache.commons.lang3.time
                                                                |                                                     |                |           |               | org.apache.commons.lang3.tuple
                                                                |                                                     |                |           |               | org.apache.commons.lang3.util
-commons-io-2.17.0.jar                                          | org.apache.commons.io                               | Module-Info    | No        | java.base     | org.apache.commons.io
+commons-io-2.18.0.jar                                          | org.apache.commons.io                               | Module-Info    | No        | java.base     | org.apache.commons.io
                                                                |                                                     |                |           |               | org.apache.commons.io.build
                                                                |                                                     |                |           |               | org.apache.commons.io.channels
                                                                |                                                     |                |           |               | org.apache.commons.io.charset
@@ -68,7 +69,7 @@ slf4j-api-2.0.16.jar                                           | org.slf4j      
                                                                |                                                     |                |           |               | org.slf4j.event
                                                                |                                                     |                |           |               | org.slf4j.helpers
                                                                |                                                     |                |           |               | org.slf4j.spi
-guava-33.3.0-jre.jar                                           | com.google.common                                   | Manifest       | Yes       | -             | [all packages]
+guava-33.4.0-jre.jar                                           | com.google.common                                   | Manifest       | Yes       | -             | [all packages]
 javax.inject-1.jar                                             | javax.inject                                        | Auto-generated | Yes       | -             | [all packages]
 aopalliance-1.0.jar                                            | aopalliance                                         | Auto-generated | Yes       | -             | [all packages]
 failureaccess-1.0.2.jar                                        | com.google.common.util.concurrent.internal          | Manifest       | Yes       | -             | [all packages]
@@ -104,8 +105,9 @@ checker-qual-3.43.0.jar                                        | org.checkerfram
                                                                |                                                     |                |           |               | org.checkerframework.common.value.qual
                                                                |                                                     |                |           |               | org.checkerframework.dataflow.qual
                                                                |                                                     |                |           |               | org.checkerframework.framework.qual
-error_prone_annotations-2.28.0.jar                             | com.google.errorprone.annotations                   | Module-Info    | No        | java.compiler | com.google.errorprone.annotations
+error_prone_annotations-2.36.0.jar                             | com.google.errorprone.annotations                   | Module-Info    | No        | java.compiler | com.google.errorprone.annotations
                                                                |                                                     |                |           | java.base     | com.google.errorprone.annotations.concurrent
+j2objc-annotations-3.0.0.jar                                   | com.google.j2objc.annotations                       | Module-Info    | No        | java.base     | com.google.j2objc.annotations
 
 Class Versions
 --------------
@@ -114,19 +116,20 @@ Java class file format information.
 JAR file                                                       | Multi-release | Class files by Java version
 ---------------------------------------------------------------+---------------+-----------------------------------------------------
 commons-lang3-3.17.0.jar                                       | Yes (Java 9)  | Java 8 (377)
-commons-io-2.17.0.jar                                          | Yes (Java 9)  | Java 8 (335)
+commons-io-2.18.0.jar                                          | Yes (Java 9)  | Java 8 (355)
 guice-5.1.0.jar                                                | No            | Java 8 (460), Java 5 (34)
 slf4j-simple-2.0.16.jar                                        | Yes (Java 9)  | Java 8 (6)
 slf4j-api-2.0.16.jar                                           | Yes (Java 9)  | Java 8 (55)
-guava-33.3.0-jre.jar                                           | No            | Java 8 (2001)
+guava-33.4.0-jre.jar                                           | No            | Java 8 (2002)
 javax.inject-1.jar                                             | No            | Java 5 (6)
 aopalliance-1.0.jar                                            | No            | Java 1.3 (9)
 failureaccess-1.0.2.jar                                        | No            | Java 7 (2)
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | No            | [no class files]
 jsr305-3.0.2.jar                                               | No            | Java 5 (35)
 checker-qual-3.43.0.jar                                        | No            | Java 8 (369)
-error_prone_annotations-2.28.0.jar                             | Yes (Java 9)  | Java 8 (27)
-Classpath                                                      | -             | Java 8 (3630), Java 7 (2), Java 5 (75), Java 1.3 (9)
+error_prone_annotations-2.36.0.jar                             | Yes (Java 9)  | Java 8 (27)
+j2objc-annotations-3.0.0.jar                                   | Yes (Java 9)  | Java 8 (17)
+Classpath                                                      | -             | Java 8 (3668), Java 7 (2), Java 5 (75), Java 1.3 (9)
 
 JAR Dependencies
 ----------------
@@ -135,27 +138,29 @@ Dependencies between JAR files.
 JAR file                                                       | Uses                               | Used by
 ---------------------------------------------------------------+------------------------------------+------------------------
 commons-lang3-3.17.0.jar                                       | [none]                             | [none]
-commons-io-2.17.0.jar                                          | [none]                             | [none]
+commons-io-2.18.0.jar                                          | [none]                             | [none]
 guice-5.1.0.jar                                                | aopalliance-1.0.jar                | [none]
-                                                               | error_prone_annotations-2.28.0.jar |
-                                                               | guava-33.3.0-jre.jar               |
+                                                               | error_prone_annotations-2.36.0.jar |
+                                                               | guava-33.4.0-jre.jar               |
                                                                | javax.inject-1.jar                 |
                                                                | jsr305-3.0.2.jar                   |
 slf4j-simple-2.0.16.jar                                        | slf4j-api-2.0.16.jar               | [none]
 slf4j-api-2.0.16.jar                                           | [none]                             | slf4j-simple-2.0.16.jar
-guava-33.3.0-jre.jar                                           | checker-qual-3.43.0.jar            | guice-5.1.0.jar
-                                                               | error_prone_annotations-2.28.0.jar |
+guava-33.4.0-jre.jar                                           | checker-qual-3.43.0.jar            | guice-5.1.0.jar
+                                                               | error_prone_annotations-2.36.0.jar |
                                                                | failureaccess-1.0.2.jar            |
+                                                               | j2objc-annotations-3.0.0.jar       |
                                                                | jsr305-3.0.2.jar                   |
 javax.inject-1.jar                                             | [none]                             | guice-5.1.0.jar
 aopalliance-1.0.jar                                            | [none]                             | guice-5.1.0.jar
-failureaccess-1.0.2.jar                                        | [none]                             | guava-33.3.0-jre.jar
+failureaccess-1.0.2.jar                                        | [none]                             | guava-33.4.0-jre.jar
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | [none]                             | [none]
-jsr305-3.0.2.jar                                               | [none]                             | guava-33.3.0-jre.jar
+jsr305-3.0.2.jar                                               | [none]                             | guava-33.4.0-jre.jar
                                                                |                                    | guice-5.1.0.jar
-checker-qual-3.43.0.jar                                        | [none]                             | guava-33.3.0-jre.jar
-error_prone_annotations-2.28.0.jar                             | [none]                             | guava-33.3.0-jre.jar
+checker-qual-3.43.0.jar                                        | [none]                             | guava-33.4.0-jre.jar
+error_prone_annotations-2.36.0.jar                             | [none]                             | guava-33.4.0-jre.jar
                                                                |                                    | guice-5.1.0.jar
+j2objc-annotations-3.0.0.jar                                   | [none]                             | guava-33.4.0-jre.jar
 
 Dependencies
 ------------
@@ -164,26 +169,27 @@ Dependencies as declared in POM file.
 JAR file                                                       | Maven coordinates                                                           | Direct dependencies                                                         | Status
 ---------------------------------------------------------------+-----------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------------------
 commons-lang3-3.17.0.jar                                       | org.apache.commons:commons-lang3:3.17.0                                     | org.apache.commons:commons-text:1.12.0 (provided)                           | Unsatisfied
-commons-io-2.17.0.jar                                          | commons-io:commons-io:2.17.0                                                | [none]                                                                      |
+commons-io-2.18.0.jar                                          | commons-io:commons-io:2.18.0                                                | [none]                                                                      |
 guice-5.1.0.jar                                                | com.google.inject:guice:5.1.0                                               | javax.inject:javax.inject:1                                                 | OK
                                                                |                                                                             | aopalliance:aopalliance:1.0                                                 | OK
-                                                               |                                                                             | com.google.guava:guava:30.1-jre                                             | OK (version 33.3.0-jre)
+                                                               |                                                                             | com.google.guava:guava:30.1-jre                                             | OK (version 33.4.0-jre)
                                                                |                                                                             | org.ow2.asm:asm:9.2 (optional)                                              | Unsatisfied
 slf4j-simple-2.0.16.jar                                        | org.slf4j:slf4j-simple:2.0.16                                               | org.slf4j:slf4j-api:2.0.16                                                  | OK
 slf4j-api-2.0.16.jar                                           | org.slf4j:slf4j-api:2.0.16                                                  | [none]                                                                      |
-guava-33.3.0-jre.jar                                           | com.google.guava:guava:33.3.0-jre                                           | com.google.guava:failureaccess:1.0.2                                        | OK
+guava-33.4.0-jre.jar                                           | com.google.guava:guava:33.4.0-jre                                           | com.google.guava:failureaccess:1.0.2                                        | OK
                                                                |                                                                             | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava | OK
                                                                |                                                                             | com.google.code.findbugs:jsr305:3.0.2                                       | OK
                                                                |                                                                             | org.checkerframework:checker-qual:3.43.0                                    | OK
-                                                               |                                                                             | com.google.errorprone:error_prone_annotations:2.28.0                        | OK
-                                                               |                                                                             | com.google.j2objc:j2objc-annotations:3.0.0                                  | Unsatisfied
+                                                               |                                                                             | com.google.errorprone:error_prone_annotations:2.36.0                        | OK
+                                                               |                                                                             | com.google.j2objc:j2objc-annotations:3.0.0                                  | OK
 javax.inject-1.jar                                             | javax.inject:javax.inject:1                                                 | [none]                                                                      |
 aopalliance-1.0.jar                                            | aopalliance:aopalliance:1.0                                                 | [none]                                                                      |
 failureaccess-1.0.2.jar                                        | com.google.guava:failureaccess:1.0.2                                        | [none]                                                                      |
 listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar | com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava | [none]                                                                      |
 jsr305-3.0.2.jar                                               | com.google.code.findbugs:jsr305:3.0.2                                       | [none]                                                                      |
 checker-qual-3.43.0.jar                                        | org.checkerframework:checker-qual:3.43.0                                    | [none]                                                                      |
-error_prone_annotations-2.28.0.jar                             | com.google.errorprone:error_prone_annotations:2.28.0                        | [none]                                                                      |
+error_prone_annotations-2.36.0.jar                             | com.google.errorprone:error_prone_annotations:2.36.0                        | [none]                                                                      |
+j2objc-annotations-3.0.0.jar                                   | com.google.j2objc:j2objc-annotations:3.0.0                                  | [none]                                                                      |
 
 Packages
 --------
@@ -193,11 +199,11 @@ JAR file                           | Count | Packages                           
 -----------------------------------+-------+---------------------------------------------------+-------
 aopalliance-1.0.jar                | 2     | org.aopalliance.* (2 subpackages)                 |
 checker-qual-3.43.0.jar            | 30    | org.checkerframework.* (30 subpackages)           |
-commons-io-2.17.0.jar              | 15    | org.apache.commons.io (+14 subpackages)           |
+commons-io-2.18.0.jar              | 15    | org.apache.commons.io (+14 subpackages)           |
 commons-lang3-3.17.0.jar           | 18    | org.apache.commons.lang3 (+17 subpackages)        |
-error_prone_annotations-2.28.0.jar | 2     | com.google.errorprone.annotations (+1 subpackage) |
+error_prone_annotations-2.36.0.jar | 2     | com.google.errorprone.annotations (+1 subpackage) |
 failureaccess-1.0.2.jar            | 1     | com.google.common.util.concurrent.internal        |
-guava-33.3.0-jre.jar               | 18    | com.google.common.annotations                     |
+guava-33.4.0-jre.jar               | 18    | com.google.common.annotations                     |
                                    |       | com.google.common.base (+1 subpackage)            |
                                    |       | com.google.common.cache                           |
                                    |       | com.google.common.collect                         |
@@ -215,6 +221,7 @@ guava-33.3.0-jre.jar               | 18    | com.google.common.annotations      
                                    |       | com.google.common.xml                             |
                                    |       | com.google.thirdparty.publicsuffix                |
 guice-5.1.0.jar                    | 11    | com.google.inject (+10 subpackages)               |
+j2objc-annotations-3.0.0.jar       | 1     | com.google.j2objc.annotations                     |
 javax.inject-1.jar                 | 1     | javax.inject                                      |
 jsr305-3.0.2.jar                   | 3     | javax.annotation (+2 subpackages)                 |
 slf4j-api-2.0.16.jar               | 4     | org.slf4j                                         |
@@ -234,156 +241,8 @@ Binary Compatibility
 --------------------
 Compatibility issues between JAR files.
 
-JAR file             | Issues
----------------------+---------------------------------------------------------------------------------------------
-guava-33.3.0-jre.jar | com.google.common.base.Converter
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.cache.LocalCache
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$AccessQueue$1
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$Segment
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$StrongAccessEntry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$StrongAccessWriteEntry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$StrongWriteEntry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$WeakAccessEntry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$WeakAccessWriteEntry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$WeakWriteEntry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.cache.LocalCache$WriteQueue$1
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.AbstractBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.CollectSpliterators$FlatMapSpliterator
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.FilteredMultimapValues
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.HashBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.HashBiMap$BiEntry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.ImmutableListMultimap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.ImmutableMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.ImmutableMultimap$EntryCollection
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.ImmutableMultimap$Values
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.ImmutableSet$CachingAsList
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.ImmutableSetMultimap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.ImmutableSetMultimap$EntrySet
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.JdkBackedImmutableBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.MapMakerInternalMap$Segment
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.MapMakerInternalMap$WeakValueReferenceImpl
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.Maps$FilteredEntryBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.Maps$KeySet
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.Maps$UnmodifiableBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.Maps$Values
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.MinMaxPriorityQueue$Heap
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.Multimaps$AsMap
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.Multimaps$Keys
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.RegularImmutableBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.SingletonImmutableBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.collect.SortedMultisets$ElementSet
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.collect.Synchronized$SynchronizedBiMap
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.eventbus.Subscriber
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.eventbus.SubscriberRegistry
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.util.concurrent.AbstractFuture
-                     | • Class not found: com.google.j2objc.annotations.ReflectionSupport$Level (package not found)
-                     | • Annotation not found: com.google.j2objc.annotations.ReflectionSupport (package not found)
-                     |
-                     | com.google.common.util.concurrent.AggregateFutureState
-                     | • Class not found: com.google.j2objc.annotations.ReflectionSupport$Level (package not found)
-                     | • Annotation not found: com.google.j2objc.annotations.ReflectionSupport (package not found)
-                     |
-                     | com.google.common.util.concurrent.AtomicDouble
-                     | • Class not found: com.google.j2objc.annotations.ReflectionSupport$Level (package not found)
-                     | • Annotation not found: com.google.j2objc.annotations.ReflectionSupport (package not found)
-                     |
-                     | com.google.common.util.concurrent.ClosingFuture$DeferredCloser
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
-                     |
-                     | com.google.common.util.concurrent.CycleDetectingLockFactory$CycleDetectingReentrantReadLock
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.util.concurrent.CycleDetectingLockFactory$CycleDetectingReentrantWriteLock
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.util.concurrent.InterruptibleTask
-                     | • Class not found: com.google.j2objc.annotations.ReflectionSupport$Level (package not found)
-                     | • Annotation not found: com.google.j2objc.annotations.ReflectionSupport (package not found)
-                     |
-                     | com.google.common.util.concurrent.Monitor$Guard
-                     | • Annotation not found: com.google.j2objc.annotations.Weak (package not found)
-                     |
-                     | com.google.common.util.concurrent.SequentialExecutor
-                     | • Annotation not found: com.google.j2objc.annotations.RetainedWith (package not found)
+JAR file | Issues
+---------+-------
 
 Blacklist
 ---------
@@ -407,7 +266,7 @@ slf4j-api-2.0.16.jar    | org.slf4j.LoggerFactory
                         |
                         | org.slf4j.helpers.Util$ClassContextSecurityManager
                         | • @Deprecated: public class java.lang.SecurityManager
-guava-33.3.0-jre.jar    | com.google.common.cache.Striped64
+guava-33.4.0-jre.jar    | com.google.common.cache.Striped64
                         | • @Deprecated: public final class java.security.AccessController
                         | • boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)
                         | • boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)
@@ -468,8 +327,8 @@ Java Runtime
 ------------
 Information about JRE/JDK runtime.
 
-Java home    : /home/markwalder/.jdks/temurin-17.0.12
+Java home    : /home/markwalder/.jdks/temurin-17.0.13
 Java runtime : OpenJDK Runtime Environment
-Java version : 17.0.12
+Java version : 17.0.13
 Java vendor  : Eclipse Adoptium
 
