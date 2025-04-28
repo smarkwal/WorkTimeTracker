@@ -1,225 +1,1629 @@
 <!DOCTYPE html>
+<!--suppress CssUnusedSymbol, HttpUrlsUsage, SpellCheckingInspection, GrazieInspection, DeprecatedClassUsageInspection -->
 <html lang="en">
 <head>
-<title>JarHC Report for WorkTimeTracker 3.0.1-SNAPSHOT</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="generator" content="JarHC 2.2.2">
-<style>
-body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	margin: 20px;
-	font-size: 0.8rem;
-}
+	<title>JarHC Report for WorkTimeTracker 3.0.1-SNAPSHOT</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="generator" content="JarHC 3.0.0">
+	<style>
 
-table {
-	border-collapse: collapse;
-}
+		html {
+			scroll-padding-top: 80px;
+		}
 
-th {
-	background-color: lightgray;
-}
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			line-height: 1.2rem;
+		}
 
-th, td {
-	border: 1px solid gray;
-	padding: 0.3rem;
-	vertical-align: top;
-	text-align: left;
-	white-space: nowrap;
-}
+		a {
+			color: #333399;
+			text-decoration: none;
 
-.generator {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: gray;
-}
-</style>
+			&:hover {
+				text-decoration: underline;
+			}
+
+			&:visited {
+				color: #333399;
+			}
+		}
+
+		#header {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			background-color: lightgray;
+			padding: 12px;
+			z-index: 100;
+		}
+
+		#controls {
+			display: flex;
+			align-self: flex-start;
+		}
+
+		.control {
+			display: flex;
+			align-items: center;
+			padding: 8px;
+			margin-right: 10px;
+			background-color: #EEEEEE;
+			border-radius: 8px;
+			user-select: none;
+
+			&:hover {
+				background-color: white;
+			}
+		}
+
+		#showOnlyDiffControl {
+			display: none;
+		}
+
+		.icon {
+			width: 16px;
+			height: 16px;
+			display: inline-block;
+
+			&.icon-up {
+				background-image: url('data:image/svg+xml,%3C%3Fxml version="1.0" encoding="utf-8"%3F%3E%3Csvg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"%3E%3Cg%3E%3Cpath d="M256,234.8l90.5,90.5c10.2,9.8,26.4,9.5,36.2-0.6c9.6-9.9,9.6-25.6,0-35.6L274.1,180.5c-10-10-26.2-10-36.2,0L129.3,289.1c-9.8,10.2-9.5,26.4,0.6,36.2c9.9,9.6,25.6,9.6,35.6,0L256,234.8z M256,512C114.6,512,0,397.4,0,256S114.6,0,256,0s256,114.6,256,256S397.4,512,256,512z"/%3E%3C/g%3E%3C/svg%3E%0A');
+			}
+
+			&.icon-down {
+				background-image: url('data:image/svg+xml,%3C%3Fxml version="1.0" encoding="utf-8"%3F%3E%3Csvg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"%3E%3Cg%3E%3Cpath d="M256,302.8l-90.5-90.5c-10.2-9.8-26.4-9.5-36.2,0.6c-9.6,9.9-9.6,25.6,0,35.6l108.6,108.6c9.9,10,26.1,10,36.1,0.1l0.1-0.1l108.6-108.6c10.2-9.8,10.4-26,0.6-36.2c-9.8-10.2-26-10.4-36.2-0.6l-0.6,0.6L256,302.8z M256,512C114.6,512,0,397.4,0,256S114.6,0,256,0s256,114.6,256,256S397.4,512,256,512z"/%3E%3C/g%3E%3C/svg%3E%0A');
+			}
+		}
+
+		input[type="checkbox"] {
+			transform: scale(1.5);
+		}
+
+		.label {
+			margin-left: 0.5em;
+		}
+
+		#generator {
+			align-self: flex-end;
+			margin-right: 20px;
+			padding: 8px;
+		}
+
+		#minimap {
+			display: none; /* hidden by default */
+			position: fixed;
+			top: 70px;
+			left: 10px;
+			width: 70px;
+			height: calc(100% - 80px);
+			z-index: 80;
+			user-select: none;
+			background-color: #EEEEEE;
+		}
+
+		#minimapView {
+			display: none; /* hidden by default */
+			position: fixed;
+			top: 66px; /* minimap top - 4px border */
+			left: 6px; /* minimap left - 4px border */
+			width: 70px; /* minimap width */
+			height: 0;
+			z-index: 90; /* float above minimap */
+			pointer-events: none;
+			user-select: none;
+			border: 4px solid black;
+		}
+
+		.minimapSection {
+			position: absolute;
+			left: 2px;
+			width: 62px; /* minimap width - 2x 2px inset - 2x 2px padding */
+			padding: 2px;
+			background-color: lightgray;
+			overflow: hidden;
+		}
+
+		.minimapSectionTitle {
+			font-size: 12px;
+			font-weight: bold;
+			line-height: 1em;
+			overflow-wrap: break-word;
+		}
+
+		#main {
+			margin: 80px 20px 20px 20px;
+		}
+
+		nav ul {
+			list-style-type: none;
+			margin-left: 10px;
+			padding: 0;
+			line-height: 1.7em;
+		}
+
+		h2, h3, h4, h5, h6 {
+			margin-top: 3rem;
+		}
+
+		.report-section-title {
+			background-color: black;
+			color: white;
+			padding: 10px 10px 10px 45px;
+			user-select: none;
+
+			/* collapse icon */
+			background-image: url('data:image/svg+xml,%3C%3Fxml version="1.0" encoding="utf-8"%3F%3E%3Csvg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;"%3E%3Cg style="stroke:white;stroke-width:6" fill="none"%3E%3Cpath d="M10,30L30,30L30,10"/%3E%3Cpath d="M70,30L50,30L50,10"/%3E%3Cpath d="M10,50L30,50L30,70"/%3E%3Cpath d="M70,50L50,50L50,70"/%3E%3C/g%3E%3C/svg%3E%0A');
+			background-position: center left 5px;
+			background-repeat: no-repeat;
+			background-size: 30px 30px;
+		}
+
+		section.collapsed {
+			.report-section-title { /* replace collapse icon with expand icon */
+				background-image: url('data:image/svg+xml,%3C%3Fxml version="1.0" encoding="utf-8"%3F%3E%3Csvg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;"%3E%3Cg style="stroke:white;stroke-width:6" fill="none"%3E%3Cpath d="M10,30L10,10L30,10"/%3E%3Cpath d="M70,30L70,10L50,10"/%3E%3Cpath d="M10,50L10,70L30,70"/%3E%3Cpath d="M70,50L70,70L50,70"/%3E%3C/g%3E%3C/svg%3E%0A');
+			}
+
+			.report-section-content {
+				display: none;
+			}
+		}
+
+		.report-section-content {
+			margin-left: 10px;
+		}
+
+		table {
+			border-collapse: collapse;
+			font-size: 0.8rem;
+		}
+
+		th {
+			background-color: lightgray;
+		}
+
+		th, td {
+			border: 1px solid gray;
+			padding: 0.3rem;
+			vertical-align: top;
+			text-align: left;
+			white-space: nowrap;
+		}
+
+		.report-text-block {
+			margin-bottom: 1em;
+
+			&:last-child { /* no margin after last block */
+				margin-bottom: 0;
+			}
+		}
+
+		.report-issue {
+		}
+
+		code {
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			color: #333399;
+		}
+
+		.inserted {
+			background-color: #D4EDDA;
+		}
+
+		.deleted {
+			background-color: #F8D7DA;
+		}
+
+		.marked {
+			background-color: #FFF6D8;
+		}
+
+		/* special diff report settings */
+
+		.diff-report {
+
+			#showOnlyDiffControl {
+				display: flex; /* only available in diff report */
+			}
+
+			.report-table-row.no-diff,
+			.report-issue.no-diff {
+				display: none; /* default: only show differences */
+			}
+
+		}
+
+		/* special print settings */
+
+		@media print {
+
+			header,
+			#minimap,
+			#minimapView,
+			nav {
+				display: none !important;
+			}
+
+			main {
+				margin: 0;
+			}
+
+			th, td {
+				white-space: normal;
+			}
+
+		}
+
+	</style>
+	<script>
+
+		const HEADER_HEIGHT = 80;
+		const MINIMAP_VSPACE = 10;
+
+		let MINIMAP_ENABLED = false;
+
+		function init() {
+
+			// check if document is a diff report
+			const isDiffReport = "scan" === "diff"
+			if (isDiffReport) {
+				initDiffUI();
+			}
+
+			initMinimap();
+			initCollapseExpand();
+			initRowMarking();
+			initKeyboardShortcuts();
+		}
+
+		function initDiffUI() {
+
+			// support click on control (outside of checkbox and label)
+			const control = document.getElementById("showOnlyDiffControl");
+			control.addEventListener("click", function(event) {
+				if (event.target === control) { // ignore clicks on nested elements
+					// similate click on checkbox
+					const checkbox = document.getElementById("showOnlyDiffCheckbox");
+					checkbox.click();
+				}
+			});
+		}
+
+		function initMinimap() {
+
+			window.addEventListener("scroll", updateMinimapView);
+			window.addEventListener("resize", updateMinimap);
+
+			const minimap = document.getElementById("minimap");
+			minimap.addEventListener("click", scrollMinimapView);
+			// TODO: on mouse drag
+		}
+
+		function initCollapseExpand() {
+
+			// for every report section ...
+			const sections = document.getElementsByClassName("report-section");
+			for (let section of sections) {
+
+				const title = section.querySelector("h2, h3, h4, h5, h6");
+				if (title) {
+					title.addEventListener("click", () => {
+						section.classList.toggle("collapsed");
+						updateMinimap();
+					});
+				}
+			}
+		}
+
+		function initRowMarking() {
+
+			const rows = document.getElementsByClassName("report-table-row");
+			for (let row of rows) {
+				row.addEventListener("dblclick", () => {
+					row.classList.toggle("marked");
+				});
+			}
+		}
+
+		function initKeyboardShortcuts() {
+
+			// prepare event handler
+			function handleShortcut(event) {
+				if (event.ctrlKey && event.key === "ArrowUp") { // Ctrl + ArrowUp
+					event.preventDefault();
+					// scroll to previous section
+					scrollToSection(false);
+				} else if (event.ctrlKey && event.key === "ArrowDown") { // Ctrl + ArrowDown
+					event.preventDefault();
+					// scroll to next section
+					scrollToSection(true);
+				}
+			}
+
+			// register event handler
+			document.addEventListener("keydown", handleShortcut);
+		}
+
+		function scrollToSection(next) {
+
+			const targetY = HEADER_HEIGHT; // target scroll position (relative to viewport)
+
+			// find next section
+			let nextSection = null;
+			let nextSectionY = next ? Number.MAX_VALUE : -Number.MAX_VALUE;
+
+			// iterate over all sections
+			const sections = document.getElementsByClassName("report-section");
+			for (let section of sections) {
+
+				// get position of section (relative to viewport)
+				const sectionY = section.getBoundingClientRect().top;
+
+				// check if section is closer than previous next section
+				let better = next ? (sectionY > targetY + 10 && sectionY < nextSectionY) : (sectionY < targetY - 10 && sectionY > nextSectionY);
+				if (better) {
+					nextSection = section;
+					nextSectionY = sectionY;
+				}
+			}
+
+			// if there is a next section ...
+			if (nextSection) {
+
+				// get current vertical scroll position
+				const scrollY = window.scrollY;
+
+				// scroll to next section
+				window.scrollTo(0, scrollY + nextSectionY - targetY);
+
+			} else if (!next) { // if there is no previous section
+
+				// scroll to top
+				window.scrollTo(0, 0);
+			}
+
+		}
+
+		function showOnlyDiff(enabled) {
+
+			// show or hide table rows
+			const rows = document.getElementsByClassName("report-table-row");
+			for (let row of rows) {
+				if (row.classList.contains("no-diff")) {
+					if (enabled) {
+						row.style.display = "none";
+					} else {
+						row.style.display = "table-row";
+					}
+				}
+			}
+
+			// show or hide issues
+			const issues = document.getElementsByClassName("report-issue");
+			for (let issue of issues) {
+				if (issue.classList.contains("no-diff")) {
+					if (enabled) {
+						issue.style.display = "none";
+					} else {
+						issue.style.display = "block";
+					}
+				}
+			}
+
+			// update minimap
+			updateMinimap();
+		}
+
+		function showMinimap(enabled) {
+
+			// remember state
+			MINIMAP_ENABLED = enabled;
+
+			// find all relevant elements
+			let minimap = document.getElementById("minimap");
+			let minimapView = document.getElementById("minimapView");
+			let main = document.getElementById("main");
+
+			if (enabled) {
+
+				// show minimap
+				minimap.style.display = "block";
+				minimapView.style.display = "block";
+				main.style.marginLeft = "100px";
+
+				// re-calculate minimap
+				updateMinimap();
+
+			} else {
+
+				// hide minimap
+				minimap.style.display = "none";
+				minimapView.style.display = "none";
+				main.style.marginLeft = "20px";
+			}
+		}
+
+		function updateMinimap() {
+			if (!MINIMAP_ENABLED) return;
+
+			const minimap = document.getElementById("minimap");
+
+			// get dimensions
+			const documentHeight = document.body.scrollHeight;
+			const minimapHeight = minimap.clientHeight;
+
+			// prepare list of new minimap elements
+			const elements = [];
+
+			let previousElementBottom = -MINIMAP_VSPACE;
+
+			// iterate over all report tables and add them to the minimap
+			const sections = document.getElementsByClassName("report-section");
+			for (let section of sections) {
+
+				// TODO: fix position
+				let elementTop = (section.offsetTop - HEADER_HEIGHT) * minimapHeight / documentHeight;
+				let elementHeight = section.clientHeight * minimapHeight / documentHeight - MINIMAP_VSPACE;
+
+				const minElementTop = previousElementBottom + MINIMAP_VSPACE;
+				if (elementTop < minElementTop) {
+					elementHeight = elementHeight - (minElementTop - elementTop);
+					elementTop = minElementTop;
+				}
+
+				const minElementHeight = 16; // 12px font size + 2 x 2px padding
+				if (elementHeight < minElementHeight) {
+					elementHeight = minElementHeight;
+				}
+
+				const title = document.createElement("div");
+				title.classList.add("minimapSectionTitle");
+				title.innerText = section.title;
+				title.addEventListener("click", function(event) {
+					window.scrollTo(0, section.offsetTop - HEADER_HEIGHT);
+					event.stopPropagation();
+				})
+
+				const element = document.createElement("div");
+				element.classList.add("minimapSection");
+				element.style.top = elementTop + "px";
+				element.style.height = elementHeight + "px";
+				element.appendChild(title);
+				elements.push(element);
+
+				previousElementBottom = elementTop + elementHeight;
+			}
+
+			// TODO: iterate over all differences and add them to the minimap
+
+			// replace content of minimap
+			minimap.replaceChildren(...elements);
+
+			updateMinimapView();
+		}
+
+		function updateMinimapView() {
+			if (!MINIMAP_ENABLED) return;
+
+			const minimap = document.getElementById("minimap");
+
+			// get dimensions
+			const documentHeight = document.body.scrollHeight;
+			const viewportHeight = window.innerHeight;
+			const minimapHeight = minimap.clientHeight;
+			const scrollY = window.scrollY;
+
+			// calculate new position and height of minimap view
+			const minimapViewTop = minimapHeight * scrollY / documentHeight + 70 - 4;
+			const minimapViewHeight = minimapHeight * viewportHeight / documentHeight - 4;
+
+			// update position and height of minimap view
+			const minimapView = document.getElementById("minimapView");
+			minimapView.style.top = minimapViewTop + "px";
+			minimapView.style.height = minimapViewHeight + "px";
+		}
+
+		function scrollMinimapView(event) {
+			const minimap = document.getElementById("minimap");
+
+			// calculate height of minimap view
+			const documentHeight = document.body.scrollHeight;
+			const viewportHeight = window.innerHeight;
+			const minimapHeight = minimap.clientHeight;
+			const minimapViewHeight = minimapHeight * viewportHeight / documentHeight - 4;
+			const minimapViewOffset = minimapViewHeight / 2;
+
+			// calculate position of minimap view (relative to top of minimap)
+			let y = event.clientY - minimap.offsetTop;
+			if (y < minimapViewOffset) {
+				y = minimapViewOffset;
+			} else if (y > minimapHeight - minimapViewOffset) {
+				y = minimapHeight - minimapViewOffset;
+			}
+			y = y - minimapViewOffset;
+
+			const scrollY = y / minimapHeight * document.body.scrollHeight;
+			window.scrollTo(0, scrollY);
+
+			updateMinimapView();
+		}
+
+	</script>
 </head>
-<body>
+<body class="report scan-report" onload="init()">
 
-<h1>JarHC Report for WorkTimeTracker 3.0.1-SNAPSHOT</h1>
+	<header id="header">
+		<div id="controls">
+			<div class="control" onclick="scrollToSection(true)" title="Ctrl+&#x2193;"><span class="icon icon-down"></span><span class="label">Next section</span></div>
+			<div class="control" onclick="scrollToSection(false)" title="Ctrl+&#x2191;"><span class="icon icon-up"></span><span class="label">Previous section</span></div>
+			<div class="control" id="showOnlyDiffControl"><input type="checkbox" id="showOnlyDiffCheckbox" checked="checked" onchange="showOnlyDiff(this.checked)"><label class="label" for="showOnlyDiffCheckbox">Show only differences</label></div>
+			<div class="control" id="showMinimapControl"><input type="checkbox" id="showMinimapCheckbox" onchange="showMinimap(this.checked)"><label class="label" for="showMinimapCheckbox">Show MiniMap (Beta)</label></div>
+		</div>
+		<div id="generator">Generated with <a href="http://jarhc.org" target="_blank">JarHC 3.0.0</a></div>
+	</header>
 
-<h3>Table of Contents</h3>
-<ul>
-<li><a href="#JARFiles">JAR Files</a></li>
-<li><a href="#Modules">Modules</a></li>
-<li><a href="#ClassVersions">Class Versions</a></li>
-<li><a href="#JARDependencies">JAR Dependencies</a></li>
-<li><a href="#Dependencies">Dependencies</a></li>
-<li><a href="#Packages">Packages</a></li>
-<li><a href="#DuplicateClasses">Duplicate Classes</a></li>
-<li><a href="#BinaryCompatibility">Binary Compatibility</a></li>
-<li><a href="#Blacklist">Blacklist</a></li>
-<li><a href="#JavaRuntime">Java Runtime</a></li>
+	<div id="minimap"></div>
+	<div id="minimapView"></div>
+
+	<main id="main">
+		<h1 class="report-title">JarHC Report for WorkTimeTracker 3.0.1-SNAPSHOT</h1>
+		
+<nav>
+<h2 class="report-toc-title">Table of Contents</h2>
+<ul class="report-toc">
+<li class="report-toc-item"><a href="#JARFiles">JAR Files</a></li>
+<li class="report-toc-item"><a href="#Dependencies">Dependencies</a></li>
+<li class="report-toc-item"><a href="#DuplicateClasses">Duplicate Classes</a></li>
+<li class="report-toc-item"><a href="#BinaryCompatibility">Binary Compatibility</a></li>
+<li class="report-toc-item"><a href="#Blacklist">Blacklist</a></li>
+<li class="report-toc-item"><a href="#JARManifests">JAR Manifests</a></li>
+<li class="report-toc-item"><a href="#JPMSModules">JPMS Modules</a></li>
+<li class="report-toc-item"><a href="#OSGiBundles">OSGi Bundles</a></li>
+<li class="report-toc-item"><a href="#JavaRuntime">Java Runtime</a></li>
 </ul>
+</nav>
 
-<section id="JARFiles">
-<h2>JAR Files</h2>
-<p>List of JAR files found in classpath.</p>
-<table>
-	<tr><th>JAR file</th><th>Size</th><th>Classes</th><th>Resources</th><th>Checksum (SHA-1)</th><th>Artifact coordinates</th></tr>
-	<tr><td>commons-lang3-3.17.0.jar</td><td>658 KB</td><td>377</td><td>0</td><td>b17d2136f0460dcc0d2016ceefca8723bdf4ee70</td><td>org.apache.commons:commons-lang3:3.17.0</td></tr>
-	<tr><td>commons-io-2.18.0.jar</td><td>526 KB</td><td>355</td><td>0</td><td>44084ef756763795b31c578403dd028ff4a22950</td><td>commons-io:commons-io:2.18.0</td></tr>
-	<tr><td>guice-5.1.0.jar</td><td>759 KB</td><td>494</td><td>1</td><td>da25056c694c54ba16e78e4fc35f17fc60f0d1b4</td><td>com.google.inject:guice:5.1.0</td></tr>
-	<tr><td>slf4j-simple-2.0.16.jar</td><td>15.3 KB</td><td>6</td><td>0</td><td>56d3d8e59293543780ad35af4ee4a5d9c111a588</td><td>org.slf4j:slf4j-simple:2.0.16</td></tr>
-	<tr><td>slf4j-api-2.0.16.jar</td><td>67.8 KB</td><td>55</td><td>0</td><td>0172931663a09a1fa515567af5fbef00897d3c04</td><td>org.slf4j:slf4j-api:2.0.16</td></tr>
-	<tr><td>guava-33.4.0-jre.jar</td><td>2.94 MB</td><td>2002</td><td>0</td><td>03fcc0a259f724c7de54a6a55ea7e26d3d5c0cac</td><td>com.google.guava:guava:33.4.0-jre</td></tr>
-	<tr><td>javax.inject-1.jar</td><td>2.44 KB</td><td>6</td><td>0</td><td>6975da39a7040257bd51d21a231b76c915872d38</td><td>javax.inject:javax.inject:1</td></tr>
-	<tr><td>aopalliance-1.0.jar</td><td>4.36 KB</td><td>9</td><td>0</td><td>0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8</td><td>aopalliance:aopalliance:1.0</td></tr>
-	<tr><td>failureaccess-1.0.2.jar</td><td>4.63 KB</td><td>2</td><td>0</td><td>c4a06a64e650562f30b7bf9aaec1bfed43aca12b</td><td>com.google.guava:failureaccess:1.0.2</td></tr>
-	<tr><td>listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</td><td>2.15 KB</td><td>0</td><td>0</td><td>b421526c5f297295adef1c886e5246c39d4ac629</td><td>com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</td></tr>
-	<tr><td>jsr305-3.0.2.jar</td><td>19.5 KB</td><td>35</td><td>0</td><td>25ea2e8b0c338a877313bd4672d3fe056ea78f0d</td><td>com.google.code.findbugs:jsr305:3.0.2</td></tr>
-	<tr><td>checker-qual-3.43.0.jar</td><td>226 KB</td><td>369</td><td>0</td><td>9425eee39e56b116d2b998b7c2cebcbd11a3c98b</td><td>org.checkerframework:checker-qual:3.43.0</td></tr>
-	<tr><td>error_prone_annotations-2.36.0.jar</td><td>18.9 KB</td><td>27</td><td>0</td><td>227d4d4957ccc3dc5761bd897e3a0ee587e750a7</td><td>com.google.errorprone:error_prone_annotations:2.36.0</td></tr>
-	<tr><td>j2objc-annotations-3.0.0.jar</td><td>12.2 KB</td><td>17</td><td>0</td><td>7399e65dd7e9ff3404f4535b2f017093bdb134c7</td><td>com.google.j2objc:j2objc-annotations:3.0.0</td></tr>
-	<tr><td>Classpath</td><td>5.20 MB</td><td>3754</td><td>1</td><td>-</td><td>-</td></tr>
+<section class="report-section" id="JARFiles" title="JAR Files">
+<h2 class="report-section-title">JAR Files</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">List of JAR files found in classpath.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Artifact</th>
+		<th>Version</th>
+		<th>Source</th>
+		<th>Size</th>
+		<th>Multi-release</th>
+		<th>Java version (classes)</th>
+		<th>Resources</th>
+		<th>Packages</th>
+		<th>Checksum (SHA-1)</th>
+		<th>Coordinates</th>
+		<th>Issues</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="report-table-row no-diff">
+		<td>aopalliance</td>
+		<td>1.0</td>
+		<td>aopalliance-1.0.jar</td>
+		<td>4.36 KB</td>
+		<td>No</td>
+		<td>Java 1.3 (9)</td>
+		<td>0</td>
+		<td><code>org.aopalliance.*</code> (2 subpackages)</td>
+		<td><a href="https://search.maven.org/search?q=1:0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8" target="_blank" rel="noopener noreferrer">0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8</a></td>
+		<td><a href="https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0" target="_blank" rel="noopener noreferrer">aopalliance:aopalliance:1.0</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-io</td>
+		<td>2.19.0</td>
+		<td>commons-io-2.19.0.jar</td>
+		<td>543 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (365)</td>
+		<td>0</td>
+		<td><code>org.apache.commons.io</code> (+14 subpackages)</td>
+		<td><a href="https://search.maven.org/search?q=1:1f8d4a99ba72b77aa69101175efc79b0c7dcdd7e" target="_blank" rel="noopener noreferrer">1f8d4a99ba72b77aa69101175efc79b0c7dcdd7e</a></td>
+		<td><a href="https://central.sonatype.com/artifact/commons-io/commons-io/2.19.0" target="_blank" rel="noopener noreferrer">commons-io:commons-io:2.19.0</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-lang3</td>
+		<td>3.17.0</td>
+		<td>commons-lang3-3.17.0.jar</td>
+		<td>658 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (377)</td>
+		<td>0</td>
+		<td><code>org.apache.commons.lang3</code> (+17 subpackages)</td>
+		<td><a href="https://search.maven.org/search?q=1:b17d2136f0460dcc0d2016ceefca8723bdf4ee70" target="_blank" rel="noopener noreferrer">b17d2136f0460dcc0d2016ceefca8723bdf4ee70</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.apache.commons/commons-lang3/3.17.0" target="_blank" rel="noopener noreferrer">org.apache.commons:commons-lang3:3.17.0</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>error_prone_annotations</td>
+		<td>2.36.0</td>
+		<td>error_prone_annotations-2.36.0.jar</td>
+		<td>18.9 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (27)</td>
+		<td>0</td>
+		<td><code>com.google.errorprone.annotations</code> (+1 subpackage)</td>
+		<td><a href="https://search.maven.org/search?q=1:227d4d4957ccc3dc5761bd897e3a0ee587e750a7" target="_blank" rel="noopener noreferrer">227d4d4957ccc3dc5761bd897e3a0ee587e750a7</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.36.0" target="_blank" rel="noopener noreferrer">com.google.errorprone:error_prone_annotations:2.36.0</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>failureaccess</td>
+		<td>1.0.3</td>
+		<td>failureaccess-1.0.3.jar</td>
+		<td>10.5 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (2)</td>
+		<td>0</td>
+		<td><code>com.google.common.util.concurrent.internal</code></td>
+		<td><a href="https://search.maven.org/search?q=1:aeaffd00d57023a2c947393ed251f0354f0985fc" target="_blank" rel="noopener noreferrer">aeaffd00d57023a2c947393ed251f0354f0985fc</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/failureaccess/1.0.3" target="_blank" rel="noopener noreferrer">com.google.guava:failureaccess:1.0.3</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guava</td>
+		<td>33.4.8-jre</td>
+		<td>guava-33.4.8-jre.jar</td>
+		<td>2.88 MB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (1951)</td>
+		<td>0</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.common.annotations</code><br><code>com.google.common.base</code> (+1 subpackage)<br><code>com.google.common.cache</code><br><code>com.google.common.collect</code><br><code>com.google.common.escape</code><br><code>com.google.common.eventbus</code><br><code>com.google.common.graph</code><br><code>com.google.common.hash</code><br><code>com.google.common.html</code><br><code>com.google.common.io</code><br><code>com.google.common.math</code><br><code>com.google.common.net</code><br><code>com.google.common.primitives</code><br><code>com.google.common.reflect</code><br><code>com.google.common.util.concurrent</code><br><code>com.google.common.xml</code><br><code>com.google.thirdparty.publicsuffix</code></div>
+		</td>
+		<td><a href="https://search.maven.org/search?q=1:e70a3268e6cd3e7d458aa15787ce6811c34e96ae" target="_blank" rel="noopener noreferrer">e70a3268e6cd3e7d458aa15787ce6811c34e96ae</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/guava/33.4.8-jre" target="_blank" rel="noopener noreferrer">com.google.guava:guava:33.4.8-jre</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guice</td>
+		<td>5.1.0</td>
+		<td>guice-5.1.0.jar</td>
+		<td>759 KB</td>
+		<td>No</td>
+		<td>Java 8 (460), Java 5 (34)</td>
+		<td>1</td>
+		<td><code>com.google.inject</code> (+10 subpackages)</td>
+		<td><a href="https://search.maven.org/search?q=1:da25056c694c54ba16e78e4fc35f17fc60f0d1b4" target="_blank" rel="noopener noreferrer">da25056c694c54ba16e78e4fc35f17fc60f0d1b4</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.inject/guice/5.1.0" target="_blank" rel="noopener noreferrer">com.google.inject:guice:5.1.0</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>j2objc-annotations</td>
+		<td>3.0.0</td>
+		<td>j2objc-annotations-3.0.0.jar</td>
+		<td>12.2 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (17)</td>
+		<td>0</td>
+		<td><code>com.google.j2objc.annotations</code></td>
+		<td><a href="https://search.maven.org/search?q=1:7399e65dd7e9ff3404f4535b2f017093bdb134c7" target="_blank" rel="noopener noreferrer">7399e65dd7e9ff3404f4535b2f017093bdb134c7</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.j2objc/j2objc-annotations/3.0.0" target="_blank" rel="noopener noreferrer">com.google.j2objc:j2objc-annotations:3.0.0</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>javax.inject</td>
+		<td>1</td>
+		<td>javax.inject-1.jar</td>
+		<td>2.44 KB</td>
+		<td>No</td>
+		<td>Java 5 (6)</td>
+		<td>0</td>
+		<td><code>javax.inject</code></td>
+		<td><a href="https://search.maven.org/search?q=1:6975da39a7040257bd51d21a231b76c915872d38" target="_blank" rel="noopener noreferrer">6975da39a7040257bd51d21a231b76c915872d38</a></td>
+		<td><a href="https://central.sonatype.com/artifact/javax.inject/javax.inject/1" target="_blank" rel="noopener noreferrer">javax.inject:javax.inject:1</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>jspecify</td>
+		<td>1.0.0</td>
+		<td>jspecify-1.0.0.jar</td>
+		<td>3.73 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (4)</td>
+		<td>1</td>
+		<td><code>org.jspecify.annotations</code></td>
+		<td><a href="https://search.maven.org/search?q=1:7425a601c1c7ec76645a78d22b8c6a627edee507" target="_blank" rel="noopener noreferrer">7425a601c1c7ec76645a78d22b8c6a627edee507</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.0" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.0</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>listenablefuture</td>
+		<td>9999.0-empty-to-avoid-conflict-with-guava</td>
+		<td>listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</td>
+		<td>2.15 KB</td>
+		<td>No</td>
+		<td>[no class files]</td>
+		<td>0</td>
+		<td></td>
+		<td><a href="https://search.maven.org/search?q=1:b421526c5f297295adef1c886e5246c39d4ac629" target="_blank" rel="noopener noreferrer">b421526c5f297295adef1c886e5246c39d4ac629</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava" target="_blank" rel="noopener noreferrer">com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-api</td>
+		<td>2.0.17</td>
+		<td>slf4j-api-2.0.17.jar</td>
+		<td>68.3 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (55)</td>
+		<td>0</td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.slf4j</code><br><code>org.slf4j.event</code><br><code>org.slf4j.helpers</code><br><code>org.slf4j.spi</code></div>
+		</td>
+		<td><a href="https://search.maven.org/search?q=1:d9e58ac9c7779ba3bf8142aff6c830617a7fe60f" target="_blank" rel="noopener noreferrer">d9e58ac9c7779ba3bf8142aff6c830617a7fe60f</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.17</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-simple</td>
+		<td>2.0.17</td>
+		<td>slf4j-simple-2.0.17.jar</td>
+		<td>15.3 KB</td>
+		<td>Yes (Java 9)</td>
+		<td>Java 8 (6)</td>
+		<td>0</td>
+		<td><code>org.slf4j.simple</code></td>
+		<td><a href="https://search.maven.org/search?q=1:9872a3fd794ffe7b18d17747926a64d61526ca96" target="_blank" rel="noopener noreferrer">9872a3fd794ffe7b18d17747926a64d61526ca96</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-simple/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-simple:2.0.17</a></td>
+		<td>
+			<div class="report-text-block report-issue no-diff"></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>Classpath</td>
+		<td>-</td>
+		<td>-</td>
+		<td>4.93 MB</td>
+		<td>-</td>
+		<td>Java 8 (3264), Java 5 (40), Java 1.3 (9)</td>
+		<td>2</td>
+		<td>75</td>
+		<td>-</td>
+		<td>-</td>
+		<td>
+			<div class="report-text-block report-issue no-diff">-</div>
+		</td>
+	</tr>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="Modules">
-<h2>Modules</h2>
-<p>List of Java Modules found in classpath.</p>
-<table>
-	<tr><th>JAR file</th><th>Module name</th><th>Definition</th><th>Automatic</th><th>Requires</th><th>Exports</th></tr>
-	<tr><td>commons-lang3-3.17.0.jar</td><td>org.apache.commons.lang3</td><td>Module-Info</td><td>No</td><td>java.desktop<br>java.base</td><td>org.apache.commons.lang3<br>org.apache.commons.lang3.arch<br>org.apache.commons.lang3.builder<br>org.apache.commons.lang3.compare<br>org.apache.commons.lang3.concurrent<br>org.apache.commons.lang3.concurrent.locks<br>org.apache.commons.lang3.event<br>org.apache.commons.lang3.exception<br>org.apache.commons.lang3.function<br>org.apache.commons.lang3.math<br>org.apache.commons.lang3.mutable<br>org.apache.commons.lang3.reflect<br>org.apache.commons.lang3.stream<br>org.apache.commons.lang3.text<br>org.apache.commons.lang3.text.translate<br>org.apache.commons.lang3.time<br>org.apache.commons.lang3.tuple<br>org.apache.commons.lang3.util</td></tr>
-	<tr><td>commons-io-2.18.0.jar</td><td>org.apache.commons.io</td><td>Module-Info</td><td>No</td><td>java.base</td><td>org.apache.commons.io<br>org.apache.commons.io.build<br>org.apache.commons.io.channels<br>org.apache.commons.io.charset<br>org.apache.commons.io.comparator<br>org.apache.commons.io.file<br>org.apache.commons.io.file.attribute<br>org.apache.commons.io.file.spi<br>org.apache.commons.io.filefilter<br>org.apache.commons.io.function<br>org.apache.commons.io.input<br>org.apache.commons.io.input.buffer<br>org.apache.commons.io.monitor<br>org.apache.commons.io.output<br>org.apache.commons.io.serialization</td></tr>
-	<tr><td>guice-5.1.0.jar</td><td>com.google.guice</td><td>Manifest</td><td>Yes</td><td>-</td><td>[all packages]</td></tr>
-	<tr><td>slf4j-simple-2.0.16.jar</td><td>org.slf4j.simple</td><td>Module-Info</td><td>No</td><td>org.slf4j<br>java.base</td><td>org.slf4j.simple</td></tr>
-	<tr><td>slf4j-api-2.0.16.jar</td><td>org.slf4j</td><td>Module-Info</td><td>No</td><td>java.base</td><td>org.slf4j<br>org.slf4j.event<br>org.slf4j.helpers<br>org.slf4j.spi</td></tr>
-	<tr><td>guava-33.4.0-jre.jar</td><td>com.google.common</td><td>Manifest</td><td>Yes</td><td>-</td><td>[all packages]</td></tr>
-	<tr><td>javax.inject-1.jar</td><td>javax.inject</td><td>Auto-generated</td><td>Yes</td><td>-</td><td>[all packages]</td></tr>
-	<tr><td>aopalliance-1.0.jar</td><td>aopalliance</td><td>Auto-generated</td><td>Yes</td><td>-</td><td>[all packages]</td></tr>
-	<tr><td>failureaccess-1.0.2.jar</td><td>com.google.common.util.concurrent.internal</td><td>Manifest</td><td>Yes</td><td>-</td><td>[all packages]</td></tr>
-	<tr><td>listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</td><td>listenablefuture.empty.to.avoid.conflict.with.guava</td><td>Auto-generated</td><td>Yes</td><td>-</td><td>[all packages]</td></tr>
-	<tr><td>jsr305-3.0.2.jar</td><td>jsr305</td><td>Auto-generated</td><td>Yes</td><td>-</td><td>[all packages]</td></tr>
-	<tr><td>checker-qual-3.43.0.jar</td><td>org.checkerframework.checker.qual</td><td>Module-Info</td><td>No</td><td>java.compiler<br>java.desktop<br>java.base<br>jdk.compiler</td><td>org.checkerframework.checker.builder.qual<br>org.checkerframework.checker.calledmethods.qual<br>org.checkerframework.checker.compilermsgs.qual<br>org.checkerframework.checker.fenum.qual<br>org.checkerframework.checker.formatter.qual<br>org.checkerframework.checker.guieffect.qual<br>org.checkerframework.checker.i18n.qual<br>org.checkerframework.checker.i18nformatter.qual<br>org.checkerframework.checker.index.qual<br>org.checkerframework.checker.initialization.qual<br>org.checkerframework.checker.interning.qual<br>org.checkerframework.checker.lock.qual<br>org.checkerframework.checker.mustcall.qual<br>org.checkerframework.checker.nullness.qual<br>org.checkerframework.checker.optional.qual<br>org.checkerframework.checker.propkey.qual<br>org.checkerframework.checker.regex.qual<br>org.checkerframework.checker.signature.qual<br>org.checkerframework.checker.signedness.qual<br>org.checkerframework.checker.tainting.qual<br>org.checkerframework.checker.units.qual<br>org.checkerframework.common.aliasing.qual<br>org.checkerframework.common.initializedfields.qual<br>org.checkerframework.common.reflection.qual<br>org.checkerframework.common.returnsreceiver.qual<br>org.checkerframework.common.subtyping.qual<br>org.checkerframework.common.util.count.report.qual<br>org.checkerframework.common.value.qual<br>org.checkerframework.dataflow.qual<br>org.checkerframework.framework.qual</td></tr>
-	<tr><td>error_prone_annotations-2.36.0.jar</td><td>com.google.errorprone.annotations</td><td>Module-Info</td><td>No</td><td>java.compiler<br>java.base</td><td>com.google.errorprone.annotations<br>com.google.errorprone.annotations.concurrent</td></tr>
-	<tr><td>j2objc-annotations-3.0.0.jar</td><td>com.google.j2objc.annotations</td><td>Module-Info</td><td>No</td><td>java.base</td><td>com.google.j2objc.annotations</td></tr>
+<section class="report-section" id="Dependencies" title="Dependencies">
+<h2 class="report-section-title">Dependencies</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Dependencies between JAR files, and as declared in POM file.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Artifact</th>
+		<th>Uses</th>
+		<th>Used by</th>
+		<th>Maven coordinates</th>
+		<th>Updates</th>
+		<th>Direct dependencies</th>
+		<th>Status</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="report-table-row no-diff">
+		<td>aopalliance</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>guice</td>
+		<td><a href="https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0" target="_blank" rel="noopener noreferrer">aopalliance:aopalliance:1.0</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-io</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><a href="https://central.sonatype.com/artifact/commons-io/commons-io/2.19.0" target="_blank" rel="noopener noreferrer">commons-io:commons-io:2.19.0</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-lang3</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><a href="https://central.sonatype.com/artifact/org.apache.commons/commons-lang3/3.17.0" target="_blank" rel="noopener noreferrer">org.apache.commons:commons-lang3:3.17.0</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><a href="https://central.sonatype.com/artifact/org.apache.commons/commons-text/1.12.0" target="_blank" rel="noopener noreferrer">org.apache.commons:commons-text:1.12.0</a> (provided)</td>
+		<td>Unsatisfied</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>error_prone_annotations</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>
+			<div class="report-text-block no-diff">guava<br>guice</div>
+		</td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.36.0" target="_blank" rel="noopener noreferrer">com.google.errorprone:error_prone_annotations:2.36.0</a></td>
+		<td>
+			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.37.0" target="_blank" rel="noopener noreferrer">2.37.0</a><br><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.38.0" target="_blank" rel="noopener noreferrer">2.38.0</a></div>
+		</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>failureaccess</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>guava</td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/failureaccess/1.0.3" target="_blank" rel="noopener noreferrer">com.google.guava:failureaccess:1.0.3</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guava</td>
+		<td>
+			<div class="report-text-block no-diff">error_prone_annotations<br>failureaccess<br>j2objc-annotations<br>jspecify</div>
+		</td>
+		<td>guice</td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/guava/33.4.8-jre" target="_blank" rel="noopener noreferrer">com.google.guava:guava:33.4.8-jre</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>
+			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/com.google.guava/failureaccess/1.0.3" target="_blank" rel="noopener noreferrer">com.google.guava:failureaccess:1.0.3</a><br><a href="https://central.sonatype.com/artifact/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava" target="_blank" rel="noopener noreferrer">com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</a><br><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.36.0" target="_blank" rel="noopener noreferrer">com.google.errorprone:error_prone_annotations:2.36.0</a><br><a href="https://central.sonatype.com/artifact/com.google.j2objc/j2objc-annotations/3.0.0" target="_blank" rel="noopener noreferrer">com.google.j2objc:j2objc-annotations:3.0.0</a><br><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.0" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.0</a></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">OK<br>OK<br>OK<br>OK<br>OK</div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guice</td>
+		<td>
+			<div class="report-text-block no-diff">aopalliance<br>error_prone_annotations<br>guava<br>javax.inject</div>
+		</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.inject/guice/5.1.0" target="_blank" rel="noopener noreferrer">com.google.inject:guice:5.1.0</a></td>
+		<td>
+			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/com.google.inject/guice/6.0.0" target="_blank" rel="noopener noreferrer">6.0.0</a><br><a href="https://central.sonatype.com/artifact/com.google.inject/guice/7.0.0" target="_blank" rel="noopener noreferrer">7.0.0</a></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0" target="_blank" rel="noopener noreferrer">aopalliance:aopalliance:1.0</a><br><a href="https://central.sonatype.com/artifact/com.google.guava/guava/30.1-jre" target="_blank" rel="noopener noreferrer">com.google.guava:guava:30.1-jre</a><br><a href="https://central.sonatype.com/artifact/javax.inject/javax.inject/1" target="_blank" rel="noopener noreferrer">javax.inject:javax.inject:1</a><br><a href="https://central.sonatype.com/artifact/org.ow2.asm/asm/9.2" target="_blank" rel="noopener noreferrer">org.ow2.asm:asm:9.2</a> (optional)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">OK<br>OK (version 33.4.8-jre)<br>OK<br>Unsatisfied</div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>j2objc-annotations</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>guava</td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.j2objc/j2objc-annotations/3.0.0" target="_blank" rel="noopener noreferrer">com.google.j2objc:j2objc-annotations:3.0.0</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>javax.inject</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>guice</td>
+		<td><a href="https://central.sonatype.com/artifact/javax.inject/javax.inject/1" target="_blank" rel="noopener noreferrer">javax.inject:javax.inject:1</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>jspecify</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>guava</td>
+		<td><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.0" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.0</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>listenablefuture</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava" target="_blank" rel="noopener noreferrer">com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-api</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>slf4j-simple</td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.17</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-simple</td>
+		<td>slf4j-api</td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-simple/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-simple:2.0.17</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.17</a></td>
+		<td>OK</td>
+	</tr>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="ClassVersions">
-<h2>Class Versions</h2>
-<p>Java class file format information.</p>
-<table>
-	<tr><th>JAR file</th><th>Multi-release</th><th>Class files by Java version</th></tr>
-	<tr><td>commons-lang3-3.17.0.jar</td><td>Yes (Java 9)</td><td>Java 8 (377)</td></tr>
-	<tr><td>commons-io-2.18.0.jar</td><td>Yes (Java 9)</td><td>Java 8 (355)</td></tr>
-	<tr><td>guice-5.1.0.jar</td><td>No</td><td>Java 8 (460), Java 5 (34)</td></tr>
-	<tr><td>slf4j-simple-2.0.16.jar</td><td>Yes (Java 9)</td><td>Java 8 (6)</td></tr>
-	<tr><td>slf4j-api-2.0.16.jar</td><td>Yes (Java 9)</td><td>Java 8 (55)</td></tr>
-	<tr><td>guava-33.4.0-jre.jar</td><td>No</td><td>Java 8 (2002)</td></tr>
-	<tr><td>javax.inject-1.jar</td><td>No</td><td>Java 5 (6)</td></tr>
-	<tr><td>aopalliance-1.0.jar</td><td>No</td><td>Java 1.3 (9)</td></tr>
-	<tr><td>failureaccess-1.0.2.jar</td><td>No</td><td>Java 7 (2)</td></tr>
-	<tr><td>listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</td><td>No</td><td>[no class files]</td></tr>
-	<tr><td>jsr305-3.0.2.jar</td><td>No</td><td>Java 5 (35)</td></tr>
-	<tr><td>checker-qual-3.43.0.jar</td><td>No</td><td>Java 8 (369)</td></tr>
-	<tr><td>error_prone_annotations-2.36.0.jar</td><td>Yes (Java 9)</td><td>Java 8 (27)</td></tr>
-	<tr><td>j2objc-annotations-3.0.0.jar</td><td>Yes (Java 9)</td><td>Java 8 (17)</td></tr>
-	<tr><td>Classpath</td><td>-</td><td>Java 8 (3668), Java 7 (2), Java 5 (75), Java 1.3 (9)</td></tr>
+<section class="report-section" id="DuplicateClasses" title="Duplicate Classes">
+<h2 class="report-section-title">Duplicate Classes</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Duplicate classes, shadowed classes, and duplicate resources.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Class/Resource</th>
+		<th>Sources</th>
+		<th>Similarity</th>
+	</tr>
+</thead>
+<tbody>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="JARDependencies">
-<h2>JAR Dependencies</h2>
-<p>Dependencies between JAR files.</p>
-<table>
-	<tr><th>JAR file</th><th>Uses</th><th>Used by</th></tr>
-	<tr><td>commons-lang3-3.17.0.jar</td><td>[none]</td><td>[none]</td></tr>
-	<tr><td>commons-io-2.18.0.jar</td><td>[none]</td><td>[none]</td></tr>
-	<tr><td>guice-5.1.0.jar</td><td>aopalliance-1.0.jar<br>error_prone_annotations-2.36.0.jar<br>guava-33.4.0-jre.jar<br>javax.inject-1.jar<br>jsr305-3.0.2.jar</td><td>[none]</td></tr>
-	<tr><td>slf4j-simple-2.0.16.jar</td><td>slf4j-api-2.0.16.jar</td><td>[none]</td></tr>
-	<tr><td>slf4j-api-2.0.16.jar</td><td>[none]</td><td>slf4j-simple-2.0.16.jar</td></tr>
-	<tr><td>guava-33.4.0-jre.jar</td><td>checker-qual-3.43.0.jar<br>error_prone_annotations-2.36.0.jar<br>failureaccess-1.0.2.jar<br>j2objc-annotations-3.0.0.jar<br>jsr305-3.0.2.jar</td><td>guice-5.1.0.jar</td></tr>
-	<tr><td>javax.inject-1.jar</td><td>[none]</td><td>guice-5.1.0.jar</td></tr>
-	<tr><td>aopalliance-1.0.jar</td><td>[none]</td><td>guice-5.1.0.jar</td></tr>
-	<tr><td>failureaccess-1.0.2.jar</td><td>[none]</td><td>guava-33.4.0-jre.jar</td></tr>
-	<tr><td>listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</td><td>[none]</td><td>[none]</td></tr>
-	<tr><td>jsr305-3.0.2.jar</td><td>[none]</td><td>guava-33.4.0-jre.jar<br>guice-5.1.0.jar</td></tr>
-	<tr><td>checker-qual-3.43.0.jar</td><td>[none]</td><td>guava-33.4.0-jre.jar</td></tr>
-	<tr><td>error_prone_annotations-2.36.0.jar</td><td>[none]</td><td>guava-33.4.0-jre.jar<br>guice-5.1.0.jar</td></tr>
-	<tr><td>j2objc-annotations-3.0.0.jar</td><td>[none]</td><td>guava-33.4.0-jre.jar</td></tr>
+<section class="report-section" id="BinaryCompatibility" title="Binary Compatibility">
+<h2 class="report-section-title">Binary Compatibility</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Compatibility issues between JAR files.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Artifact</th>
+		<th>Issues</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="report-table-row no-diff">
+		<td>guice</td>
+		<td>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.ConstructorInjector</code><br>• Annotation not found: <code>javax.annotation.Nullable</code> (package not found)</div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.MembersInjectorImpl</code><br>• Annotation not found: <code>javax.annotation.Nullable</code> (package not found)</div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.ProviderInternalFactory</code><br>• Annotation not found: <code>javax.annotation.Nullable</code> (package not found)</div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.SingletonScope$1</code><br>• Annotation not found: <code>javax.annotation.Nullable</code> (package not found)</div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.util.ContinuousStopwatch</code><br>• Annotation not found: <code>javax.annotation.concurrent.NotThreadSafe</code> (package not found)</div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.spi.ElementSource</code><br>• Annotation not found: <code>javax.annotation.Nullable</code> (package not found)</div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.spi.ModuleSource</code><br>• Annotation not found: <code>javax.annotation.Nullable</code> (package not found)</div>
+		</td>
+	</tr>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="Dependencies">
-<h2>Dependencies</h2>
-<p>Dependencies as declared in POM file.</p>
-<table>
-	<tr><th>JAR file</th><th>Maven coordinates</th><th>Direct dependencies</th><th>Status</th></tr>
-	<tr><td>commons-lang3-3.17.0.jar</td><td>org.apache.commons:commons-lang3:3.17.0</td><td>org.apache.commons:commons-text:1.12.0 (provided)</td><td>Unsatisfied</td></tr>
-	<tr><td>commons-io-2.18.0.jar</td><td>commons-io:commons-io:2.18.0</td><td>[none]</td><td></td></tr>
-	<tr><td>guice-5.1.0.jar</td><td>com.google.inject:guice:5.1.0</td><td>javax.inject:javax.inject:1<br>aopalliance:aopalliance:1.0<br>com.google.guava:guava:30.1-jre<br>org.ow2.asm:asm:9.2 (optional)</td><td>OK<br>OK<br>OK (version 33.4.0-jre)<br>Unsatisfied</td></tr>
-	<tr><td>slf4j-simple-2.0.16.jar</td><td>org.slf4j:slf4j-simple:2.0.16</td><td>org.slf4j:slf4j-api:2.0.16</td><td>OK</td></tr>
-	<tr><td>slf4j-api-2.0.16.jar</td><td>org.slf4j:slf4j-api:2.0.16</td><td>[none]</td><td></td></tr>
-	<tr><td>guava-33.4.0-jre.jar</td><td>com.google.guava:guava:33.4.0-jre</td><td>com.google.guava:failureaccess:1.0.2<br>com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava<br>com.google.code.findbugs:jsr305:3.0.2<br>org.checkerframework:checker-qual:3.43.0<br>com.google.errorprone:error_prone_annotations:2.36.0<br>com.google.j2objc:j2objc-annotations:3.0.0</td><td>OK<br>OK<br>OK<br>OK<br>OK<br>OK</td></tr>
-	<tr><td>javax.inject-1.jar</td><td>javax.inject:javax.inject:1</td><td>[none]</td><td></td></tr>
-	<tr><td>aopalliance-1.0.jar</td><td>aopalliance:aopalliance:1.0</td><td>[none]</td><td></td></tr>
-	<tr><td>failureaccess-1.0.2.jar</td><td>com.google.guava:failureaccess:1.0.2</td><td>[none]</td><td></td></tr>
-	<tr><td>listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</td><td>com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</td><td>[none]</td><td></td></tr>
-	<tr><td>jsr305-3.0.2.jar</td><td>com.google.code.findbugs:jsr305:3.0.2</td><td>[none]</td><td></td></tr>
-	<tr><td>checker-qual-3.43.0.jar</td><td>org.checkerframework:checker-qual:3.43.0</td><td>[none]</td><td></td></tr>
-	<tr><td>error_prone_annotations-2.36.0.jar</td><td>com.google.errorprone:error_prone_annotations:2.36.0</td><td>[none]</td><td></td></tr>
-	<tr><td>j2objc-annotations-3.0.0.jar</td><td>com.google.j2objc:j2objc-annotations:3.0.0</td><td>[none]</td><td></td></tr>
+<section class="report-section" id="Blacklist" title="Blacklist">
+<h2 class="report-section-title">Blacklist</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Use of dangerous, unsafe, unstable, or deprecated classes and methods.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Artifact</th>
+		<th>Issues</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="report-table-row no-diff">
+		<td>guava</td>
+		<td>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray</code><br>• @Deprecated: <code>public final class java.security.AccessController</code><br>• <code>int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)</code><br>• <code>int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray$1</code><br>• <code>long sun.misc.Unsafe.getLong(java.lang.Object,long)</code><br>• <code>void sun.misc.Unsafe.putLong(java.lang.Object,long,long)</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray$2</code><br>• <code>long sun.misc.Unsafe.getLong(java.lang.Object,long)</code><br>• <code>void sun.misc.Unsafe.putLong(java.lang.Object,long,long)</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator</code><br>• @Deprecated: <code>public final class java.security.AccessController</code><br>• <code>int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)</code><br>• <code>int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)</code><br>• <code>long sun.misc.Unsafe.getLong(java.lang.Object,long)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.reflect.Types$TypeVariableInvocationHandler</code><br>• @Deprecated: <code>public class java.security.AccessControlException</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.util.concurrent.AbstractFutureState$UnsafeAtomicHelper</code><br>• @Deprecated: <code>public final class java.security.AccessController</code><br>• <code>boolean sun.misc.Unsafe.compareAndSwapObject(java.lang.Object,long,java.lang.Object,java.lang.Object)</code><br>• <code>java.lang.Object sun.misc.Unsafe.getAndSetObject(java.lang.Object,long,java.lang.Object)</code><br>• <code>long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code><br>• <code>void sun.misc.Unsafe.putObject(java.lang.Object,long,java.lang.Object)</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guice</td>
+		<td>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.InternalFlags</code><br>• @Deprecated: <code>public final class java.security.AccessController</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.aop.ChildClassDefiner</code><br>• @Deprecated: <code>public final class java.security.AccessController</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.inject.internal.aop.UnsafeClassDefiner</code><br>• @Deprecated: <code>public final class java.security.AccessController</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-api</td>
+		<td>
+			<div class="report-text-block report-issue no-diff"><code>org.slf4j.LoggerFactory</code><br>• @Deprecated: <code>public class java.lang.SecurityManager</code><br>• @Deprecated: <code>public final class java.security.AccessController</code></div>
+			<div class="report-text-block report-issue no-diff"><code>org.slf4j.helpers.Util$ClassContextSecurityManager</code><br>• @Deprecated: <code>public class java.lang.SecurityManager</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-simple</td>
+		<td>
+			<div class="report-text-block report-issue no-diff"><code>org.slf4j.simple.SimpleLoggerConfiguration</code><br>• @Deprecated: <code>public final class java.security.AccessController</code></div>
+		</td>
+	</tr>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="Packages">
-<h2>Packages</h2>
-<p>List of packages per JAR file.</p>
-<table>
-	<tr><th>JAR file</th><th>Count</th><th>Packages</th><th>Issues</th></tr>
-	<tr><td>aopalliance-1.0.jar</td><td>2</td><td>org.aopalliance.* (2 subpackages)</td><td></td></tr>
-	<tr><td>checker-qual-3.43.0.jar</td><td>30</td><td>org.checkerframework.* (30 subpackages)</td><td></td></tr>
-	<tr><td>commons-io-2.18.0.jar</td><td>15</td><td>org.apache.commons.io (+14 subpackages)</td><td></td></tr>
-	<tr><td>commons-lang3-3.17.0.jar</td><td>18</td><td>org.apache.commons.lang3 (+17 subpackages)</td><td></td></tr>
-	<tr><td>error_prone_annotations-2.36.0.jar</td><td>2</td><td>com.google.errorprone.annotations (+1 subpackage)</td><td></td></tr>
-	<tr><td>failureaccess-1.0.2.jar</td><td>1</td><td>com.google.common.util.concurrent.internal</td><td></td></tr>
-	<tr><td>guava-33.4.0-jre.jar</td><td>18</td><td>com.google.common.annotations<br>com.google.common.base (+1 subpackage)<br>com.google.common.cache<br>com.google.common.collect<br>com.google.common.escape<br>com.google.common.eventbus<br>com.google.common.graph<br>com.google.common.hash<br>com.google.common.html<br>com.google.common.io<br>com.google.common.math<br>com.google.common.net<br>com.google.common.primitives<br>com.google.common.reflect<br>com.google.common.util.concurrent<br>com.google.common.xml<br>com.google.thirdparty.publicsuffix</td><td></td></tr>
-	<tr><td>guice-5.1.0.jar</td><td>11</td><td>com.google.inject (+10 subpackages)</td><td></td></tr>
-	<tr><td>j2objc-annotations-3.0.0.jar</td><td>1</td><td>com.google.j2objc.annotations</td><td></td></tr>
-	<tr><td>javax.inject-1.jar</td><td>1</td><td>javax.inject</td><td></td></tr>
-	<tr><td>jsr305-3.0.2.jar</td><td>3</td><td>javax.annotation (+2 subpackages)</td><td></td></tr>
-	<tr><td>slf4j-api-2.0.16.jar</td><td>4</td><td>org.slf4j<br>org.slf4j.event<br>org.slf4j.helpers<br>org.slf4j.spi</td><td></td></tr>
-	<tr><td>slf4j-simple-2.0.16.jar</td><td>1</td><td>org.slf4j.simple</td><td></td></tr>
+<section class="report-section collapsed" id="JARManifests" title="JAR Manifests">
+<h2 class="report-section-title">JAR Manifests</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Information found in META-INF/MANIFEST.MF, except JPMS and OSGi attributes.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Artifact</th>
+		<th>General</th>
+		<th>Runtime</th>
+		<th>Implementation</th>
+		<th>Specification</th>
+		<th>Signature</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="report-table-row no-diff">
+		<td>aopalliance</td>
+		<td>
+			<div class="report-text-block no-diff">Ant-Version: <code>Apache Ant 1.5.4 </code><br>Created-By: <code>1.4.2_01-b06 (Sun Microsystems Inc.)</code><br>Manifest-Version: <code>1.0</code></div>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-io</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>21</code><br>Created-By: <code>Apache Maven Bundle Plugin 5.1.9</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-6.4.1.202306080939</code></div>
+		</td>
+		<td></td>
+		<td>
+			<div class="report-text-block no-diff">Apache Commons IO<br>Version: <code>2.19.0</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Apache Commons IO<br>Version: <code>2.19</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+		</td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-lang3</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>17</code><br>Created-By: <code>Apache Maven Bundle Plugin 5.1.9</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-6.4.1.202306080939</code></div>
+		</td>
+		<td></td>
+		<td>
+			<div class="report-text-block no-diff">Apache Commons Lang<br>Version: <code>3.17.0</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Apache Commons Lang<br>Version: <code>3.17</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+		</td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>error_prone_annotations</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>17</code><br>Created-By: <code>Maven JAR Plugin 3.2.2</code><br>Manifest-Version: <code>1.0</code></div>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>failureaccess</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>17</code><br>Created-By: <code>Apache Maven Bundle Plugin 5.1.8</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-6.3.1.202206071316</code></div>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guava</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>11</code><br>Created-By: <code>Apache Maven Bundle Plugin 5.1.9</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-6.3.1.202206071316</code></div>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guice</td>
+		<td>
+			<div class="report-text-block no-diff">Archiver-Version: <code>Plexus Archiver</code><br>Build-Jdk: <code>11.0.13</code><br>Built-By: <code>xiaomingjia</code><br>Created-By: <code>Apache Maven</code><br>Eclipse-ExtensibleAPI: <code>true</code><br>Manifest-Version: <code>1.0</code></div>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>j2objc-annotations</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>11</code><br>Created-By: <code>Maven JAR Plugin 3.3.0</code><br>Manifest-Version: <code>1.0</code></div>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>jspecify</td>
+		<td>Manifest-Version: <code>1.0</code></td>
+		<td></td>
+		<td>Version: <code>1.0.0</code></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>listenablefuture</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk: <code>1.8.0_151-google-v7</code><br>Built-By: <code>cpovirk</code><br>Created-By: <code>Apache Maven 3.5.0</code><br>Manifest-Version: <code>1.0</code></div>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-api</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>21</code><br>Created-By: <code>Apache Maven Bundle Plugin 5.1.9</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-6.3.1.202206071316</code><br>X-Compile-Source-JDK: <code>8</code><br>X-Compile-Target-JDK: <code>8</code></div>
+		</td>
+		<td></td>
+		<td>
+			<div class="report-text-block no-diff">slf4j-api<br>Version: <code>2.0.17</code></div>
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-simple</td>
+		<td>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>21</code><br>Created-By: <code>Apache Maven Bundle Plugin 5.1.9</code><br>Manifest-Version: <code>1.0</code><br>Originally-Created-By: <code>Apache Maven Bundle Plugin 5.1.9</code><br>Tool: <code>Bnd-6.3.1.202206071316</code><br>X-Compile-Source-JDK: <code>8</code><br>X-Compile-Target-JDK: <code>8</code></div>
+		</td>
+		<td></td>
+		<td>
+			<div class="report-text-block no-diff">slf4j-simple<br>Version: <code>2.0.17</code></div>
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="DuplicateClasses">
-<h2>Duplicate Classes</h2>
-<p>Duplicate classes, shadowed classes, and duplicate resources.</p>
-<table>
-	<tr><th>Class/Resource</th><th>Sources</th><th>Similarity</th></tr>
+<section class="report-section collapsed" id="JPMSModules" title="JPMS Modules">
+<h2 class="report-section-title">JPMS Modules</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">List of Java Modules found in classpath.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Artifact</th>
+		<th>Module name</th>
+		<th>Definition</th>
+		<th>Automatic</th>
+		<th>Requires</th>
+		<th>Exports</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="report-table-row no-diff">
+		<td>aopalliance</td>
+		<td><code>aopalliance</code></td>
+		<td>Auto-generated</td>
+		<td>Yes</td>
+		<td></td>
+		<td>[all packages]</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-io</td>
+		<td><code>org.apache.commons.io</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td><code>java.base</code></td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.apache.commons.io</code><br><code>org.apache.commons.io.build</code><br><code>org.apache.commons.io.channels</code><br><code>org.apache.commons.io.charset</code><br><code>org.apache.commons.io.comparator</code><br><code>org.apache.commons.io.file</code><br><code>org.apache.commons.io.file.attribute</code><br><code>org.apache.commons.io.file.spi</code><br><code>org.apache.commons.io.filefilter</code><br><code>org.apache.commons.io.function</code><br><code>org.apache.commons.io.input</code><br><code>org.apache.commons.io.input.buffer</code><br><code>org.apache.commons.io.monitor</code><br><code>org.apache.commons.io.output</code><br><code>org.apache.commons.io.serialization</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-lang3</td>
+		<td><code>org.apache.commons.lang3</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td>
+			<div class="report-text-block no-diff"><code>java.desktop</code><br><code>java.base</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.apache.commons.lang3</code><br><code>org.apache.commons.lang3.arch</code><br><code>org.apache.commons.lang3.builder</code><br><code>org.apache.commons.lang3.compare</code><br><code>org.apache.commons.lang3.concurrent</code><br><code>org.apache.commons.lang3.concurrent.locks</code><br><code>org.apache.commons.lang3.event</code><br><code>org.apache.commons.lang3.exception</code><br><code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.math</code><br><code>org.apache.commons.lang3.mutable</code><br><code>org.apache.commons.lang3.reflect</code><br><code>org.apache.commons.lang3.stream</code><br><code>org.apache.commons.lang3.text</code><br><code>org.apache.commons.lang3.text.translate</code><br><code>org.apache.commons.lang3.time</code><br><code>org.apache.commons.lang3.tuple</code><br><code>org.apache.commons.lang3.util</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>error_prone_annotations</td>
+		<td><code>com.google.errorprone.annotations</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td>
+			<div class="report-text-block no-diff"><code>java.compiler</code><br><code>java.base</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.errorprone.annotations</code><br><code>com.google.errorprone.annotations.concurrent</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>failureaccess</td>
+		<td><code>com.google.common.util.concurrent.internal</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td><code>java.base</code></td>
+		<td><code>com.google.common.util.concurrent.internal</code></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guava</td>
+		<td><code>com.google.common</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.common.util.concurrent.internal</code><br><code>com.google.errorprone.annotations</code><br><code>com.google.j2objc.annotations</code><br><code>org.jspecify</code><br><code>java.logging</code><br><code>java.base</code><br><code>jdk.unsupported</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.common.annotations</code><br><code>com.google.common.base</code><br><code>com.google.common.cache</code><br><code>com.google.common.collect</code><br><code>com.google.common.escape</code><br><code>com.google.common.eventbus</code><br><code>com.google.common.graph</code><br><code>com.google.common.hash</code><br><code>com.google.common.html</code><br><code>com.google.common.io</code><br><code>com.google.common.math</code><br><code>com.google.common.net</code><br><code>com.google.common.primitives</code><br><code>com.google.common.reflect</code><br><code>com.google.common.util.concurrent</code><br><code>com.google.common.xml</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guice</td>
+		<td><code>com.google.guice</code></td>
+		<td>Manifest</td>
+		<td>Yes</td>
+		<td></td>
+		<td>[all packages]</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>j2objc-annotations</td>
+		<td><code>com.google.j2objc.annotations</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td><code>java.base</code></td>
+		<td><code>com.google.j2objc.annotations</code></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>javax.inject</td>
+		<td><code>javax.inject</code></td>
+		<td>Auto-generated</td>
+		<td>Yes</td>
+		<td></td>
+		<td>[all packages]</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>jspecify</td>
+		<td><code>org.jspecify</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td><code>java.base</code></td>
+		<td><code>org.jspecify.annotations</code></td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>listenablefuture</td>
+		<td><code>listenablefuture.empty.to.avoid.conflict.with.guava</code></td>
+		<td>Auto-generated</td>
+		<td>Yes</td>
+		<td></td>
+		<td>[all packages]</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-api</td>
+		<td><code>org.slf4j</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td><code>java.base</code></td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.slf4j</code><br><code>org.slf4j.event</code><br><code>org.slf4j.helpers</code><br><code>org.slf4j.spi</code></div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-simple</td>
+		<td><code>org.slf4j.simple</code></td>
+		<td>Module-Info</td>
+		<td>No</td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.slf4j</code><br><code>java.base</code></div>
+		</td>
+		<td><code>org.slf4j.simple</code></td>
+	</tr>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="BinaryCompatibility">
-<h2>Binary Compatibility</h2>
-<p>Compatibility issues between JAR files.</p>
-<table>
-	<tr><th>JAR file</th><th>Issues</th></tr>
+<section class="report-section collapsed" id="OSGiBundles" title="OSGi Bundles">
+<h2 class="report-section-title">OSGi Bundles</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Information about OSGi Bundles.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>Artifact</th>
+		<th>Name</th>
+		<th>Version</th>
+		<th>Description</th>
+		<th>Import Package</th>
+		<th>Export Package</th>
+		<th>Capabilities</th>
+		<th>Others</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="report-table-row no-diff">
+		<td>commons-io</td>
+		<td>
+			<div class="report-text-block no-diff">Apache Commons IO<br>Symbolic Name: <code>org.apache.commons.commons-io</code></div>
+		</td>
+		<td>2.19.0</td>
+		<td>
+			<div class="report-text-block no-diff">The Apache Commons IO library contains utility classes,<br>stream implementations, file filters,file comparators,<br>endian transformation classes, and much more.<br>Vendor: The Apache Software Foundation<br>License: https://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://commons.apache.org/proper/commons-io/</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>sun.nio.ch</code> (optional)<br><code>sun.misc</code> (optional)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.apache.commons.io</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.filefilter</code>, <code>org.apache.commons.io.function</code>, <code>org.apache.commons.io.input</code><br><code>org.apache.commons.io.comparator</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code><br><code>org.apache.commons.io.filefilter</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.file</code><br><code>org.apache.commons.io.input</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.apache.commons.io.output</code><br><code>org.apache.commons.io.output</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code>, <code>org.apache.commons.io.input</code><br><code>org.apache.commons.io.build</code> (Version: <code>2.19.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.function</code><br><code>org.apache.commons.io.channels</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.charset</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.file</code> (Version: <code>2.19.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code><br><code>org.apache.commons.io.file.attribute</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.file.spi</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.function</code> (Version: <code>2.19.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code><br><code>org.apache.commons.io.input.buffer</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.monitor</code> (Version: <code>2.19.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code><br><code>org.apache.commons.io.serialization</code> (Version: <code>2.19.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code><br><code>org.apache.commons.io</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.comparator</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.filefilter</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.input</code> (Version: <code>2.19.0</code>)<br><code>org.apache.commons.io.output</code> (Version: <code>2.19.0</code>)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Manifest Version: 2<br>Include Resource:<br>META-INF/LICENSE.txt=LICENSE.txt<br>META-INF/NOTICE.txt=NOTICE.txt</div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>commons-lang3</td>
+		<td>
+			<div class="report-text-block no-diff">Apache Commons Lang<br>Symbolic Name: <code>org.apache.commons.lang3</code></div>
+		</td>
+		<td>3.17.0</td>
+		<td>
+			<div class="report-text-block no-diff">Apache Commons Lang, a package of Java utility classes for<br>the  classes that are in java.lang's hierarchy, or are<br>considered to be so  standard as to justify existence in<br>java.lang.  The code is tested using the latest revision of<br>the JDK for supported  LTS releases: 8, 11, 17 and 21<br>currently.  See<br>https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml<br>Please ensure your build environment is up-to-date and<br>kindly report any build issues.<br>Vendor: The Apache Software Foundation<br>License: https://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://commons.apache.org/proper/commons-lang/</div>
+		</td>
+		<td></td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.apache.commons.lang3</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.arch</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.builder</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.compare</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.concurrent</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.concurrent.locks</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.event</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.exception</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.function</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.math</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.mutable</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.reflect</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.stream</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.text</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.text.translate</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.time</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.tuple</code> (Version: <code>3.17.0</code>)<br><code>org.apache.commons.lang3.util</code> (Version: <code>3.17.0</code>)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Manifest Version: 2<br>Include Resource:<br>META-INF/LICENSE.txt=LICENSE.txt<br>META-INF/NOTICE.txt=NOTICE.txt</div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>error_prone_annotations</td>
+		<td>
+			<div class="report-text-block no-diff">error-prone annotations<br>Symbolic Name: <code>com.google.errorprone.annotations</code></div>
+		</td>
+		<td>2.36.0</td>
+		<td>
+			<div class="report-text-block no-diff">Error Prone is a static analysis tool for Java that catches<br>common programming mistakes at compile-time.<br>Vendor: Google LLC<br>License: &quot;Apache<br>2.0&quot;;link=&quot;http://www.apache.org/licenses/LICENSE-2.0.txt&quot;<br>Doc URL: https://errorprone.info/error_prone_annotations</div>
+		</td>
+		<td><code>javax.lang.model.element</code></td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.errorprone.annotations</code> (Version: <code>2.36.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>javax.lang.model.element</code><br><code>com.google.errorprone.annotations.concurrent</code> (Version: <code>2.36.0</code>)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>Manifest Version: 2</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>failureaccess</td>
+		<td>
+			<div class="report-text-block no-diff">Guava InternalFutureFailureAccess and InternalFutures<br>Symbolic Name: <code>com.google.guava.failureaccess</code></div>
+		</td>
+		<td>1.0.3</td>
+		<td>
+			<div class="report-text-block no-diff">Contains<br>com.google.common.util.concurrent.internal.InternalFutureFailureAccess<br>and    InternalFutures. Most users will never need to use<br>this artifact. Its    classes are conceptually a part of<br>Guava, but they're in this separate    artifact so that<br>Android libraries can use them without pulling in all of<br>Guava (just as they can use ListenableFuture by depending on<br>the    listenablefuture artifact).<br>License: http://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://github.com/google/guava/</div>
+		</td>
+		<td></td>
+		<td><code>com.google.common.util.concurrent.internal</code> (Version: <code>1.0.3</code>)</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>Manifest Version: 2</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guava</td>
+		<td>
+			<div class="report-text-block no-diff">Guava: Google Core Libraries for Java<br>Symbolic Name: <code>com.google.guava</code></div>
+		</td>
+		<td>33.4.8.jre</td>
+		<td>
+			<div class="report-text-block no-diff">Guava is a suite of core and expanded libraries that include<br>utility classes, Google's collections, I/O classes, and<br>much more.<br>License: http://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://github.com/google/guava/</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.common.util.concurrent.internal</code> (Version: <code>[1.0,2)</code>)<br><code>javax.crypto</code> (optional)<br><code>javax.crypto.spec</code> (optional)<br><code>sun.misc</code> (optional)<br><code>javax.annotation</code> (optional)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.common.annotations</code> (Version: <code>33.4.8</code>)<br><code>com.google.common.base</code> (Version: <code>33.4.8</code>)<br><code>com.google.common.cache</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.util.concurrent</code><br><code>com.google.common.collect</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code><br><code>com.google.common.escape</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code><br><code>com.google.common.eventbus</code> (Version: <code>33.4.8</code>)<br><code>com.google.common.graph</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.collect</code><br><code>com.google.common.hash</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code><br><code>com.google.common.html</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.escape</code><br><code>com.google.common.io</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.graph</code>, <code>com.google.common.hash</code><br><code>com.google.common.math</code> (Version: <code>33.4.8</code>)<br><code>com.google.common.net</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.escape</code><br><code>com.google.common.primitives</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code><br><code>com.google.common.reflect</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.collect</code>, <code>com.google.common.io</code><br><code>com.google.common.util.concurrent</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code><br><code>com.google.common.xml</code> (Version: <code>33.4.8</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.escape</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>Manifest Version: 2</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>guice</td>
+		<td>
+			<div class="report-text-block no-diff">guice<br>Symbolic Name: <code>com.google.inject</code></div>
+		</td>
+		<td>5.1.0</td>
+		<td>
+			<div class="report-text-block no-diff">Guice is a lightweight dependency injection framework for<br>Java 6 and above<br>Vendor: Google, Inc.<br>License: http://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://github.com/google/guice</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.common.base</code> (Version: <code>[30.1,31)</code>)<br><code>com.google.common.cache</code> (Version: <code>[30.1,31)</code>)<br><code>com.google.common.collect</code> (Version: <code>[30.1,31)</code>)<br><code>com.google.common.primitives</code> (Version: <code>[30.1,31)</code>)<br><code>com.google.errorprone.annotations</code><br><code>javax.annotation</code> (Version: <code>[3.0,4)</code>)<br><code>javax.inject</code><br><code>org.aopalliance.intercept</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.inject</code> (Version: <code>1.4</code>)<br><code>com.google.inject.binder</code> (Version: <code>1.4</code>)<br><code>com.google.inject.matcher</code> (Version: <code>1.4</code>)<br><code>com.google.inject.multibindings</code> (Version: <code>1.4</code>)<br><code>com.google.inject.name</code> (Version: <code>1.4</code>)<br><code>com.google.inject.spi</code> (Version: <code>1.4</code>)<br><code>com.google.inject.util</code> (Version: <code>1.4</code>)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Manifest Version: 2<br>Required Execution Environment: JavaSE-1.6</div>
+		</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>jspecify</td>
+		<td>
+			<div class="report-text-block no-diff">JSpecify annotations<br>Symbolic Name: <code>org.jspecify.jspecify</code></div>
+		</td>
+		<td>1.0.0</td>
+		<td>
+			<div class="report-text-block no-diff">An artifact of well-specified annotations to power static<br>analysis checks and JVM language interop.<br>Vendor: The JSpecify Authors<br>License: https://www.apache.org/licenses/LICENSE-2.0<br>Doc URL: https://jspecify.dev/docs/start-here</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>java.lang</code><br><code>java.lang.annotation</code></div>
+		</td>
+		<td><code>org.jspecify.annotations</code> (Version: <code>1.0.0</code>)</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>Manifest Version: 2</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-api</td>
+		<td>
+			<div class="report-text-block no-diff">SLF4J API Module<br>Symbolic Name: <code>slf4j.api</code></div>
+		</td>
+		<td>2.0.17</td>
+		<td>
+			<div class="report-text-block no-diff">The slf4j API<br>Vendor: SLF4J.ORG<br>License: https://opensource.org/license/mit<br>Doc URL: http://www.slf4j.org</div>
+		</td>
+		<td><code>org.slf4j.spi</code> (Version: <code>[2.0.17,3)</code>)</td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.slf4j</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code>, <code>org.slf4j.spi</code><br><code>org.slf4j.event</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.helpers</code><br><code>org.slf4j.helpers</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.spi</code><br><code>org.slf4j.spi</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code><br><code>org.slf4j</code> (Version: <code>1.7.36</code>)<br><code>org.slf4j.helpers</code> (Version: <code>1.7.36</code>)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.extender;filter:=&quot;(&(osgi.extender=osgi.serviceloader.processor)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))&quot;</code><br><code>osgi.serviceloader;filter:=&quot;(osgi.serviceloader=org.slf4j.spi.SLF4JServiceProvider)&quot;;osgi.serviceloader=&quot;org.slf4j.spi.SLF4JServiceProvider&quot;</code><br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
+		</td>
+		<td>Manifest Version: 2</td>
+	</tr>
+	<tr class="report-table-row no-diff">
+		<td>slf4j-simple</td>
+		<td>
+			<div class="report-text-block no-diff">SLF4J Simple Provider<br>Symbolic Name: <code>slf4j.simple</code></div>
+		</td>
+		<td>2.0.17</td>
+		<td>
+			<div class="report-text-block no-diff">SLF4J Simple Provider<br>Vendor: SLF4J.ORG<br>License: https://opensource.org/license/mit<br>Doc URL: http://www.slf4j.org</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.slf4j</code> (Version: <code>[2.0,3)</code>)<br><code>org.slf4j.event</code> (Version: <code>[2.0,3)</code>)<br><code>org.slf4j.helpers</code> (Version: <code>[2.0,3)</code>)<br><code>org.slf4j.spi</code> (Version: <code>[2.0,3)</code>)</div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>org.slf4j.simple</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code>, <code>org.slf4j.spi</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff">Required:<br><code>osgi.extender;filter:=&quot;(&(osgi.extender=osgi.serviceloader.registrar)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))&quot;</code><br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code><br>Provided:<br><code>osgi.service;objectClass:List&lt;String&gt;=&quot;org.slf4j.spi.SLF4JServiceProvider&quot;;type=simple;effective:=active</code><br><code>osgi.serviceloader;osgi.serviceloader=&quot;org.slf4j.spi.SLF4JServiceProvider&quot;;register:=&quot;org.slf4j.simple.SimpleServiceProvider&quot;;type=simple</code></div>
+		</td>
+		<td>Manifest Version: 2</td>
+	</tr>
+</tbody>
 </table>
+</div>
 </section>
 
-<section id="Blacklist">
-<h2>Blacklist</h2>
-<p>Use of dangerous, unsafe, unstable, or deprecated classes and methods.</p>
-<table>
-	<tr><th>JAR file</th><th>Issues</th></tr>
-	<tr><td>guice-5.1.0.jar</td><td>com.google.inject.internal.InternalFlags<br>• @Deprecated: public final class java.security.AccessController<br><br>com.google.inject.internal.aop.ChildClassDefiner<br>• @Deprecated: public final class java.security.AccessController<br><br>com.google.inject.internal.aop.UnsafeClassDefiner<br>• @Deprecated: public final class java.security.AccessController</td></tr>
-	<tr><td>slf4j-simple-2.0.16.jar</td><td>org.slf4j.simple.SimpleLoggerConfiguration<br>• @Deprecated: public final class java.security.AccessController</td></tr>
-	<tr><td>slf4j-api-2.0.16.jar</td><td>org.slf4j.LoggerFactory<br>• @Deprecated: public class java.lang.SecurityManager<br>• @Deprecated: public final class java.security.AccessController<br><br>org.slf4j.helpers.Util$ClassContextSecurityManager<br>• @Deprecated: public class java.lang.SecurityManager</td></tr>
-	<tr><td>guava-33.4.0-jre.jar</td><td>com.google.common.cache.Striped64<br>• @Deprecated: public final class java.security.AccessController<br>• boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)<br>• boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)<br>• long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)<br>• static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()<br><br>com.google.common.cache.Striped64$Cell<br>• boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)<br>• long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)<br><br>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray<br>• @Deprecated: public final class java.security.AccessController<br>• int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)<br>• int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)<br>• static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()<br><br>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray$1<br>• long sun.misc.Unsafe.getLong(java.lang.Object,long)<br>• void sun.misc.Unsafe.putLong(java.lang.Object,long,long)<br><br>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray$2<br>• long sun.misc.Unsafe.getLong(java.lang.Object,long)<br>• void sun.misc.Unsafe.putLong(java.lang.Object,long,long)<br><br>com.google.common.hash.Striped64<br>• @Deprecated: public final class java.security.AccessController<br>• boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)<br>• boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)<br>• long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)<br>• static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()<br><br>com.google.common.hash.Striped64$Cell<br>• boolean sun.misc.Unsafe.compareAndSwapLong(java.lang.Object,long,long,long)<br>• long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)<br><br>com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator<br>• @Deprecated: public final class java.security.AccessController<br>• int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)<br>• int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)<br>• long sun.misc.Unsafe.getLong(java.lang.Object,long)<br>• static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()<br><br>com.google.common.reflect.Types$TypeVariableInvocationHandler<br>• @Deprecated: public class java.security.AccessControlException<br><br>com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper<br>• @Deprecated: public final class java.security.AccessController<br>• boolean sun.misc.Unsafe.compareAndSwapObject(java.lang.Object,long,java.lang.Object,java.lang.Object)<br>• java.lang.Object sun.misc.Unsafe.getAndSetObject(java.lang.Object,long,java.lang.Object)<br>• long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)<br>• static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()<br>• void sun.misc.Unsafe.putObject(java.lang.Object,long,java.lang.Object)<br><br>com.google.common.util.concurrent.UncaughtExceptionHandlers$Exiter<br>• void java.lang.Runtime.exit(int)</td></tr>
-</table>
+<section class="report-section" id="JavaRuntime" title="Java Runtime">
+<h2 class="report-section-title">Java Runtime</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Information about JRE/JDK runtime.</p>
+<p class="report-content no-diff">Java home    : <code>/home/markwalder/.jdks/temurin-17.0.15</code><br>Java runtime : <code>OpenJDK Runtime Environment</code><br>Java version : <code>17.0.15</code><br>Java vendor  : <code>Eclipse Adoptium</code></p>
+</div>
 </section>
 
-<section id="JavaRuntime">
-<h2>Java Runtime</h2>
-<p>Information about JRE/JDK runtime.</p>
-<p>Java home    : /home/markwalder/.jdks/temurin-17.0.13<br>Java runtime : OpenJDK Runtime Environment<br>Java version : 17.0.13<br>Java vendor  : Eclipse Adoptium</p>
-</section>
 
-<div class="generator">Generated with <a href="http://jarhc.org" target="_blank">JarHC 2.2.2</a></div>
+	</main>
+
 </body>
+<!-- JSON REPORT DATA
+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
+-->
 </html>
