@@ -21,8 +21,6 @@ import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class WorkContract {
 
-	private static final int WORK_MINUTES_PER_DAY = 504; // 8.4 h
-
 	/**
 	 * Get work time in minutes.
 	 */
@@ -39,16 +37,23 @@ public class WorkContract {
 		int dayOfYear = date.getDayOfYear();
 		int slot = (dayOfYear - 1) * 2;
 
+		int minutesPerDay = 42 * 60 / 5; // 8.4 h = 504 min
+
+		// from 2026-01-01 on, only 40 hours work week (8 h per day)
+		if (date.isAfter(LocalDate.of(2025, 12, 31))) {
+			minutesPerDay = 40 * 60 / 5; // 8 h = 480 min
+		}
+
 		// morning
 		byte value = workYear.getValue(slot);
 		if (value == 0) { // no holiday, no vacation, ...
-			time += WORK_MINUTES_PER_DAY / 2;
+			time += minutesPerDay / 2;
 		}
 
 		// afternoon
 		value = workYear.getValue(slot + 1);
 		if (value == 0) { // no holiday, no vacation, ...
-			time += WORK_MINUTES_PER_DAY / 2;
+			time += minutesPerDay / 2;
 		}
 
 		// from 2021-06-01 on, count only 80% for every day
