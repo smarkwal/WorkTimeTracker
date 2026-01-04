@@ -21,16 +21,16 @@ plugins {
 
     // Gradle Versions Plugin
     // https://github.com/ben-manes/gradle-versions-plugin
-    id("com.github.ben-manes.versions") version "0.52.0"
+    id("com.github.ben-manes.versions") version "0.53.0"
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "2.9"
+    id("com.github.jk1.dependency-license-report") version "3.0.1"
 
     // run Sonar analysis
     id("org.sonarqube") version "6.1.0.5360"
 
     // get current Git branch name
-    id("org.ajoberstar.grgit") version "5.3.0"
+    id("org.ajoberstar.grgit") version "5.3.3"
 
     // JarHC Gradle plugin
     id("org.jarhc") version "1.2.0"
@@ -41,17 +41,17 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.17.0")
-    implementation("commons-io:commons-io:2.19.0")
+    implementation("org.apache.commons:commons-lang3:3.20.0")
+    implementation("commons-io:commons-io:2.21.0")
     implementation("com.google.inject:guice:5.1.0")
     implementation("org.slf4j:slf4j-api:2.0.17")
     runtimeOnly("org.slf4j:slf4j-simple:2.0.17")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.17.0")
+    testImplementation("org.mockito:mockito-core:5.21.0")
 
     // fix vulnerabilities in transitive dependencies
     // fix CVE-2018-10237 and CVE-2020-8908
-    implementation("com.google.guava:guava:33.4.8-jre")
+    implementation("com.google.guava:guava:33.5.0-jre")
 }
 
 java {
