@@ -22,7 +22,7 @@ import org.junit.Test;
 public class VersionTest {
 
 	@Test
-	public void testVersion() throws Exception {
+	public void testVersion() {
 		String version = Version.getVersion();
 		Assert.assertNotEquals("Version is defined", Version.UNKNOWN, version);
 	}

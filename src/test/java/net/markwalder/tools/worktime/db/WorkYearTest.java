@@ -60,7 +60,7 @@ public class WorkYearTest {
 		int slots = daysInYear * 2;
 		byte[] data = new byte[slots];
 
-		byte[] values = new byte[] { 0, 1, 2, 4, 8 };
+		byte[] values = { 0, 1, 2, 4, 8 };
 		for (int i = 0; i < data.length; i++) {
 			data[i] = values[i % values.length];
 		}

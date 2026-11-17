@@ -21,19 +21,19 @@ plugins {
 
     // Gradle Versions Plugin
     // https://github.com/ben-manes/gradle-versions-plugin
-    id("io.github.ben-manes.versions") version "0.67.0"
+    alias(libs.plugins.versions)
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "3.1.5"
+    alias(libs.plugins.license.report)
 
     // run Sonar analysis
-    id("org.sonarqube") version "7.6.0.18749"
+    alias(libs.plugins.sonarqube)
 
     // get current Git branch name
-    id("org.ajoberstar.grgit") version "5.3.3"
+    alias(libs.plugins.grgit)
 
     // JarHC Gradle plugin
-    id("org.jarhc") version "3.1.0"
+    alias(libs.plugins.jarhc)
 }
 
 buildscript {
@@ -51,21 +51,22 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.22.0")
-    implementation("commons-io:commons-io:2.22.0")
-    implementation("com.google.inject:guice:5.1.0")
-    implementation("org.slf4j:slf4j-api:2.0.20")
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.20")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.24.0")
+    implementation(libs.commons.lang3)
+    implementation(libs.commons.io)
+    implementation(libs.guice)
+    implementation(libs.slf4j.api)
 
-    // fix vulnerabilities in transitive dependencies
-    // fix CVE-2018-10237 and CVE-2020-8908
-    implementation("com.google.guava:guava:33.8.0-jre")
+    // Fix CVE-2018-10237 and CVE-2020-8908 in transitive Guava dependencies.
+    implementation(libs.guava)
+
+    runtimeOnly(libs.slf4j.simple)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito)
 
     constraints {
-        add("jarhc", "org.json:json:20260814") {
-            because("JarHC 3.1.0 uses a JSON-java version with known vulnerabilities")
+        add("jarhc", libs.json) {
+            because("JarHC's transitive JSON-java dependency has known vulnerabilities")
         }
     }
 }
@@ -219,16 +220,6 @@ tasks {
             file("${rootDir}/docs/jarhc-report.html"),
             file("${rootDir}/docs/jarhc-report.txt")
         )
-
-        doLast {
-            // JarHC generates the reports asynchronously in a worker.
-            workerExecutor.await()
-            val javaHomePattern = Regex("""(Java home\s*:\s*(?:<code>)?)[^<\r\n]+""")
-            reportFiles.files.forEach { reportFile ->
-                val content = reportFile.readText()
-                reportFile.writeText(javaHomePattern.replace(content, "$1[redacted]"))
-            }
-        }
     }
 
     build {

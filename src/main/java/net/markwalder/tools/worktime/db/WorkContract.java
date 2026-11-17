@@ -17,6 +17,7 @@
 package net.markwalder.tools.worktime.db;
 
 import java.time.LocalDate;
+import java.time.Month;
 import net.markwalder.tools.worktime.utils.DateTimeUtils;
 
 public class WorkContract {
@@ -40,7 +41,7 @@ public class WorkContract {
 		int minutesPerDay = 42 * 60 / 5; // 8.4 h = 504 min
 
 		// from 2026-01-01 on, only 40 hours work week (8 h per day)
-		if (date.isAfter(LocalDate.of(2025, 12, 31))) {
+		if (date.isAfter(LocalDate.of(2025, Month.DECEMBER, 31))) {
 			minutesPerDay = 40 * 60 / 5; // 8 h = 480 min
 		}
 
@@ -59,7 +60,7 @@ public class WorkContract {
 		// from 2021-06-01 on, count only 80% for every day
 		// before: Monday is marked as free day
 		// after: work 80% every day of the week
-		if (date.isAfter(LocalDate.of(2021, 5, 31))) {
+		if (date.isAfter(LocalDate.of(2021, Month.MAY, 31))) {
 			time = time * 4 / 5; // 80%
 		}
 

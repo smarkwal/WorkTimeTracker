@@ -122,8 +122,8 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 			final TrayIcon trayIcon = new TrayIcon(image);
 
 			ActionListener actionListener = event -> {
-				Window.this.setVisible(true);
-				Window.this.setExtendedState(NORMAL);
+				setVisible(true);
+				setExtendedState(NORMAL);
 				SystemTray.getSystemTray().remove(trayIcon);
 			};
 
