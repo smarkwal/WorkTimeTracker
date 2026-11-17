@@ -21,19 +21,19 @@ plugins {
 
     // Gradle Versions Plugin
     // https://github.com/ben-manes/gradle-versions-plugin
-    id("com.github.ben-manes.versions") version "0.53.0"
+    id("io.github.ben-manes.versions") version "0.67.0"
 
     // create report with all open-source licenses
-    id("com.github.jk1.dependency-license-report") version "3.0.1"
+    id("com.github.jk1.dependency-license-report") version "3.1.5"
 
     // run Sonar analysis
-    id("org.sonarqube") version "7.2.2.6593"
+    id("org.sonarqube") version "7.6.0.18749"
 
     // get current Git branch name
     id("org.ajoberstar.grgit") version "5.3.3"
 
     // JarHC Gradle plugin
-    id("org.jarhc") version "1.2.0"
+    id("org.jarhc") version "3.1.0"
 }
 
 repositories {
@@ -41,17 +41,23 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.20.0")
-    implementation("commons-io:commons-io:2.21.0")
+    implementation("org.apache.commons:commons-lang3:3.22.0")
+    implementation("commons-io:commons-io:2.22.0")
     implementation("com.google.inject:guice:5.1.0")
-    implementation("org.slf4j:slf4j-api:2.0.17")
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.17")
+    implementation("org.slf4j:slf4j-api:2.0.20")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.20")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.21.0")
+    testImplementation("org.mockito:mockito-core:5.24.0")
 
     // fix vulnerabilities in transitive dependencies
     // fix CVE-2018-10237 and CVE-2020-8908
-    implementation("com.google.guava:guava:33.5.0-jre")
+    implementation("com.google.guava:guava:33.8.0-jre")
+
+    constraints {
+        add("jarhc", "org.json:json:20260814") {
+            because("JarHC 3.1.0 uses a JSON-java version with known vulnerabilities")
+        }
+    }
 }
 
 java {
@@ -80,10 +86,6 @@ licenseReport {
     renderers = arrayOf(
         com.github.jk1.license.render.CsvReportRenderer("licenses.csv")
     )
-}
-
-jacoco {
-    toolVersion = "0.8.10"
 }
 
 sonar {
