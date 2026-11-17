@@ -56,15 +56,15 @@ dependencies {
     implementation(libs.guice)
     implementation(libs.slf4j.api)
 
-    // Fix CVE-2018-10237 and CVE-2020-8908 in transitive Guava dependencies.
-    implementation(libs.guava)
-
     runtimeOnly(libs.slf4j.simple)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockito)
 
     constraints {
+        implementation(libs.guava) {
+            because("Guice 5.1.0 requests Guava 30.1-jre, affected by CVE-2020-8908")
+        }
         add("jarhc", libs.json) {
             because("JarHC's transitive JSON-java dependency has known vulnerabilities")
         }
