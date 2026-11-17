@@ -2,9 +2,9 @@
 <!--suppress CssUnusedSymbol, HttpUrlsUsage, SpellCheckingInspection, GrazieInspection, DeprecatedClassUsageInspection -->
 <html lang="en">
 <head>
-	<title>JarHC Report for WorkTimeTracker 3.1.0</title>
+	<title>JarHC Report for WorkTimeTracker 3.1.1-SNAPSHOT</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="generator" content="JarHC 3.0.0">
+	<meta name="generator" content="JarHC 3.1.0">
 	<style>
 
 		html {
@@ -276,6 +276,7 @@
 
 			initMinimap();
 			initCollapseExpand();
+			initExpandFromHash();
 			initRowMarking();
 			initKeyboardShortcuts();
 		}
@@ -316,6 +317,35 @@
 						updateMinimap();
 					});
 				}
+			}
+		}
+
+		function initExpandFromHash() {
+			expandHashTarget();
+			// expand on hash change (e.g. back/forward navigation)
+			window.addEventListener("hashchange", expandHashTarget);
+			// also expand on in-page anchor clicks (e.g. from the Table of Contents);
+			// this also covers clicks re-selecting the current hash, which fire no "hashchange" event
+			for (let link of document.querySelectorAll('a[href^="#"]')) {
+				link.addEventListener("click", () => setTimeout(expandHashTarget));
+			}
+		}
+
+		function expandHashTarget() {
+			if (!location.hash) return;
+			let id;
+			try {
+				id = decodeURIComponent(location.hash.substring(1));
+			} catch (e) {
+				id = location.hash.substring(1); // malformed escape: fall back to raw fragment
+			}
+			const target = document.getElementById(id);
+			if (!target) return;
+			const section = target.closest(".report-section");
+			if (section && section.classList.contains("collapsed")) {
+				section.classList.remove("collapsed");   // expand only, never collapse
+				updateMinimap();
+				section.scrollIntoView();                // re-align: expanding shifted the layout
 			}
 		}
 
@@ -563,19 +593,20 @@
 			<div class="control" id="showOnlyDiffControl"><input type="checkbox" id="showOnlyDiffCheckbox" checked="checked" onchange="showOnlyDiff(this.checked)"><label class="label" for="showOnlyDiffCheckbox">Show only differences</label></div>
 			<div class="control" id="showMinimapControl"><input type="checkbox" id="showMinimapCheckbox" onchange="showMinimap(this.checked)"><label class="label" for="showMinimapCheckbox">Show MiniMap (Beta)</label></div>
 		</div>
-		<div id="generator">Generated with <a href="http://jarhc.org" target="_blank">JarHC 3.0.0</a></div>
+		<div id="generator">Generated with <a href="http://jarhc.org" target="_blank">JarHC 3.1.0</a></div>
 	</header>
 
 	<div id="minimap"></div>
 	<div id="minimapView"></div>
 
 	<main id="main">
-		<h1 class="report-title">JarHC Report for WorkTimeTracker 3.1.0</h1>
+		<h1 class="report-title">JarHC Report for WorkTimeTracker 3.1.1-SNAPSHOT</h1>
 		
 <nav>
 <h2 class="report-toc-title">Table of Contents</h2>
 <ul class="report-toc">
 <li class="report-toc-item"><a href="#JARFiles">JAR Files</a></li>
+<li class="report-toc-item"><a href="#Vulnerabilities">Vulnerabilities</a></li>
 <li class="report-toc-item"><a href="#Dependencies">Dependencies</a></li>
 <li class="report-toc-item"><a href="#DuplicateClasses">Duplicate Classes</a></li>
 <li class="report-toc-item"><a href="#BinaryCompatibility">Binary Compatibility</a></li>
@@ -617,7 +648,7 @@
 		<td>Java 1.3 (9)</td>
 		<td>0</td>
 		<td><code>org.aopalliance.*</code> (2 subpackages)</td>
-		<td><a href="https://search.maven.org/search?q=1:0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8" target="_blank" rel="noopener noreferrer">0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8" target="_blank" rel="noopener noreferrer">0235ba8b489512805ac13a8f9ea77a1ca5ebe3e8</a></td>
 		<td><a href="https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0" target="_blank" rel="noopener noreferrer">aopalliance:aopalliance:1.0</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
@@ -625,45 +656,45 @@
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>commons-io</td>
-		<td>2.21.0</td>
-		<td>commons-io-2.21.0.jar</td>
-		<td>572 KB</td>
+		<td>2.22.0</td>
+		<td>commons-io-2.22.0.jar</td>
+		<td>595 KB</td>
 		<td>Yes (Java 9)</td>
-		<td>Java 8 (383)</td>
+		<td>Java 8 (413)</td>
 		<td>0</td>
 		<td><code>org.apache.commons.io</code> (+14 subpackages)</td>
-		<td><a href="https://search.maven.org/search?q=1:52a6f68fe5afe335cde95461dd5c3412f04996f7" target="_blank" rel="noopener noreferrer">52a6f68fe5afe335cde95461dd5c3412f04996f7</a></td>
-		<td><a href="https://central.sonatype.com/artifact/commons-io/commons-io/2.21.0" target="_blank" rel="noopener noreferrer">commons-io:commons-io:2.21.0</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:5b1e18bc0ad651ed878029d83f88d9c8189fd51e" target="_blank" rel="noopener noreferrer">5b1e18bc0ad651ed878029d83f88d9c8189fd51e</a></td>
+		<td><a href="https://central.sonatype.com/artifact/commons-io/commons-io/2.22.0" target="_blank" rel="noopener noreferrer">commons-io:commons-io:2.22.0</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>commons-lang3</td>
-		<td>3.20.0</td>
-		<td>commons-lang3-3.20.0.jar</td>
-		<td>697 KB</td>
+		<td>3.22.0</td>
+		<td>commons-lang3-3.22.0.jar</td>
+		<td>747 KB</td>
 		<td>Yes (Java 9)</td>
-		<td>Java 8 (403)</td>
+		<td>Java 8 (426)</td>
 		<td>0</td>
 		<td><code>org.apache.commons.lang3</code> (+17 subpackages)</td>
-		<td><a href="https://search.maven.org/search?q=1:65897b3e5731220962e659e001904af3c3cbeba9" target="_blank" rel="noopener noreferrer">65897b3e5731220962e659e001904af3c3cbeba9</a></td>
-		<td><a href="https://central.sonatype.com/artifact/org.apache.commons/commons-lang3/3.20.0" target="_blank" rel="noopener noreferrer">org.apache.commons:commons-lang3:3.20.0</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:fda38d1637719132fa12b5b96ea99958fc7150e7" target="_blank" rel="noopener noreferrer">fda38d1637719132fa12b5b96ea99958fc7150e7</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.apache.commons/commons-lang3/3.22.0" target="_blank" rel="noopener noreferrer">org.apache.commons:commons-lang3:3.22.0</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>error_prone_annotations</td>
-		<td>2.41.0</td>
-		<td>error_prone_annotations-2.41.0.jar</td>
-		<td>19.9 KB</td>
+		<td>2.52.0</td>
+		<td>error_prone_annotations-2.52.0.jar</td>
+		<td>20.2 KB</td>
 		<td>Yes (Java 9)</td>
 		<td>Java 8 (29)</td>
-		<td>0</td>
+		<td>1</td>
 		<td><code>com.google.errorprone.annotations</code> (+1 subpackage)</td>
-		<td><a href="https://search.maven.org/search?q=1:4381275efdef6ddfae38f002c31e84cd001c97f0" target="_blank" rel="noopener noreferrer">4381275efdef6ddfae38f002c31e84cd001c97f0</a></td>
-		<td><span style="color:orange">[unknown]</span></td>
+		<td><a href="https://central.sonatype.com/search?q=1:83177bbb5db5bfe120666ae93fdaf44625ad7a7d" target="_blank" rel="noopener noreferrer">83177bbb5db5bfe120666ae93fdaf44625ad7a7d</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.52.0" target="_blank" rel="noopener noreferrer">com.google.errorprone:error_prone_annotations:2.52.0</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
@@ -677,25 +708,25 @@
 		<td>Java 8 (2)</td>
 		<td>0</td>
 		<td><code>com.google.common.util.concurrent.internal</code></td>
-		<td><a href="https://search.maven.org/search?q=1:aeaffd00d57023a2c947393ed251f0354f0985fc" target="_blank" rel="noopener noreferrer">aeaffd00d57023a2c947393ed251f0354f0985fc</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:aeaffd00d57023a2c947393ed251f0354f0985fc" target="_blank" rel="noopener noreferrer">aeaffd00d57023a2c947393ed251f0354f0985fc</a></td>
 		<td><a href="https://central.sonatype.com/artifact/com.google.guava/failureaccess/1.0.3" target="_blank" rel="noopener noreferrer">com.google.guava:failureaccess:1.0.3</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
 	</tr>
 	<tr class="report-table-row no-diff">
-		<td>guava-jre</td>
-		<td>33.5.0</td>
-		<td>guava-33.5.0-jre.jar</td>
-		<td>2.88 MB</td>
-		<td>Yes (Java 9)</td>
-		<td>Java 8 (1945)</td>
+		<td>guava</td>
+		<td>33.8.0-jre</td>
+		<td>guava-33.8.0-jre.jar</td>
+		<td>2.93 MB</td>
+		<td>No</td>
+		<td>Java 8 (1956)</td>
 		<td>0</td>
 		<td>
 			<div class="report-text-block no-diff"><code>com.google.common.annotations</code><br><code>com.google.common.base</code> (+1 subpackage)<br><code>com.google.common.cache</code><br><code>com.google.common.collect</code><br><code>com.google.common.escape</code><br><code>com.google.common.eventbus</code><br><code>com.google.common.graph</code><br><code>com.google.common.hash</code><br><code>com.google.common.html</code><br><code>com.google.common.io</code><br><code>com.google.common.math</code><br><code>com.google.common.net</code><br><code>com.google.common.primitives</code><br><code>com.google.common.reflect</code><br><code>com.google.common.util.concurrent</code><br><code>com.google.common.xml</code><br><code>com.google.thirdparty.publicsuffix</code></div>
 		</td>
-		<td><a href="https://search.maven.org/search?q=1:8699de25f2f979108d6c1b804a7ba38cda1116bc" target="_blank" rel="noopener noreferrer">8699de25f2f979108d6c1b804a7ba38cda1116bc</a></td>
-		<td><span style="color:orange">[unknown]</span></td>
+		<td><a href="https://central.sonatype.com/search?q=1:bb3b79346325315062192205fa6636dd5873151f" target="_blank" rel="noopener noreferrer">bb3b79346325315062192205fa6636dd5873151f</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/guava/33.8.0-jre" target="_blank" rel="noopener noreferrer">com.google.guava:guava:33.8.0-jre</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
@@ -709,7 +740,7 @@
 		<td>Java 8 (460), Java 5 (34)</td>
 		<td>1</td>
 		<td><code>com.google.inject</code> (+10 subpackages)</td>
-		<td><a href="https://search.maven.org/search?q=1:da25056c694c54ba16e78e4fc35f17fc60f0d1b4" target="_blank" rel="noopener noreferrer">da25056c694c54ba16e78e4fc35f17fc60f0d1b4</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:da25056c694c54ba16e78e4fc35f17fc60f0d1b4" target="_blank" rel="noopener noreferrer">da25056c694c54ba16e78e4fc35f17fc60f0d1b4</a></td>
 		<td><a href="https://central.sonatype.com/artifact/com.google.inject/guice/5.1.0" target="_blank" rel="noopener noreferrer">com.google.inject:guice:5.1.0</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
@@ -724,8 +755,8 @@
 		<td>Java 8 (24)</td>
 		<td>0</td>
 		<td><code>com.google.j2objc.annotations</code></td>
-		<td><a href="https://search.maven.org/search?q=1:a892ca9507839bbdb900d64310ac98256cab992f" target="_blank" rel="noopener noreferrer">a892ca9507839bbdb900d64310ac98256cab992f</a></td>
-		<td><span style="color:orange">[unknown]</span></td>
+		<td><a href="https://central.sonatype.com/search?q=1:a892ca9507839bbdb900d64310ac98256cab992f" target="_blank" rel="noopener noreferrer">a892ca9507839bbdb900d64310ac98256cab992f</a></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.j2objc/j2objc-annotations/3.1" target="_blank" rel="noopener noreferrer">com.google.j2objc:j2objc-annotations:3.1</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
@@ -739,7 +770,7 @@
 		<td>Java 5 (6)</td>
 		<td>0</td>
 		<td><code>javax.inject</code></td>
-		<td><a href="https://search.maven.org/search?q=1:6975da39a7040257bd51d21a231b76c915872d38" target="_blank" rel="noopener noreferrer">6975da39a7040257bd51d21a231b76c915872d38</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:6975da39a7040257bd51d21a231b76c915872d38" target="_blank" rel="noopener noreferrer">6975da39a7040257bd51d21a231b76c915872d38</a></td>
 		<td><a href="https://central.sonatype.com/artifact/javax.inject/javax.inject/1" target="_blank" rel="noopener noreferrer">javax.inject:javax.inject:1</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
@@ -747,15 +778,15 @@
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>jspecify</td>
-		<td>1.0.0</td>
-		<td>jspecify-1.0.0.jar</td>
-		<td>3.73 KB</td>
-		<td>Yes (Java 9)</td>
+		<td>1.0.1</td>
+		<td>jspecify-1.0.1.jar</td>
+		<td>2.99 KB</td>
+		<td>No</td>
 		<td>Java 8 (4)</td>
-		<td>1</td>
+		<td>0</td>
 		<td><code>org.jspecify.annotations</code></td>
-		<td><a href="https://search.maven.org/search?q=1:7425a601c1c7ec76645a78d22b8c6a627edee507" target="_blank" rel="noopener noreferrer">7425a601c1c7ec76645a78d22b8c6a627edee507</a></td>
-		<td><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.0" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.0</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:3d60fd98eb8ade73004f4195c37b6317e02cf3d7" target="_blank" rel="noopener noreferrer">3d60fd98eb8ade73004f4195c37b6317e02cf3d7</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.1" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.1</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
@@ -769,7 +800,7 @@
 		<td>[no class files]</td>
 		<td>0</td>
 		<td></td>
-		<td><a href="https://search.maven.org/search?q=1:b421526c5f297295adef1c886e5246c39d4ac629" target="_blank" rel="noopener noreferrer">b421526c5f297295adef1c886e5246c39d4ac629</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:b421526c5f297295adef1c886e5246c39d4ac629" target="_blank" rel="noopener noreferrer">b421526c5f297295adef1c886e5246c39d4ac629</a></td>
 		<td><a href="https://central.sonatype.com/artifact/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava" target="_blank" rel="noopener noreferrer">com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
@@ -777,32 +808,32 @@
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>slf4j-api</td>
-		<td>2.0.17</td>
-		<td>slf4j-api-2.0.17.jar</td>
-		<td>68.3 KB</td>
+		<td>2.0.20</td>
+		<td>slf4j-api-2.0.20.jar</td>
+		<td>68.6 KB</td>
 		<td>Yes (Java 9)</td>
 		<td>Java 8 (55)</td>
 		<td>0</td>
 		<td>
 			<div class="report-text-block no-diff"><code>org.slf4j</code><br><code>org.slf4j.event</code><br><code>org.slf4j.helpers</code><br><code>org.slf4j.spi</code></div>
 		</td>
-		<td><a href="https://search.maven.org/search?q=1:d9e58ac9c7779ba3bf8142aff6c830617a7fe60f" target="_blank" rel="noopener noreferrer">d9e58ac9c7779ba3bf8142aff6c830617a7fe60f</a></td>
-		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.17</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:7fea9d92ba67e9b3c8f03515fb202b86a1fe44f6" target="_blank" rel="noopener noreferrer">7fea9d92ba67e9b3c8f03515fb202b86a1fe44f6</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.20" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.20</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>slf4j-simple</td>
-		<td>2.0.17</td>
-		<td>slf4j-simple-2.0.17.jar</td>
+		<td>2.0.20</td>
+		<td>slf4j-simple-2.0.20.jar</td>
 		<td>15.3 KB</td>
 		<td>Yes (Java 9)</td>
 		<td>Java 8 (6)</td>
 		<td>0</td>
 		<td><code>org.slf4j.simple</code></td>
-		<td><a href="https://search.maven.org/search?q=1:9872a3fd794ffe7b18d17747926a64d61526ca96" target="_blank" rel="noopener noreferrer">9872a3fd794ffe7b18d17747926a64d61526ca96</a></td>
-		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-simple/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-simple:2.0.17</a></td>
+		<td><a href="https://central.sonatype.com/search?q=1:b08c9c3983e9fa3b37b929251523ae74ab7b680a" target="_blank" rel="noopener noreferrer">b08c9c3983e9fa3b37b929251523ae74ab7b680a</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-simple/2.0.20" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-simple:2.0.20</a></td>
 		<td>
 			<div class="report-text-block report-issue no-diff"></div>
 		</td>
@@ -811,9 +842,9 @@
 		<td>Classpath</td>
 		<td>-</td>
 		<td>-</td>
-		<td>5.00 MB</td>
+		<td>5.12 MB</td>
 		<td>-</td>
-		<td>Java 8 (3311), Java 5 (40), Java 1.3 (9)</td>
+		<td>Java 8 (3375), Java 5 (40), Java 1.3 (9)</td>
 		<td>2</td>
 		<td>75</td>
 		<td>-</td>
@@ -822,6 +853,26 @@
 			<div class="report-text-block report-issue no-diff">-</div>
 		</td>
 	</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="report-section" id="Vulnerabilities" title="Vulnerabilities">
+<h2 class="report-section-title">Vulnerabilities</h2>
+<div class="report-section-content">
+<p class="report-section-description no-diff">Known security vulnerabilities found in the artifacts.</p>
+<table class="report-table">
+<thead>
+	<tr class="report-table-header">
+		<th>CVE</th>
+		<th>Artifacts</th>
+		<th>Severity</th>
+		<th>Description</th>
+		<th>Advisory</th>
+	</tr>
+</thead>
+<tbody>
 </tbody>
 </table>
 </div>
@@ -840,7 +891,6 @@
 		<th>Maven coordinates</th>
 		<th>Updates</th>
 		<th>Direct dependencies</th>
-		<th>Status</th>
 	</tr>
 </thead>
 <tbody>
@@ -851,61 +901,57 @@
 		<td><a href="https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0" target="_blank" rel="noopener noreferrer">aopalliance:aopalliance:1.0</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>commons-io</td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td><a href="https://central.sonatype.com/artifact/commons-io/commons-io/2.21.0" target="_blank" rel="noopener noreferrer">commons-io:commons-io:2.21.0</a></td>
+		<td><a href="https://central.sonatype.com/artifact/commons-io/commons-io/2.22.0" target="_blank" rel="noopener noreferrer">commons-io:commons-io:2.22.0</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>commons-lang3</td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td><a href="https://central.sonatype.com/artifact/org.apache.commons/commons-lang3/3.20.0" target="_blank" rel="noopener noreferrer">org.apache.commons:commons-lang3:3.20.0</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.apache.commons/commons-lang3/3.22.0" target="_blank" rel="noopener noreferrer">org.apache.commons:commons-lang3:3.22.0</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>error_prone_annotations</td>
 		<td><span style="color:gray">[none]</span></td>
 		<td>
-			<div class="report-text-block no-diff">guava-jre<br>guice</div>
+			<div class="report-text-block no-diff">guava<br>guice</div>
 		</td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.52.0" target="_blank" rel="noopener noreferrer">com.google.errorprone:error_prone_annotations:2.52.0</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>failureaccess</td>
 		<td><span style="color:gray">[none]</span></td>
-		<td>guava-jre</td>
+		<td>guava</td>
 		<td><a href="https://central.sonatype.com/artifact/com.google.guava/failureaccess/1.0.3" target="_blank" rel="noopener noreferrer">com.google.guava:failureaccess:1.0.3</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
-		<td>guava-jre</td>
+		<td>guava</td>
 		<td>
 			<div class="report-text-block no-diff">error_prone_annotations<br>failureaccess<br>j2objc-annotations<br>jspecify</div>
 		</td>
 		<td>guice</td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td></td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.guava/guava/33.8.0-jre" target="_blank" rel="noopener noreferrer">com.google.guava:guava:33.8.0-jre</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td>
+			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/com.google.guava/failureaccess/1.0.3" target="_blank" rel="noopener noreferrer">com.google.guava:failureaccess:1.0.3</a> <span style="color:green">[OK]</span><br><a href="https://central.sonatype.com/artifact/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava" target="_blank" rel="noopener noreferrer">com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</a> <span style="color:green">[OK]</span><br><a href="https://central.sonatype.com/artifact/com.google.errorprone/error_prone_annotations/2.52.0" target="_blank" rel="noopener noreferrer">com.google.errorprone:error_prone_annotations:2.52.0</a> <span style="color:green">[OK]</span><br><a href="https://central.sonatype.com/artifact/com.google.j2objc/j2objc-annotations/3.1" target="_blank" rel="noopener noreferrer">com.google.j2objc:j2objc-annotations:3.1</a> <span style="color:green">[OK]</span><br><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.1" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.1</a> <span style="color:green">[OK]</span></div>
+		</td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>guice</td>
 		<td>
-			<div class="report-text-block no-diff">aopalliance<br>error_prone_annotations<br>guava-jre<br>javax.inject</div>
+			<div class="report-text-block no-diff">aopalliance<br>error_prone_annotations<br>guava<br>javax.inject</div>
 		</td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><a href="https://central.sonatype.com/artifact/com.google.inject/guice/5.1.0" target="_blank" rel="noopener noreferrer">com.google.inject:guice:5.1.0</a></td>
@@ -913,20 +959,16 @@
 			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/com.google.inject/guice/6.0.0" target="_blank" rel="noopener noreferrer">6.0.0</a><br><a href="https://central.sonatype.com/artifact/com.google.inject/guice/7.0.0" target="_blank" rel="noopener noreferrer">7.0.0</a></div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0" target="_blank" rel="noopener noreferrer">aopalliance:aopalliance:1.0</a><br><a href="https://central.sonatype.com/artifact/com.google.guava/guava/30.1-jre" target="_blank" rel="noopener noreferrer">com.google.guava:guava:30.1-jre</a><br><a href="https://central.sonatype.com/artifact/javax.inject/javax.inject/1" target="_blank" rel="noopener noreferrer">javax.inject:javax.inject:1</a><br><a href="https://central.sonatype.com/artifact/org.ow2.asm/asm/9.2" target="_blank" rel="noopener noreferrer">org.ow2.asm:asm:9.2</a> (optional)</div>
-		</td>
-		<td>
-			<div class="report-text-block no-diff">OK<br>Unsatisfied<br>OK<br>Unsatisfied</div>
+			<div class="report-text-block no-diff"><a href="https://central.sonatype.com/artifact/aopalliance/aopalliance/1.0" target="_blank" rel="noopener noreferrer">aopalliance:aopalliance:1.0</a> <span style="color:green">[OK]</span><br><a href="https://central.sonatype.com/artifact/com.google.guava/guava/30.1-jre" target="_blank" rel="noopener noreferrer">com.google.guava:guava:30.1-jre</a> <span style="color:green">[OK]</span> (version 33.8.0-jre)<br><a href="https://central.sonatype.com/artifact/javax.inject/javax.inject/1" target="_blank" rel="noopener noreferrer">javax.inject:javax.inject:1</a> <span style="color:green">[OK]</span><br><a href="https://central.sonatype.com/artifact/org.ow2.asm/asm/9.2" target="_blank" rel="noopener noreferrer">org.ow2.asm:asm:9.2</a> (optional) <span style="color:orange">[not found]</span></div>
 		</td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>j2objc-annotations</td>
 		<td><span style="color:gray">[none]</span></td>
-		<td>guava-jre</td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td><span style="color:orange">[unknown]</span></td>
-		<td></td>
+		<td>guava</td>
+		<td><a href="https://central.sonatype.com/artifact/com.google.j2objc/j2objc-annotations/3.1" target="_blank" rel="noopener noreferrer">com.google.j2objc:j2objc-annotations:3.1</a></td>
+		<td><span style="color:gray">[none]</span></td>
+		<td><span style="color:gray">[none]</span></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>javax.inject</td>
@@ -935,16 +977,14 @@
 		<td><a href="https://central.sonatype.com/artifact/javax.inject/javax.inject/1" target="_blank" rel="noopener noreferrer">javax.inject:javax.inject:1</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>jspecify</td>
 		<td><span style="color:gray">[none]</span></td>
-		<td>guava-jre</td>
-		<td><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.0" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.0</a></td>
+		<td>guava</td>
+		<td><a href="https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.1" target="_blank" rel="noopener noreferrer">org.jspecify:jspecify:1.0.1</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>listenablefuture</td>
@@ -953,25 +993,22 @@
 		<td><a href="https://central.sonatype.com/artifact/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava" target="_blank" rel="noopener noreferrer">com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>slf4j-api</td>
 		<td><span style="color:gray">[none]</span></td>
 		<td>slf4j-simple</td>
-		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.17</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.20" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.20</a></td>
 		<td><span style="color:gray">[none]</span></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>slf4j-simple</td>
 		<td>slf4j-api</td>
 		<td><span style="color:gray">[none]</span></td>
-		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-simple/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-simple:2.0.17</a></td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-simple/2.0.20" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-simple:2.0.20</a></td>
 		<td><span style="color:gray">[none]</span></td>
-		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.17" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.17</a></td>
-		<td>OK</td>
+		<td><a href="https://central.sonatype.com/artifact/org.slf4j/slf4j-api/2.0.20" target="_blank" rel="noopener noreferrer">org.slf4j:slf4j-api:2.0.20</a> <span style="color:green">[OK]</span></td>
 	</tr>
 </tbody>
 </table>
@@ -1044,14 +1081,13 @@
 </thead>
 <tbody>
 	<tr class="report-table-row no-diff">
-		<td>guava-jre</td>
+		<td>guava</td>
 		<td>
-			<div class="report-text-block report-issue no-diff"><code>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray</code><br>• @Deprecated: <code>public final class java.security.AccessController</code><br>• <code>int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)</code><br>• <code>int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray</code><br>• <code>int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)</code><br>• <code>int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code></div>
 			<div class="report-text-block report-issue no-diff"><code>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray$1</code><br>• <code>long sun.misc.Unsafe.getLong(java.lang.Object,long)</code><br>• <code>void sun.misc.Unsafe.putLong(java.lang.Object,long,long)</code></div>
 			<div class="report-text-block report-issue no-diff"><code>com.google.common.hash.LittleEndianByteArray$UnsafeByteArray$2</code><br>• <code>long sun.misc.Unsafe.getLong(java.lang.Object,long)</code><br>• <code>void sun.misc.Unsafe.putLong(java.lang.Object,long,long)</code></div>
-			<div class="report-text-block report-issue no-diff"><code>com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator</code><br>• @Deprecated: <code>public final class java.security.AccessController</code><br>• <code>int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)</code><br>• <code>int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)</code><br>• <code>long sun.misc.Unsafe.getLong(java.lang.Object,long)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code></div>
-			<div class="report-text-block report-issue no-diff"><code>com.google.common.reflect.Types$TypeVariableInvocationHandler</code><br>• @Deprecated: <code>public class java.security.AccessControlException</code></div>
-			<div class="report-text-block report-issue no-diff"><code>com.google.common.util.concurrent.AbstractFutureState$UnsafeAtomicHelper</code><br>• @Deprecated: <code>public final class java.security.AccessController</code><br>• <code>boolean sun.misc.Unsafe.compareAndSwapObject(java.lang.Object,long,java.lang.Object,java.lang.Object)</code><br>• <code>java.lang.Object sun.misc.Unsafe.getAndSetObject(java.lang.Object,long,java.lang.Object)</code><br>• <code>long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code><br>• <code>void sun.misc.Unsafe.putObject(java.lang.Object,long,java.lang.Object)</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator</code><br>• <code>int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)</code><br>• <code>int sun.misc.Unsafe.arrayIndexScale(java.lang.Class)</code><br>• <code>long sun.misc.Unsafe.getLong(java.lang.Object,long)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code></div>
+			<div class="report-text-block report-issue no-diff"><code>com.google.common.util.concurrent.AbstractFutureState$UnsafeAtomicHelper</code><br>• <code>boolean sun.misc.Unsafe.compareAndSwapObject(java.lang.Object,long,java.lang.Object,java.lang.Object)</code><br>• <code>java.lang.Object sun.misc.Unsafe.getAndSetObject(java.lang.Object,long,java.lang.Object)</code><br>• <code>long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)</code><br>• <code>static sun.misc.Unsafe sun.misc.Unsafe.getUnsafe()</code><br>• <code>void sun.misc.Unsafe.putObject(java.lang.Object,long,java.lang.Object)</code></div>
 		</td>
 	</tr>
 	<tr class="report-table-row no-diff">
@@ -1109,35 +1145,35 @@
 	<tr class="report-table-row no-diff">
 		<td>commons-io</td>
 		<td>
-			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>21</code><br>Created-By: <code>Apache Maven Bundle Plugin 6.0.0</code><br>EnableDynamicAgentLoading: <code>-XX:+EnableDynamicAgentLoading</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-7.1.0.202411251545</code></div>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>21</code><br>Created-By: <code>Apache Maven Bundle Plugin 6.0.2</code><br>EnableDynamicAgentLoading: <code>-XX:+EnableDynamicAgentLoading</code><br>Java-Version: <code>8</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-7.2.3.202603250810</code></div>
 		</td>
 		<td></td>
 		<td>
-			<div class="report-text-block no-diff">Apache Commons IO<br>Version: <code>2.21.0</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+			<div class="report-text-block no-diff">Apache Commons IO<br>Version: <code>2.22.0</code><br>Vendor: <code>The Apache Software Foundation</code></div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff">Apache Commons IO<br>Version: <code>2.21</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+			<div class="report-text-block no-diff">Apache Commons IO<br>Version: <code>2.22</code><br>Vendor: <code>The Apache Software Foundation</code></div>
 		</td>
 		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>commons-lang3</td>
 		<td>
-			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>25</code><br>Created-By: <code>Apache Maven Bundle Plugin 6.0.0</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-7.1.0.202411251545</code></div>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>27</code><br>Created-By: <code>Apache Maven Bundle Plugin 6.2.0</code><br>Java-Version: <code>8</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-7.4.0.202608180709</code></div>
 		</td>
 		<td></td>
 		<td>
-			<div class="report-text-block no-diff">Apache Commons Lang<br>Version: <code>3.20.0</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+			<div class="report-text-block no-diff">Apache Commons Lang<br>Version: <code>3.22.0</code><br>Vendor: <code>The Apache Software Foundation</code></div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff">Apache Commons Lang<br>Version: <code>3.20</code><br>Vendor: <code>The Apache Software Foundation</code></div>
+			<div class="report-text-block no-diff">Apache Commons Lang<br>Version: <code>3.22</code><br>Vendor: <code>The Apache Software Foundation</code></div>
 		</td>
 		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>error_prone_annotations</td>
 		<td>
-			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>17</code><br>Created-By: <code>Maven JAR Plugin 3.2.2</code><br>Manifest-Version: <code>1.0</code></div>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>25</code><br>Build-Tool-Jdk-Spec: <code>21</code><br>Created-By: <code>Maven JAR Plugin 3.5.1</code><br>Java-Version: <code>21</code><br>Manifest-Version: <code>1.0</code></div>
 		</td>
 		<td></td>
 		<td></td>
@@ -1155,9 +1191,9 @@
 		<td></td>
 	</tr>
 	<tr class="report-table-row no-diff">
-		<td>guava-jre</td>
+		<td>guava</td>
 		<td>
-			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>11</code><br>Created-By: <code>Apache Maven Bundle Plugin 5.1.9</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-6.3.1.202206071316</code></div>
+			<div class="report-text-block no-diff">Build-Jdk-Spec: <code>25</code><br>Created-By: <code>Apache Maven Bundle Plugin 6.2.0</code><br>Manifest-Version: <code>1.0</code><br>Tool: <code>Bnd-7.4.0.202608180709</code></div>
 		</td>
 		<td></td>
 		<td></td>
@@ -1188,7 +1224,7 @@
 		<td>jspecify</td>
 		<td>Manifest-Version: <code>1.0</code></td>
 		<td></td>
-		<td>Version: <code>1.0.0</code></td>
+		<td>Version: <code>1.0.1</code></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -1209,7 +1245,7 @@
 		</td>
 		<td></td>
 		<td>
-			<div class="report-text-block no-diff">slf4j-api<br>Version: <code>2.0.17</code></div>
+			<div class="report-text-block no-diff">slf4j-api<br>Version: <code>2.0.20</code></div>
 		</td>
 		<td></td>
 		<td></td>
@@ -1221,7 +1257,7 @@
 		</td>
 		<td></td>
 		<td>
-			<div class="report-text-block no-diff">slf4j-simple<br>Version: <code>2.0.17</code></div>
+			<div class="report-text-block no-diff">slf4j-simple<br>Version: <code>2.0.20</code></div>
 		</td>
 		<td></td>
 		<td></td>
@@ -1298,7 +1334,7 @@
 		<td><code>com.google.common.util.concurrent.internal</code></td>
 	</tr>
 	<tr class="report-table-row no-diff">
-		<td>guava-jre</td>
+		<td>guava</td>
 		<td><code>com.google.common</code></td>
 		<td>Module-Info</td>
 		<td>No</td>
@@ -1343,7 +1379,7 @@
 	</tr>
 	<tr class="report-table-row no-diff">
 		<td>listenablefuture</td>
-		<td><code>listenablefuture.empty.to.avoid.conflict.with.guava</code></td>
+		<td><code>listenablefuture</code></td>
 		<td>Auto-generated</td>
 		<td>Yes</td>
 		<td></td>
@@ -1397,7 +1433,7 @@
 		<td>
 			<div class="report-text-block no-diff">Apache Commons IO<br>Symbolic Name: <code>org.apache.commons.commons-io</code></div>
 		</td>
-		<td>2.21.0</td>
+		<td>2.22.0</td>
 		<td>
 			<div class="report-text-block no-diff">The Apache Commons IO library contains utility classes,<br>stream implementations, file filters,file comparators,<br>endian transformation classes, and much more.<br>Vendor: The Apache Software Foundation<br>License: https://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://commons.apache.org/proper/commons-io/</div>
 		</td>
@@ -1405,7 +1441,7 @@
 			<div class="report-text-block no-diff"><code>sun.nio.ch</code> (optional)<br><code>sun.misc</code> (optional)<br><code>java.io</code><br><code>java.lang</code><br><code>java.lang.invoke</code><br><code>java.lang.ref</code><br><code>java.lang.reflect</code><br><code>java.math</code><br><code>java.net</code><br><code>java.nio</code><br><code>java.nio.channels</code><br><code>java.nio.charset</code><br><code>java.nio.file</code><br><code>java.nio.file.attribute</code><br><code>java.nio.file.spi</code><br><code>java.security</code><br><code>java.text</code><br><code>java.time</code><br><code>java.time.chrono</code><br><code>java.time.temporal</code><br><code>java.util</code><br><code>java.util.concurrent</code><br><code>java.util.concurrent.atomic</code><br><code>java.util.concurrent.locks</code><br><code>java.util.function</code><br><code>java.util.regex</code><br><code>java.util.stream</code><br><code>java.util.zip</code></div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff"><code>org.apache.commons.io</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.filefilter</code>, <code>org.apache.commons.io.function</code>, <code>org.apache.commons.io.input</code><br><code>org.apache.commons.io.comparator</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code><br><code>org.apache.commons.io.filefilter</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.file</code><br><code>org.apache.commons.io.input</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.apache.commons.io.output</code><br><code>org.apache.commons.io.output</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code>, <code>org.apache.commons.io.input</code><br><code>org.apache.commons.io.build</code> (Version: <code>2.21.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.function</code><br><code>org.apache.commons.io.channels</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.charset</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.file</code> (Version: <code>2.21.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code><br><code>org.apache.commons.io.file.attribute</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.file.spi</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.function</code> (Version: <code>2.21.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code><br><code>org.apache.commons.io.input.buffer</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.monitor</code> (Version: <code>2.21.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code><br><code>org.apache.commons.io.serialization</code> (Version: <code>2.21.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code><br><code>org.apache.commons.io</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.comparator</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.filefilter</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.input</code> (Version: <code>2.21.0</code>)<br><code>org.apache.commons.io.output</code> (Version: <code>2.21.0</code>)</div>
+			<div class="report-text-block no-diff"><code>org.apache.commons.io</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.filefilter</code>, <code>org.apache.commons.io.function</code>, <code>org.apache.commons.io.input</code><br><code>org.apache.commons.io.comparator</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code><br><code>org.apache.commons.io.filefilter</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.file</code><br><code>org.apache.commons.io.input</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.apache.commons.io.output</code><br><code>org.apache.commons.io.output</code> (Version: <code>1.4.9999</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code>, <code>org.apache.commons.io.input</code><br><code>org.apache.commons.io.build</code> (Version: <code>2.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.function</code><br><code>org.apache.commons.io.channels</code> (Version: <code>2.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code><br><code>org.apache.commons.io.charset</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.file</code> (Version: <code>2.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code>, <code>org.apache.commons.io.function</code><br><code>org.apache.commons.io.file.attribute</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.file.spi</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.function</code> (Version: <code>2.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code><br><code>org.apache.commons.io.input.buffer</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.monitor</code> (Version: <code>2.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io</code>, <code>org.apache.commons.io.build</code><br><code>org.apache.commons.io.serialization</code> (Version: <code>2.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.io.build</code><br><code>org.apache.commons.io</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.comparator</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.filefilter</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.input</code> (Version: <code>2.22.0</code>)<br><code>org.apache.commons.io.output</code> (Version: <code>2.22.0</code>)</div>
 		</td>
 		<td>
 			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
@@ -1419,15 +1455,15 @@
 		<td>
 			<div class="report-text-block no-diff">Apache Commons Lang<br>Symbolic Name: <code>org.apache.commons.lang3</code></div>
 		</td>
-		<td>3.20.0</td>
+		<td>3.22.0</td>
 		<td>
-			<div class="report-text-block no-diff">Apache Commons Lang, a package of Java utility classes for<br>the  classes that are in java.lang's hierarchy, or are<br>considered to be so  standard as to justify existence in<br>java.lang.  The code is tested using the latest revision of<br>the JDK for supported  LTS releases: 8, 11, 17, 21 and 25<br>currently.  See<br>https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml<br>Please ensure your build environment is up-to-date and<br>kindly report any build issues.<br>Vendor: The Apache Software Foundation<br>License: https://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://commons.apache.org/proper/commons-lang/</div>
+			<div class="report-text-block no-diff">Apache Commons Lang is a package of Java utility classes for<br>the Java lang packages,  classes that could be considered<br>standard to justify their existence in java.lang.  The code<br>is tested using the latest revision of the JDK for supported<br>LTS releases: 8, 11, 17, 21, and 25.  See<br>https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml<br>Please ensure your build environment is up-to-date and<br>kindly report any build issues.  Starting with Commons Lang<br>3.9, we target Java 8 and use those features.  For advice on<br>upgrading from 2.x to 3.x, see<br>https://commons.apache.org/lang/article3_0.html<br>Vendor: The Apache Software Foundation<br>License: https://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://commons.apache.org/proper/commons-lang/</div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff"><code>java.beans</code><br><code>java.io</code><br><code>java.lang</code><br><code>java.lang.annotation</code><br><code>java.lang.invoke</code><br><code>java.lang.reflect</code><br><code>java.math</code><br><code>java.net</code><br><code>java.nio</code><br><code>java.nio.charset</code><br><code>java.nio.file</code><br><code>java.security</code><br><code>java.text</code><br><code>java.time</code><br><code>java.time.temporal</code><br><code>java.util</code><br><code>java.util.concurrent</code><br><code>java.util.concurrent.atomic</code><br><code>java.util.concurrent.locks</code><br><code>java.util.function</code><br><code>java.util.regex</code><br><code>java.util.stream</code></div>
+			<div class="report-text-block no-diff"><code>java.beans</code><br><code>java.io</code><br><code>java.lang</code><br><code>java.lang.annotation</code><br><code>java.lang.invoke</code><br><code>java.lang.ref</code><br><code>java.lang.reflect</code><br><code>java.math</code><br><code>java.net</code><br><code>java.nio</code><br><code>java.nio.charset</code><br><code>java.nio.file</code><br><code>java.security</code><br><code>java.text</code><br><code>java.time</code><br><code>java.time.temporal</code><br><code>java.util</code><br><code>java.util.concurrent</code><br><code>java.util.concurrent.atomic</code><br><code>java.util.concurrent.locks</code><br><code>java.util.function</code><br><code>java.util.regex</code><br><code>java.util.stream</code></div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff"><code>org.apache.commons.lang3</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.arch</code>, <code>org.apache.commons.lang3.builder</code>, <code>org.apache.commons.lang3.function</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.apache.commons.lang3.text</code>, <code>org.apache.commons.lang3.text.translate</code><br><code>org.apache.commons.lang3.arch</code> (Version: <code>3.20.0</code>)<br><code>org.apache.commons.lang3.builder</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code>, <code>org.apache.commons.lang3.tuple</code><br><code>org.apache.commons.lang3.compare</code> (Version: <code>3.20.0</code>)<br><code>org.apache.commons.lang3.concurrent</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.builder</code>, <code>org.apache.commons.lang3.exception</code>, <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.concurrent.locks</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.builder</code>, <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.event</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.exception</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.tuple</code><br><code>org.apache.commons.lang3.function</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.stream</code><br><code>org.apache.commons.lang3.math</code> (Version: <code>3.20.0</code>)<br><code>org.apache.commons.lang3.mutable</code> (Version: <code>3.20.0</code>)<br><code>org.apache.commons.lang3.reflect</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3</code>, <code>org.apache.commons.lang3.builder</code><br><code>org.apache.commons.lang3.stream</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.text</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.builder</code><br><code>org.apache.commons.lang3.text.translate</code> (Version: <code>3.20.0</code>)<br><code>org.apache.commons.lang3.time</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code>, <code>org.apache.commons.lang3.tuple</code><br><code>org.apache.commons.lang3.tuple</code> (Version: <code>3.20.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.util</code> (Version: <code>3.20.0</code>)</div>
+			<div class="report-text-block no-diff"><code>org.apache.commons.lang3</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.arch</code>, <code>org.apache.commons.lang3.builder</code>, <code>org.apache.commons.lang3.function</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.apache.commons.lang3.text</code>, <code>org.apache.commons.lang3.text.translate</code><br><code>org.apache.commons.lang3.arch</code> (Version: <code>3.22.0</code>)<br><code>org.apache.commons.lang3.builder</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code>, <code>org.apache.commons.lang3.tuple</code><br><code>org.apache.commons.lang3.compare</code> (Version: <code>3.22.0</code>)<br><code>org.apache.commons.lang3.concurrent</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.builder</code>, <code>org.apache.commons.lang3.exception</code>, <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.concurrent.locks</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.builder</code>, <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.event</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.exception</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.tuple</code><br><code>org.apache.commons.lang3.function</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.stream</code><br><code>org.apache.commons.lang3.math</code> (Version: <code>3.22.0</code>)<br><code>org.apache.commons.lang3.mutable</code> (Version: <code>3.22.0</code>)<br><code>org.apache.commons.lang3.reflect</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3</code>, <code>org.apache.commons.lang3.builder</code><br><code>org.apache.commons.lang3.stream</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.text</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.builder</code><br><code>org.apache.commons.lang3.text.translate</code> (Version: <code>3.22.0</code>)<br><code>org.apache.commons.lang3.time</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code>, <code>org.apache.commons.lang3.tuple</code><br><code>org.apache.commons.lang3.tuple</code> (Version: <code>3.22.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.apache.commons.lang3.function</code><br><code>org.apache.commons.lang3.util</code> (Version: <code>3.22.0</code>)</div>
 		</td>
 		<td>
 			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
@@ -1441,13 +1477,15 @@
 		<td>
 			<div class="report-text-block no-diff">error-prone annotations<br>Symbolic Name: <code>com.google.errorprone.annotations</code></div>
 		</td>
-		<td>2.41.0</td>
+		<td>2.52.0</td>
 		<td>
-			<div class="report-text-block no-diff">Error Prone is a static analysis tool for Java that catches<br>common programming mistakes at compile-time.<br>Vendor: Google LLC<br>License: &quot;Apache<br>2.0&quot;;link=&quot;http://www.apache.org/licenses/LICENSE-2.0.txt&quot;<br>Doc URL: https://errorprone.info/error_prone_annotations</div>
+			<div class="report-text-block no-diff">Error Prone is a static analysis tool for Java that catches<br>common programming mistakes at compile-time.<br>Vendor: Google LLC<br>License: Apache<br>2.0;link=&quot;http://www.apache.org/licenses/LICENSE-2.0.txt&quot;<br>Doc URL: https://errorprone.info/error_prone_annotations</div>
 		</td>
-		<td><code>javax.lang.model.element</code></td>
 		<td>
-			<div class="report-text-block no-diff"><code>com.google.errorprone.annotations</code> (Version: <code>2.41.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>javax.lang.model.element</code><br><code>com.google.errorprone.annotations.concurrent</code> (Version: <code>2.41.0</code>)</div>
+			<div class="report-text-block no-diff"><code>java.lang</code><br><code>java.lang.annotation</code></div>
+		</td>
+		<td>
+			<div class="report-text-block no-diff"><code>com.google.errorprone.annotations</code> (Version: <code>2.52.0</code>)<br><code>com.google.errorprone.annotations.concurrent</code> (Version: <code>2.52.0</code>)</div>
 		</td>
 		<td>
 			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
@@ -1471,11 +1509,11 @@
 		<td>Manifest Version: 2</td>
 	</tr>
 	<tr class="report-table-row no-diff">
-		<td>guava-jre</td>
+		<td>guava</td>
 		<td>
 			<div class="report-text-block no-diff">Guava: Google Core Libraries for Java<br>Symbolic Name: <code>com.google.guava</code></div>
 		</td>
-		<td>33.5.0.jre</td>
+		<td>33.8.0.jre</td>
 		<td>
 			<div class="report-text-block no-diff">Guava is a suite of core and expanded libraries that include<br>utility classes, Google's collections, I/O classes, and<br>much more.<br>License: http://www.apache.org/licenses/LICENSE-2.0.txt<br>Doc URL: https://github.com/google/guava/</div>
 		</td>
@@ -1483,7 +1521,7 @@
 			<div class="report-text-block no-diff"><code>com.google.common.util.concurrent.internal</code> (Version: <code>[1.0,2)</code>)<br><code>org.jspecify.annotations</code> (Version: <code>[1.0,2)</code>) (optional)<br><code>javax.crypto</code> (optional)<br><code>javax.crypto.spec</code> (optional)<br><code>sun.misc</code> (optional)</div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff"><code>com.google.common.annotations</code> (Version: <code>33.5.0</code>)<br><code>com.google.common.base</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.jspecify.annotations</code><br><code>com.google.common.cache</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.util.concurrent</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.jspecify.annotations</code><br><code>com.google.common.collect</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.escape</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.eventbus</code> (Version: <code>33.5.0</code>)<br><code>com.google.common.graph</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.collect</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.hash</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.html</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.escape</code><br><code>com.google.common.io</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.graph</code>, <code>com.google.common.hash</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.jspecify.annotations</code><br><code>com.google.common.math</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.jspecify.annotations</code><br><code>com.google.common.net</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.escape</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.primitives</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.reflect</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.collect</code>, <code>com.google.common.io</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.util.concurrent</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.xml</code> (Version: <code>33.5.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.escape</code></div>
+			<div class="report-text-block no-diff"><code>com.google.common.annotations</code> (Version: <code>33.8.0</code>)<br><code>com.google.common.base</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.jspecify.annotations</code><br><code>com.google.common.cache</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.util.concurrent</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.jspecify.annotations</code><br><code>com.google.common.collect</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.escape</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.eventbus</code> (Version: <code>33.8.0</code>)<br><code>com.google.common.graph</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.collect</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.hash</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.html</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.escape</code><br><code>com.google.common.io</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.graph</code>, <code>com.google.common.hash</code>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>org.jspecify.annotations</code><br><code>com.google.common.math</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.jspecify.annotations</code><br><code>com.google.common.net</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>com.google.common.escape</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.primitives</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.reflect</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.collect</code>, <code>com.google.common.io</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.util.concurrent</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.base</code>, <code>com.google.common.collect</code>, <code>org.jspecify.annotations</code><br><code>com.google.common.xml</code> (Version: <code>33.8.0</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>com.google.common.escape</code></div>
 		</td>
 		<td>
 			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
@@ -1517,14 +1555,14 @@
 		<td>
 			<div class="report-text-block no-diff">JSpecify annotations<br>Symbolic Name: <code>org.jspecify.jspecify</code></div>
 		</td>
-		<td>1.0.0</td>
+		<td>1.0.1</td>
 		<td>
 			<div class="report-text-block no-diff">An artifact of well-specified annotations to power static<br>analysis checks and JVM language interop.<br>Vendor: The JSpecify Authors<br>License: https://www.apache.org/licenses/LICENSE-2.0<br>Doc URL: https://jspecify.dev/docs/start-here</div>
 		</td>
 		<td>
 			<div class="report-text-block no-diff"><code>java.lang</code><br><code>java.lang.annotation</code></div>
 		</td>
-		<td><code>org.jspecify.annotations</code> (Version: <code>1.0.0</code>)</td>
+		<td><code>org.jspecify.annotations</code> (Version: <code>1.0.1</code>)</td>
 		<td>
 			<div class="report-text-block no-diff">Required:<br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
 		</td>
@@ -1535,13 +1573,13 @@
 		<td>
 			<div class="report-text-block no-diff">SLF4J API Module<br>Symbolic Name: <code>slf4j.api</code></div>
 		</td>
-		<td>2.0.17</td>
+		<td>2.0.20</td>
 		<td>
 			<div class="report-text-block no-diff">The slf4j API<br>Vendor: SLF4J.ORG<br>License: https://opensource.org/license/mit<br>Doc URL: http://www.slf4j.org</div>
 		</td>
-		<td><code>org.slf4j.spi</code> (Version: <code>[2.0.17,3)</code>)</td>
+		<td><code>org.slf4j.spi</code> (Version: <code>[2.0.20,3)</code>)</td>
 		<td>
-			<div class="report-text-block no-diff"><code>org.slf4j</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code>, <code>org.slf4j.spi</code><br><code>org.slf4j.event</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.helpers</code><br><code>org.slf4j.helpers</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.spi</code><br><code>org.slf4j.spi</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code><br><code>org.slf4j</code> (Version: <code>1.7.36</code>)<br><code>org.slf4j.helpers</code> (Version: <code>1.7.36</code>)</div>
+			<div class="report-text-block no-diff"><code>org.slf4j</code> (Version: <code>2.0.20</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code>, <code>org.slf4j.spi</code><br><code>org.slf4j.event</code> (Version: <code>2.0.20</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.helpers</code><br><code>org.slf4j.helpers</code> (Version: <code>2.0.20</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.spi</code><br><code>org.slf4j.spi</code> (Version: <code>2.0.20</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code><br><code>org.slf4j</code> (Version: <code>1.7.36</code>)<br><code>org.slf4j.helpers</code> (Version: <code>1.7.36</code>)</div>
 		</td>
 		<td>
 			<div class="report-text-block no-diff">Required:<br><code>osgi.extender;filter:=&quot;(&(osgi.extender=osgi.serviceloader.processor)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))&quot;</code><br><code>osgi.serviceloader;filter:=&quot;(osgi.serviceloader=org.slf4j.spi.SLF4JServiceProvider)&quot;;osgi.serviceloader=&quot;org.slf4j.spi.SLF4JServiceProvider&quot;</code><br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code></div>
@@ -1553,7 +1591,7 @@
 		<td>
 			<div class="report-text-block no-diff">SLF4J Simple Provider<br>Symbolic Name: <code>slf4j.simple</code></div>
 		</td>
-		<td>2.0.17</td>
+		<td>2.0.20</td>
 		<td>
 			<div class="report-text-block no-diff">SLF4J Simple Provider<br>Vendor: SLF4J.ORG<br>License: https://opensource.org/license/mit<br>Doc URL: http://www.slf4j.org</div>
 		</td>
@@ -1561,7 +1599,7 @@
 			<div class="report-text-block no-diff"><code>org.slf4j</code> (Version: <code>[2.0,3)</code>)<br><code>org.slf4j.event</code> (Version: <code>[2.0,3)</code>)<br><code>org.slf4j.helpers</code> (Version: <code>[2.0,3)</code>)<br><code>org.slf4j.spi</code> (Version: <code>[2.0,3)</code>)</div>
 		</td>
 		<td>
-			<div class="report-text-block no-diff"><code>org.slf4j.simple</code> (Version: <code>2.0.17</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code>, <code>org.slf4j.spi</code></div>
+			<div class="report-text-block no-diff"><code>org.slf4j.simple</code> (Version: <code>2.0.20</code>)<br>&nbsp;&nbsp;&nbsp;Uses: <code>org.slf4j</code>, <code>org.slf4j.event</code>, <code>org.slf4j.helpers</code>, <code>org.slf4j.spi</code></div>
 		</td>
 		<td>
 			<div class="report-text-block no-diff">Required:<br><code>osgi.extender;filter:=&quot;(&(osgi.extender=osgi.serviceloader.registrar)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))&quot;</code><br><code>osgi.ee;filter:=&quot;(&(osgi.ee=JavaSE)(version=1.8))&quot;</code><br>Provided:<br><code>osgi.service;objectClass:List&lt;String&gt;=&quot;org.slf4j.spi.SLF4JServiceProvider&quot;;type=simple;effective:=active</code><br><code>osgi.serviceloader;osgi.serviceloader=&quot;org.slf4j.spi.SLF4JServiceProvider&quot;;register:=&quot;org.slf4j.simple.SimpleServiceProvider&quot;;type=simple</code></div>
@@ -1577,7 +1615,7 @@
 <h2 class="report-section-title">Java Runtime</h2>
 <div class="report-section-content">
 <p class="report-section-description no-diff">Information about JRE/JDK runtime.</p>
-<p class="report-content no-diff">Java home    : <code>C:\Users\micro\.jdks\temurin-17.0.15</code><br>Java runtime : <code>OpenJDK Runtime Environment</code><br>Java version : <code>17.0.15</code><br>Java vendor  : <code>Eclipse Adoptium</code></p>
+<p class="report-content no-diff">Java home    : <code>[redacted]</code><br>Java runtime : <code>OpenJDK Runtime Environment</code><br>Java version : <code>17.0.19</code><br>Java vendor  : <code>Eclipse Adoptium</code></p>
 </div>
 </section>
 
@@ -1586,48 +1624,49 @@
 
 </body>
 <!-- JSON REPORT DATA
-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
+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
 -->
 </html>
