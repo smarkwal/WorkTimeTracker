@@ -443,7 +443,7 @@ Java Runtime
 ------------
 Information about JRE/JDK runtime.
 
-Java home    : /Users/stephan.markwalder/Library/Java/JavaVirtualMachines/temurin-17.0.19/Contents/Home
+Java home    : [redacted]
 Java runtime : OpenJDK Runtime Environment
 Java version : 17.0.19
 Java vendor  : Eclipse Adoptium

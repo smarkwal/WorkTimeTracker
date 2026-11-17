@@ -36,6 +36,16 @@ plugins {
     id("org.jarhc") version "3.1.0"
 }
 
+buildscript {
+    configurations.classpath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+}
+
+dependencyLocking {
+    lockAllConfigurations()
+}
+
 repositories {
     mavenCentral()
 }
@@ -209,6 +219,16 @@ tasks {
             file("${rootDir}/docs/jarhc-report.html"),
             file("${rootDir}/docs/jarhc-report.txt")
         )
+
+        doLast {
+            // JarHC generates the reports asynchronously in a worker.
+            workerExecutor.await()
+            val javaHomePattern = Regex("""(Java home\s*:\s*(?:<code>)?)[^<\r\n]+""")
+            reportFiles.files.forEach { reportFile ->
+                val content = reportFile.readText()
+                reportFile.writeText(javaHomePattern.replace(content, "$1[redacted]"))
+            }
+        }
     }
 
     build {
