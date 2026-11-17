@@ -25,6 +25,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.Month;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -145,6 +146,26 @@ public class WorkContractTest {
 
 		// verify
 		verifyDatabaseAccess(date);
+	}
+
+	@Test
+	public void getWorkTime_onLastDayOf2025() {
+		LocalDate year = LocalDate.of(2025, Month.JANUARY, 1);
+		LocalDate date = LocalDate.of(2025, Month.DECEMBER, 31);
+		WorkYear previousYear = new WorkYear(year, new byte[year.lengthOfYear() * 2]);
+		when(database.getWorkYear(date)).thenReturn(previousYear);
+
+		assertEquals(403, contract.getWorkTime(date, database));
+	}
+
+	@Test
+	public void getWorkTime_onFirstDayOf2026() {
+		LocalDate year = LocalDate.of(2026, Month.JANUARY, 1);
+		LocalDate date = LocalDate.of(2026, Month.JANUARY, 1);
+		WorkYear currentYear = new WorkYear(year, new byte[year.lengthOfYear() * 2]);
+		when(database.getWorkYear(date)).thenReturn(currentYear);
+
+		assertEquals(384, contract.getWorkTime(date, database));
 	}
 
 	private void verifyDatabaseAccess(LocalDate date) {
