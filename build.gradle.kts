@@ -29,9 +29,6 @@ plugins {
     // run Sonar analysis
     alias(libs.plugins.sonarqube)
 
-    // get current Git branch name
-    alias(libs.plugins.grgit)
-
     // JarHC Gradle plugin
     alias(libs.plugins.jarhc)
 }
@@ -99,6 +96,8 @@ licenseReport {
     )
 }
 
+val gitBranchName = gitBranchNameProvider()
+
 sonar {
     // documentation: https://docs.sonarqube.org/latest/analyzing-source-code/scanners/sonarscanner-for-gradle/
 
@@ -110,7 +109,7 @@ sonar {
         property("sonar.projectKey", "smarkwal_WorkTimeTracker")
 
         // Git branch
-        property("sonar.branch.name", getGitBranchName())
+        property("sonar.branch.name", gitBranchName.get())
 
         // paths to test sources and test classes
         property("sonar.tests", "${projectDir}/src/test/java")
@@ -133,12 +132,14 @@ tasks {
     }
 
     processResources {
+        val resourceVersion = project.version.toString()
+        inputs.property("version", resourceVersion)
 
         // replace placeholders in resources
         // (see src/main/resources/version.properties)
         filesMatching("*.properties") {
             expand(
-                "version" to project.version
+                "version" to resourceVersion
             )
         }
     }
@@ -243,8 +244,30 @@ tasks.sonar {
 
 // helper functions ------------------------------------------------------------
 
-fun getGitBranchName(): String {
-    return grgit.branch.current().name
+fun gitBranchNameProvider(): Provider<String> {
+    val repositoryDirectory = layout.projectDirectory
+    val gitEntry = repositoryDirectory.file(".git")
+    val gitHead = if (gitEntry.asFile.isFile) {
+        // Worktrees and submodules use a gitdir pointer file.
+        providers.fileContents(gitEntry).asText.map { content ->
+            val gitDir = content.trim().removePrefix("gitdir: ")
+            repositoryDirectory.dir(gitDir).file("HEAD")
+        }
+    } else {
+        providers.provider { repositoryDirectory.file(".git/HEAD") }
+    }
+
+    return providers.fileContents(gitHead).asText.map { content ->
+        val head = content.trim()
+        val branchPrefix = "ref: refs/heads/"
+        if (!head.startsWith(branchPrefix)) {
+            throw GradleException(
+                "Cannot determine Git branch for Sonar analysis: HEAD is detached. " +
+                        "Check out a branch before running the sonar task."
+            )
+        }
+        head.removePrefix(branchPrefix)
+    }
 }
 
 fun isNonStable(version: String): Boolean {

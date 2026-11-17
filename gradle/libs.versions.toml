@@ -23,5 +23,4 @@ json = { module = "org.json:json", version.ref = "json" }
 versions = { id = "io.github.ben-manes.versions", version = "0.67.0" }
 license-report = { id = "com.github.jk1.dependency-license-report", version = "3.1.5" }
 sonarqube = { id = "org.sonarqube", version = "7.6.0.18749" }
-grgit = { id = "org.ajoberstar.grgit", version = "5.3.3" }
 jarhc = { id = "org.jarhc", version = "3.1.0" }
