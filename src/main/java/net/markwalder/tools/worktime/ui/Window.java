@@ -121,11 +121,7 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 			Image image = Toolkit.getDefaultToolkit().getImage(resource);
 			final TrayIcon trayIcon = new TrayIcon(image);
 
-			ActionListener actionListener = event -> {
-				setVisible(true);
-				setExtendedState(NORMAL);
-				SystemTray.getSystemTray().remove(trayIcon);
-			};
+			ActionListener actionListener = event -> restoreFromTray(trayIcon);
 
 			trayIcon.setToolTip(TITLE);
 
@@ -147,6 +143,12 @@ public class Window extends JFrame implements WindowListener, KeyListener {
 
 		}
 
+	}
+
+	void restoreFromTray(TrayIcon trayIcon) {
+		setVisible(true);
+		setExtendedState(NORMAL);
+		SystemTray.getSystemTray().remove(trayIcon);
 	}
 
 	@Override
