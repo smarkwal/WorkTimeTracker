@@ -6,7 +6,11 @@
 /.idea
 *.iml
 
+# Visual Studio Code
+/.vscode/
+
 # build output
+/bin/
 build/
 
 # JarHC cache (note: moved to ~/.jarhc)
